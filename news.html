@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>新闻资讯</title>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="./css/qys/zpageNav.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#app{
+			width: auto;
+			height: auto;
+		}
+		.titlePic{
+			width: auto;
+			height: auto;
+		}
+			.listFater{
+			width: 1200px;
+			margin: 0px auto;
+			display: flex;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			margin-top: 20px;
+		}
+		.dataMain{
+			width: 370px;
+			height: 198px;
+			margin-bottom: 10px ;
+			color: white;
+			padding-bottom: 20px;
+			margin-right: 45px;
+		}
+		.dataMain:nth-child(3n){
+			margin-right: 0px;
+		}
+		
+		.dataText{
+			width: 370px;
+			margin-bottom: 37px ;
+			color: white;
+			margin-right: 45px;
+		}
+		.dataText:nth-child(3n){
+			margin-right: 0px;
+		}
+		.main-h3{
+			margin-top: 50px;
+			padding-top: 5px;
+			padding-bottom: 15px;
+		}
+		.main-p{
+			font-size: 14px;
+		}
+		.main-p2{
+			font-size: 14px;
+			margin-top: 10px;
+		}
+		.main-p3{
+			font-size: 14px;
+			margin-top: 10px;
+			width: 35px;
+			height: 20px;
+			text-align: center;
+			background: #f89611;
+		}
+		.liatMain{
+			background: red;
+			padding-top:10px ;
+			padding-left: 10px;
+			padding-bottom:20px ;
+		}
+		.liatMain2{
+			padding-top:10px ;
+			padding-left: 10px;
+			height: 130px;
+			border-bottom: solid 1px #999999;
+			cursor:pointer
+		}
+		.liatMain2{
+			clear: both;
+			position: relative;
+			margin-top: 20px;
+		}
+		.liatMain2_pic{
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin-right: 15px;
+		}
+		.mianP1{
+			font-size: 15px;
+			color: #666666;
+			font-family: "微软雅黑";
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 1;
+			overflow: hidden;
+			height: 35px;
+			height: 19px;
+		}
+		.mianP2{
+			margin-top: 10px;
+			font-size: 13px;
+			color: #666666;
+			font-family: "微软雅黑";
+			    display: -webkit-box;
+			    -webkit-box-orient: vertical;
+			    -webkit-line-clamp: 2;
+			    overflow: hidden;
+				height: 35px;
+		}
+		.mianP3{
+			margin-top: 18px;
+			font-size: 14px;
+			color: #666666;
+			font-family: "微软雅黑";
+		}
+		.mianP4{
+			margin-top: 10px;
+			font-size: 14px;
+			color: #666666;
+			font-family: "微软雅黑";
+		}
+		.mianP5{
+			position: absolute;
+			width: 50px;
+			height: 20px;
+			background: #f7970f;
+			text-align: center;
+			line-height: 20px;
+			font-size: 13px;
+			border-radius: 3px;
+			top: -16px;
+		}
+		.noImg{
+			clear: both;
+		}
+		.thiz-banner {
+		    margin-top: 20px;
+		    /* background: url(images/fangImg/news.jpg); */
+		    height: 460px;
+		    background-position: center;
+		}
+	</style>
+	<body>
+		<div id="app">
+			<div class="headerpage"></div>
+			<!-- <div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div> -->
+			<div class="listFater">
+				<div v-for="item in newsTj" class="dataMain">
+					<div class="liatMain" :style="{'backgroundImage': 'url(' + item.cover + ')'}" @click="commentList(item.id)">
+						<p class="main-h3">{{item.title}}</p>
+						<p class="main-p">{{item.description}}</p>
+						<p class="main-p2">{{item.source}}</p>
+					</div>
+				</div>
+				<div v-for="item2 in newsAll" class="dataText">
+					<div class="liatMain2" @click="commentList(item2.id)">
+						<img :src="item2.cover" class="liatMain2_pic">
+						<p class="mianP1">{{item2.title}}</p>
+						<p class="mianP2">{{item2.description}}</p>
+						<p class="mianP3">{{item2.source}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="wrap" id="wrap">
+				<zpagenav v-bind:page="pageNum" v-bind:page-size="pageSize" v-bind:total="total" v-bind:max-page="maxPage"
+				 v-on:pagehandler="pageHandler">
+				</zpagenav>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+	</body>
+</html>
+<script src="js/fang-js/urlList.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qu-js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			typeId: "eb186ab5a3b94ae998675d5f3498070d",
+			newsAll: "",
+			newsTj: "",
+			textMain: "",
+			//分页容器
+			pageNum: 1, //显示的是哪一页
+			pageSize: '', //每一页显示的数据条数
+			total: '', //记录总数
+			maxPage: '', //最大页数
+			allImg: "" ,//详情页的所有图片
+			pageBanner:""
+		},
+		methods: {
+			// 获取所有新闻
+			newsListGet: function() {
+				axios.get(allUrl.article_list, {
+					params: {
+						articleTypeId: this.typeId,
+						pageNum: this.pageNum,
+						recommend: 0
+					}
+				}).then((result) => {
+					if (result != "" && result.code == 0) {
+						// this.titList = result.data
+						this.newsAll = result.data.data
+						this.pageNum = result.data.pageIndex //显示的是哪一页
+						this.pageSize = result.data.pageSize //每一页显示的数据条数
+						this.total = result.data.totalCount //记录总数
+						this.maxPage = result.data.pageCount //最大页数
+					}
+				}).catch((error) => {
+					//alert(error.message)
+				})
+			},
+			// 获取推荐新闻
+			newsTjGet: function() {
+				axios.get(allUrl.article_list, {
+					params: {
+						articleTypeId: this.typeId,
+						pageNum: this.pageNum,
+						recommend: 1
+					}
+				}).then((result) => {
+					if (result != "" && result.code == 0) {
+						// this.titList = result.data
+						this.newsTj = result.data.data
+					}
+				}).catch((error) => {
+					//alert(error.message)
+				})
+			},
+			//分页
+			pageHandler: function(pageNum) {
+				this.pageNum = pageNum;
+				this.newsListGet();
+			},
+			// 跳转评论详情
+			commentList: function(goCommentId) {
+				localStorage.setItem(workId, goCommentId);
+				window.location.href = 'news-xq.html'
+			},
+			// 获取banner
+			gatBanner:function(){
+				axios.get(allUrl.article_list, {
+					params: {
+						articleSubTypeId:"a54d7146fe0e47f4897582a991d3ab14"
+						
+					}
+				}).then((result) => {
+					if (result != "" && result.code == 0) {
+						this.pageBanner =result.data.data[0]
+					}
+				}).catch((error) => {
+					//alert(error.message)
+				})
+			},
+
+		},
+		mounted() {
+			this.newsListGet()
+			this.newsTjGet()
+			this.gatBanner()
+		}
+	})
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		/*公共部分
+		 * 导航栏
+		 * footer CopyRight
+		 */
+		$(".headerpage").load("header.html");
+		$(".footerpage").load("footer.html?vid=0717");
+	});
+	$(".liatMain2").each(function() {
+		var src = $(this).find("img").attr("src");
+		if (src == null) {
+			$(this).find(".liatMain2_pic").hide();
+		}
+	});
+</script>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/qys/zpageNav.css"/>
+		<link rel="stylesheet" type="text/css" href="css/qys/shop.css"/>
+		<link rel="stylesheet" type="text/css" href="css/qys/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/qys/index-duan.css"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.merchant-list{
+				margin-bottom: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="shop">
+			<div class="headerpage"></div>
+			<div class="main-width">
+				<img class="shop-banner" src="images/shop/shop-banner.png" >
+				<div class="shop-cu">
+					<div class="jzBox-box" v-for="(item,index) in getCuList" @click="goodDetail(item.id,item.classifyCode)">
+						<div class="font-size">
+							<h1 class="index-h1">{{item.name}}</h1>
+							<p class="font-p">{{item.summary}}</p>
+							<p class="index-pay cu-font"><img width="20" style="margin-right: 5px;" src="images/duan-img/cuFont.png" >促销价</p>
+							<div class="index-pay">￥{{item.promotionPrice}}
+								<span class="cu-huiFont">￥{{item.price}}</span>
+							</div>
+							<span class="index-span">已售：{{item.salesVolume}}件</span>
+						</div>
+						<div class="index-img">
+							<img :src="item.logo" alt="">
+						</div>
+					</div>
+				</div>
+
+				<div class="wrap" id="wrap">
+				    <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" 
+				    	v-bind:max-page="maxPage"  v-on:pagehandler="pageHandler">
+				    </zpagenav>
+				</div>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qu-js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(function() {
+				$(".headerpage").load("header.html");
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+		</script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						getUsers:'',
+						token:'',
+						getCuList:'',
+						businessName:localStorage.getItem(searchStore),
+						//分页容器
+						page: 1,  //显示的是哪一页
+						pageSize: '', //每一页显示的数据条数
+						total: '', //记录总数
+						maxPage:''  //最大页数
+					}
+				},
+				methods: {
+					// 跳转商品详情
+					goodDetail:function(goGoodId,comtIds){
+						localStorage.setItem(goodsId,goGoodId);
+						localStorage.setItem(storeId,comtIds);
+						window.location.href = 'shop-detail.html'
+					},
+					getStoreList: function() {
+						axios.get(allUrl.promotionProduct, {
+							params:{
+								pageNum:this.page,
+								pageSize:9,
+								businessName:this.businessName
+							}
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.getCuList = response.data.data
+								this.page =  response.data.pageIndex//显示的是哪一页
+								this.pageSize = response.data.pageSize//每一页显示的数据条数
+								this.total = response.data.totalCount //记录总数
+								this.maxPage = response.data.pageCount //最大页数
+							}
+						})
+					},
+					// 分页
+					pageHandler: function (page) {
+					    this.page = page;
+						this.activeIndex = -1;
+						this.getShopList();
+					},
+					// 跳转店铺页
+					shopDetail:function(goShopId){
+						localStorage.setItem(shopsId,goShopId);
+						window.location.href = 'shop-store.html'
+					},
+				},
+				mounted() {
+					this.getStoreList();
+				}
+			})
+		</script>
+		
+	</body>
+</html>

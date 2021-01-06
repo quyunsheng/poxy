@@ -1,0 +1,25 @@
+<ul class="myNav">
+	<li><a href="my-index.html">个人首页</a></li>
+	<!-- <li><a href="my-order.html">我的订单</a></li> -->
+	<!-- <li><a href="my-coupons.html">优惠劵</a></li> -->
+	<!-- <li><a href="my-integral.html">我的积分</a></li> -->
+	<!-- <li><a href="my-jsjh_f.html">我的交流</a></li> -->
+	<!-- <li><a href="my-task.html">我的劳务</a></li> -->
+	<!-- <li><a href="my-set.html">设置</a></li> -->
+	<!-- <li><a href="my-yjfk.html">意见反馈</a></li> -->
+</ul>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".myNav li a").each(function() {
+			if($(this)[0].href == String(window.location)) {
+				$('.myNav').find('.choose').removeClass('choose');
+				$(this).parent("li").addClass("choose");
+			}
+		});
+	})
+</script>
+
+
+
+
+

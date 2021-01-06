@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style>
+		.sy-alert{
+			width: 40%!important;
+		}
+	</style>
+	<body>
+		<div id="bigBox">
+			<!-- 修改密码 -->
+			<div class="sy-alert sy-alert-model animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm" sy-mask="true" id="alertMessage">
+				<div class="sy-title alert-title">
+					<div class="close-but" onClick="syalert.syhide('alertMessage')"><img src="images/duan-img/close-but.png" alt=""></div>
+					<h1>修改密码</h1>
+				</div>
+				<div class="sy-content">
+					<div class="alert-phone-inp">
+						<div>
+							<p>登录密码:</p>
+							<input type="password" v-model="loginMi" placeholder="请填写登录密码">
+							<p>新密码：</p>
+							<input type="password" v-model="oldLoginMi" placeholder="请填写新密码">
+							<p>再次输入新密码 ：</p>
+							<input type="password" v-model="newLoginMi" placeholder="再次输入新密码">
+							<div style="text-align: center">
+								<div class="alert-but" @click="changeMiMi">确认修改</div><!-- onClick="ok('alertMessage')" -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="headerpage2"></div>
+			<div class="allWidth myNav-box">
+				<div class="myNavP"></div>
+				<div class="mybox">
+					<ul class="myboxNav">
+					    <li><a href="my-ocrPersonal.html">完善个人信息</a></li>
+						<li class="choose"><a href="my-set.html">密码修改</a></li>
+					</ul>
+					<div class="my-centerBox mySet-box">
+						<ul class="mySet">
+							<li onClick="syalert.syopen('alertMessage')">
+								<div id="password">
+									<span style=" text-indent: 31px;">密码：**********</span><img src="images/duan-img/my-set.png" alt="">
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="footerpage"></div>
+		<script src="js/duan-js/duanCommon.js"></script>
+		<script>
+			$(function() {
+				/*公共部分
+				 * 导航栏
+				 * footer CopyRight
+				 * duan
+				 */
+				$(".headerpage2").load("header2.html");
+				$(".footerpage").load("footer.html?vid=0717");
+				$(".myNavP").load("myP-nav.html");
+			});
+		</script>
+	</body>
+</html>
+
+<script>
+	function ok(id) {
+		syalert.syhide(id);
+	}
+
+
+	new Vue({
+		el: '#bigBox',
+		data() {
+			return {
+				getUsers: '',
+				/* 修改登录密码 */
+				loginMi: '',
+				oldLoginMi: '',
+				newLoginMi: '',
+			}
+		},
+		mounted: function() {
+			this.getPeople()
+		},
+		methods: {
+			// 获取用户信息
+			getPeople: function() {
+				this.token = localStorage.getItem(tkn);
+				axios.get(allUrl1.currentUser, {
+					headers: {
+						Authorization: this.token,
+						Accept: 'application/json',
+					},
+				}).then((response) => {
+					if (response != "" && response.code == 0) {
+						this.getUsers = response.data
+					}
+					if (response.code == 7) {
+						window.localStorage.removeItem(tkn);
+						alert('登录失效，请重新登录！')
+						window.location.href = 'login.html';
+					}
+				})
+			},
+			/* 修改密码 */
+			changeMiMi: function() {
+				if (this.oldLoginMi != this.newLoginMi) {
+					alert('新密码不一致,请重新输入');
+					return false;
+				}
+				this.token = localStorage.getItem(tkn);
+				let myJson = {
+					code: this.loginMi, // 原密码
+					password: this.newLoginMi, // 新登录密码
+					phone: '1', // 手机
+				};
+				axios.post(allUrl1.updatePwd, myJson, {
+					headers: {
+						Authorization: this.token,
+						Accept: 'application/json',
+					}
+				}).then((result) => {
+					if (result != '' && result.code == 0) {
+						alert('修改成功')
+						//window.location.reload()
+					}
+				})
+			},
+		}
+	})
+</script>

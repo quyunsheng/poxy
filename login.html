@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="css/qys/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+        <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+            .rightBox {
+                display: none;
+            }
+
+            .footerpage .footer {
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="login">
+            <div class="login-top main-width">
+                <a href="index.html"><img src="images/header/logo.png"></a>
+                <span>欢迎登录</span>
+            </div>
+            <div class="login-box">
+                <div class="login-cont">
+                    <div class="login-tit clearfix">
+                        <span class="login-l" :class="showOn=='0'?'on':''" @click="logRest(0)">账户登录</span>
+                        <span @click="logRest(1)" :class="showOn=='1'?'on':''">注册</span>
+                    </div>
+                    <!-- 账号密码登录 -->
+                    <div class="login-main type-log" v-if="showLogin">
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-user.png"></label>
+                            <input class="log-ipt log-phone" v-model="phone" type="text" name="" id="" value=""
+                                placeholder="输入手机号" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt log-pass" v-model="pass" type="password" name="" id="" value=""
+                                placeholder="输入密码" />
+                        </div>
+                        <div class="login-again clearfix">
+                            <span class="codeShow fl" @click="logRest(3)">
+                                忘记密码？
+                            </span>
+                            <span class="codeShow fr" @click="logRest(2)">
+                                &lt;&lt;短信验证码登录
+                            </span>
+                        </div>
+                        <span class="log-btn btn-log" @click="loginType" @keyup.enter="enterClick">登录</span>
+                    </div>
+                    <!-- 验证码登录 -->
+                    <div class="login-main type-code" v-if="showCode">
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-user.png"></label>
+                            <input class="log-ipt code-phone" v-model="phone" type="text" name="" id="" value=""
+                                placeholder="输入手机号" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-code.png"></label>
+                            <input class="log-ipt log-code" v-model="code" type="text" name="" id="" value=""
+                                placeholder="输入验证码" />
+                            <span class="tableText loginText" @click="getCode" v-model="myCode">{{codeText}}</span>
+                        </div>
+                        <div class="login-again clearfix">
+                            <span class="logShow fr" @click="logRest(0)">
+                                &lt;&lt;返回密码登录
+                            </span>
+                        </div>
+                        <span class="log-btn btn-code" @click="codeLoginType">登录</span>
+                    </div>
+                    <!-- 账号注册 -->
+                    <div class="login-main type-reg" v-if="showReg">
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-user.png"></label>
+                            <input class="log-ipt reg-phone" v-model="phone" type="text" name="" id="" value=""
+                                placeholder="输入手机号" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-code.png"></label>
+                            <input class="log-ipt reg-code" v-model="code" type="text" name="" id="" value=""
+                                placeholder="输入验证码" />
+                            <span class="tableText loginText" @click="getCode">{{codeText}}</span>
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt reg-pass" v-model="pass" type="password" name="" id="" value=""
+                                placeholder="输入密码" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt reg-pass2" v-model="passVerify" type="password" name="" id="" value=""
+                                placeholder="确认密码" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt reg-pass2" v-model="address" placeholder="输入地址" />
+                        </div>
+                        <span class="log-btn btn-reg" @click="regiseType">立即注册</span>
+                    </div>
+                    <!-- 忘记密码 -->
+                    <div class="login-main type-forget" v-if="showForget">
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-user.png"></label>
+                            <input class="log-ipt forget-phone" v-model="phone" type="text" name="" id="" value=""
+                                placeholder="输入手机号" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-code.png"></label>
+                            <input class="log-ipt forget-code" v-model="code" type="text" name="" id="" value=""
+                                placeholder="输入验证码" />
+                               <!-- <span class="tableText loginText"  v-model="myCode">{{codeText}}</span> -->
+                           <span class="tableText loginText" @click="getCode">{{codeText}}</span>
+                            
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt forget-pass" v-model="pass" type="password" name="" id="" value=""
+                                placeholder="输入新密码" />
+                        </div>
+                        <div class="log-list clearfix">
+                            <label><img src="images/header/log-lock.png"></label>
+                            <input class="log-ipt forget-pass2" v-model="passVerify" type="password" name="" id=""
+                                value="" placeholder="确认密码" />
+                        </div>
+                        <div class="login-again clearfix">
+                            <span class="logShow fr" @click="logRest(0)">
+                                &lt;&lt;返回密码登录
+                            </span>
+                        </div>
+                        <span class="log-btn btn-forget" @click="forgetPassword">重置密码</span>
+                    </div>
+                    <div class="login-more">
+                        <div class="loginMore-line">
+                            <i class="loginLine-left"></i>
+                            <span>其他登录方式</span>
+                            <i class="loginLine-right"></i>
+                        </div>
+                        <div class="loginType-more">
+                            <span><a class="loginType-wx"></a></span>
+                            <span><a class="loginType-qq"></a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footerpage"></div>
+        <script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/duan-js/url.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            $(function() {
+                $(".footerpage").load("footer.html?vid=0717");
+            });
+        </script>
+        <script type="text/javascript">
+            new Vue({
+                el: '#login',
+                data() {
+                    return {
+                        showLogin: true,
+                        showCode: false,
+                        showReg: false,
+                        showForget: false,
+                        showOn: 0,
+                        nickname: '',
+                        phone: '',
+                        code: '',
+                        pass: '',
+                        address:'',
+                        passVerify: '', //确认密码
+                        headImg: 'http://huijiantong.oss-cn-beijing.aliyuncs.com/images/1592901527723437143.jpg',
+                        codeText: '获取验证码',
+						myCode:0
+						
+                    }
+                },
+                methods: {
+                    /*  找回密码 */
+                    forgetPassword:function(){
+                        this.showOn= 0
+                        this.showLogin = true;
+                        this.showCode = false;
+                        this.showReg = false;
+                        this.showForget = false;
+                        let mylog = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+                        let mypass = /^[a-zA-Z0-9_-]{6,16}$/;
+                        if (!mylog.test(this.phone)) {
+                            alert("对不起，请填写正确的手机号!");
+                            return false
+                        }
+                        if (this.code == '') {
+                            alert("请填写验证码!");
+                            return false
+                        }
+                        if (this.pass == '') {
+                            alert("请填写密码!");
+                            return false
+                        }
+                        if (this.passVerify == '') {
+                            alert("请确认密码!");
+                            return false
+                        }
+                        if (this.pass != this.passVerify) {
+                            alert("两次密码输入不一致!");
+                            return false
+                        }
+                        if (!mypass.test(this.pass)) {
+                            alert("密码格式错误!");
+                            return false
+                        }
+                        const myJson = {
+                            phone:this.phone,
+                            code :this.code,
+                            password:this.pass
+                        }
+                        axios.post(allUrl1.findPwd, myJson).then((result) => {
+                            if (result != "" && result.code == 0) {
+                            }
+                        }).catch((error) => {
+                            alert("页面错误： " + error.message)
+                        })
+                    },
+                    logRest: function(num) {
+
+                        // 0登录1注册2验证码登录3忘记密码
+                        // 显示on:showOn:0登录showOn:1注册
+                        if (num == 0) {
+                            this.showLogin = true;
+                            this.showCode = false;
+                            this.showReg = false;
+                            this.showForget = false;
+                            this.showOn = 0;
+                        } else if (num == 1) {
+                            this.showLogin = false;
+                            this.showCode = false;
+                            this.showReg = true;
+                            this.showForget = false;
+                            this.showOn = 1;
+                        } else if (num == 2) {
+                            this.showLogin = false;
+                            this.showCode = true;
+                            this.showReg = false;
+                            this.showForget = false;
+                            this.showOn = 2;
+                        } else if (num == 3) {
+                            this.showLogin = false;
+                            this.showCode = false;
+                            this.showReg = false;
+                            this.showForget = true;
+                            this.showOn = 2;
+                        }
+                        this.phone = ''
+                        this.pass = ''
+                        this.code = ''
+                    },
+                    // 登录
+                    loginType: function() {
+						let mylog = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+                        let mypass = /^[a-zA-Z0-9_-]{6,16}$/;
+                        if (!mylog.test(this.phone)) {
+                            alert("对不起，请填写正确的手机号!");
+                            return false
+                        }
+                        if (this.pass == '') {
+                            alert("请填写密码!");
+                            return false
+                        }
+                        if (!mypass.test(this.pass)) {
+                            alert("密码格式错误!");
+                            return false
+                        }
+                        const myJson = {
+                            phone: this.phone,
+                            password: this.pass
+                        }
+                        axios.post(allUrl.userLogin, myJson, ).then((result) => {
+                            if (result != "" && result.code == 0) {
+                                localStorage.setItem(tkn, result.data);
+                                window.location.href = 'index.html'
+                            }
+                        }).catch((error) => {
+                            //alert(error.message)
+                        })
+                    },
+                    // 验证码登录
+                    codeLoginType: function() {
+						let mylog = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+                        if (!mylog1.test(this.phone)) {
+                            alert("对不起，请填写正确的手机号!");
+                            return false
+                        }
+                        const myJson = {
+                            phone: this.phone,
+                            code: this.code
+                        }
+                        axios.post(allUrl1.codeLogin, myJson, ).then((result) => {
+                            if (result != "" && result.code == 0) {
+                                localStorage.setItem(tkn, result.data);
+                                window.location.href = 'index.html'
+                            }
+                        }).catch((error) => {
+                            //alert(error.message)
+                        })
+                    },
+                    // 注册
+                    regiseType: function() {
+						let mylog = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+                        let mypass = /^[a-zA-Z0-9_-]{6,16}$/;
+                        if (!mylog.test(this.phone)) {
+                            alert("对不起，请填写正确的手机号!");
+                            return false
+                        }
+                        if (this.code == '') {
+                            alert("请填写验证码!");
+                            return false
+                        }
+                        if (this.pass == '') {
+                            alert("请填写密码!");
+                            return false
+                        }
+                        if (this.passVerify == '') {
+                            alert("请确认密码!");
+                            return false
+                        }
+                        if (this.pass != this.passVerify) {
+                            alert("两次密码输入不一致!");
+                            return false
+                        }
+                        if (!mypass.test(this.pass)) {
+                            alert("密码格式错误!");
+                            return false
+                        }
+                        if (this.address== ''){
+                            alert("地址不能为空!");
+                            return false
+                        }
+                        const myJson = {
+                            cellPhone: this.phone,
+                            password: this.pass,
+                            checkCode: this.code, //验证码
+                            nickname: 'sj' + this.phone, // 用户昵称
+                            headImg: this.headImg, // 用户头像
+                            address: this.address // 地址
+                        }
+                        axios.post(allUrl.userRegist, myJson)
+                            .then((result) => {
+                                if (result != "" && result.code == 0) {
+                                    this.showLogin = true;
+                                    this.showReg = false;
+                                    this.showOn = 0;
+                                    this.pass = '';
+                                }
+                            }).catch((error) => {
+                                alert("页面错误： " + error.message)
+                            })
+                    },
+                    // 获取验证码
+                    getCode: function() {
+                        var myreg = /^[1][3,4,5,6,7,8][0-9]{9}$/;
+                        let _thiz = this
+                        if (this.phone == "" || this.phone == "undefined" || this.phone == null || this.phone ==
+                            "null" || !myreg.test(this.phone)) {
+                            alert("请填写正确的手机号");
+                            return false
+                        }
+                        if (_thiz.codeText == "获取验证码") {
+                            const myJson = {
+                                phone: _thiz.phone,
+                            }
+                            axios.post(allUrl1.getCodeNum, myJson, {
+                                headers: {
+                                    Accept: 'application/json',
+                                }
+                            }).then((result) => {
+                                if (result != "" && result.code == 0) {
+                                    var time = 60;
+                                    var timer = setInterval(function() {
+                                        time--;
+                                        _thiz.myCode = 1;
+                                        _thiz.codeText = time + "秒重发";
+                                        if (time == 0) {
+                                            clearInterval(timer);
+                                            _thiz.codeText = "获取验证码";
+                                            _thiz.myCode = '0';
+                                        }
+                                    }, 1000);
+									if(_thiz.myCode == 1){
+										 $(".tableText").attr("disabled", "disabled");
+									}else{
+										$(".tableText").removeAttr("disabled");
+									}
+                                }
+                            }).catch((error) => {
+                                //alert(error.message)
+                            })
+                        }
+                    },
+
+                },
+                created() {
+                    // 回车键登录
+                    var _self = this;
+                    document.onkeydown = function(e) {
+                        var key = window.event.keyCode;
+
+                        if (key == 13 || key == 100) {
+                            if (this.showOn = 0) {
+                                _self.loginType()
+                            }
+                        }
+
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

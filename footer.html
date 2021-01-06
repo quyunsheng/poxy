@@ -1,0 +1,106 @@
+<!-- 底部 -->
+<div class="foot-about" id="footer">
+	<div class="about-box">
+		<p class="about-btm">
+			<strong>友情链接:</strong>
+			<a target="_blank" v-for="item in blogroll" :href="item.address">{{item.title}}<span>|</span></a>
+		</p>
+		<p>Copyright © 2020-<span id="year" style="color: #FFFFFF;"></span> <a href="">www.****.com/</a>, All Rights Reserved. | 闽ICP备2020021420号
+		</p>
+		<p>版权所有：<a>云港湾</a></p>
+	</div>
+</div>
+<!-- 右侧常住条 -->
+<ul class="rightBox">
+<!--	<li>
+		<a href="javascript:;">
+			<div class="right-show" onclick="shopCar()">
+				<img src="images/header/right-car.png" >
+				<p>购物车</p>
+			</div>
+		</a>
+	</li>-->
+	<li>
+		<a onclick="goTop()">
+			<div class="right-show">
+				<img src="images/header/right-top.png" >
+				<p>去顶层</p>
+			</div>
+		</a>
+	</li>
+	<li>
+		<a href="javascript:;" onclick="uOnLine('my-index.html')">
+			<div class="right-show">
+				<img src="images/header/right-user.png" >
+				<p>个人中心</p>
+			</div>
+		</a>
+	</li>
+</ul>
+<link rel="stylesheet" type="text/css" href="css/footer.css" />
+<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var myDate = new Date();
+	var year = myDate.getFullYear();
+	$('#year').html(year);
+
+	function isEmpty(obj) {
+		if (obj == '' || obj == 'null' || obj == 'undefined' || obj == undefined)
+			return true;
+		else
+			return false;
+	}
+	// 点击验证是否登录
+	function uOnLine(url) {
+		var mytkn = localStorage.getItem(tkn);
+		if (isEmpty(mytkn)) {
+			window.location.href = 'login.html';
+			return;
+		}
+		window.location.href = url;
+	};
+	function goTop(){
+		$('html,body').animate({scrollTop:'0px'},'slow');
+	}
+	function shopCar(){
+		alert('请与商家联系 电话：1234567489')
+	}
+</script>
+<script type="text/javascript">
+		let allUrl = {
+			article_list:"yungangwan_app/article/list",//article总接口
+		};
+		new Vue({
+			el: '#footer',
+			data() {
+				return {
+					blogrollId:'9f1294259ee64e37a14a7eb4a6f84b50',
+					blogroll:'',//友情链接
+				}
+			},
+			methods: {
+				// 获取友情链接
+				getBlogroll: function() {
+					axios.get(allUrl.article_list, {
+						params: {
+							articleSubTypeId: this.blogrollId,
+							pageNum: 1
+						}
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.blogroll = result.data.data
+						}
+					}).catch((error) => {
+						//alert(error.message)
+					})
+				},
+			},
+			mounted() {
+				this.getBlogroll()
+			}
+		})
+	</script>
+

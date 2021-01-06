@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<div id="bigBox">
+    <div class="headerpage2"></div>
+
+    <div class="allWidth myNav-box">
+        <div class="myNavP"></div>
+        <div class="mybox">
+            <ul class="myboxNav">
+                <li class="choose"><a href="my-ocrPersonal.html">完善个人信息</a></li>
+				<li><a href="my-set.html">密码修改</a></li>
+            </ul>
+            <div class="ocrBox">
+                <div>
+                    <dl>
+                        <dt>头像</dt>
+                        <dd class="p-r my-centerBox">
+                            <input @change="uploadImg1" type="file" name="file" accept="image/*" class="layui-btn" style="width: 152px; opacity: 0;height: 150px;position: relative;z-index: 1;">
+                            <img id="demo1" :src="myImg1"  ref="demo1pic" style=" width:150px;border:1px solid #f6f6f6;position:absolute;background-color: rgba(0,0,0,0);height: 150px;border-radius: 5px;" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>姓名</dt>
+                        <dd>
+                            <input id="realname" v-model="realname" placeholder="请输入姓名" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>身份证号</dt>
+                        <dd>
+                            <input id="idCard" v-model="idCard" placeholder="请输入身份证号" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>昵称</dt>
+                        <dd>
+                            <input v-model="nickname" placeholder="请输入昵称" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>手机号</dt>
+                        <dd>
+                            <input v-model="cellPhone" placeholder="请输入手机号" type="text" disabled="disabled">
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt>所在地</dt>
+                        <dd>
+                            <input v-model="address" placeholder="请输入所在地" type="text">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>&nbsp;</dt>
+                        <dd>
+                            <div class="sub-but" @click="myOcr">提交</div>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footerpage"></div>
+<script src="js/duan-js/duanCommon.js"></script>
+<script>
+    $(function() {
+        /*公共部分
+         * 导航栏
+         * footer CopyRight
+         * duan
+         */
+        $(".headerpage2").load("header2.html");
+        $(".footerpage").load("footer.html?vid=0717");
+        $(".myNavP").load("myP-nav.html");
+    });
+</script>
+</body>
+</html>
+
+<script>
+    
+
+    new Vue({
+        el:"#bigBox",
+        data(){
+            return{
+                myImg1:'',// 头像 ,
+                realname:'',//真实姓名 ,
+                nickname:'',//昵称 ,
+                address:'',//所在地 ,
+                cellPhone:'',//手机号 , 不可改
+                idCard:'',//身份证
+				userRoles:'',
+				isShow:true,
+				isCompany:'',
+				showCom:false,
+				
+            }
+        },
+        mounted:function(){
+            this.getPeople()
+        },
+        methods:{
+
+            // 获取当前登录用户
+            getPeople: function() {
+                this.token = localStorage.getItem(tkn);
+                axios.get(allUrl1.currentUser, {
+                    headers: {
+                        Authorization: this.token,
+                        Accept: 'application/json',
+                    },
+                }).then((result) => {
+                    if (result != "" && result.code == 0) {
+                        this.myImg1 = result.data.headImg // 头像 
+                        this.realname = result.data.realname // 真实姓名
+                        this.nickname = result.data.nickname // 昵称
+                        this.address = result.data.address // 所在地
+                        this.cellPhone = result.data.cellPhone // 手机号 , 不可改
+                        this.idCard = result.data.idCard // 身份证 ,   如果为空 未认证，
+						this.userRoles = result.data.userRoles
+						this.isCompany = result.data.isCompany
+						if(this.userRoles == 1){
+							this.isShow = false
+						}
+						if(this.isCompany == 1){
+							this.showCom = true
+						}else{
+							this.showCom = false
+						}
+                    }
+					if (result.code == 7) {
+						window.localStorage.removeItem(tkn);
+						alert('登录失效，请重新登录！')
+						window.location.href = 'login.html';
+					}
+                })
+            },
+            /* 个人信息认证 authUser */
+            myOcr: function() {
+                if ( $('#realname').val() == '') {
+                    alert('真实姓名不能为空');
+                    return false;
+                }
+                if ($('#idCard').val() == '') {
+                    alert('身份证号不能为空');
+                    return false;
+                }
+
+                this.token = localStorage.getItem(tkn);
+                let myJson = {
+                    headImg:this.myImg1,// 头像 ,
+                    realname:this.realname,//真实姓名 ,
+                    nickname:this.nickname,//昵称 ,
+                    address:this.address,//所在地 ,
+                    cellPhone:this.cellPhone,//手机号 , 不可改
+                    idCard:this.idCard,//身份证
+                }
+
+                axios.post(allUrl1.authUser,myJson,{
+                    headers: {
+                        Authorization: this.token,
+                        Accept: 'application/json',
+                    },
+                }).then((result) => {
+                    if (result != "" && result.code == 0) {
+                        this.headImg = result.data.headImg // 头像 
+                        this.realname = result.data.realname // 真实姓名
+                        this.nickname = result.data.nickname // 昵称
+                        this.address = result.data.address // 所在地
+                        this.cellPhone = result.data.cellPhone // 手机号 , 不可改
+                        this.idCard = result.data.idCard // 身份证 ,   如果为空 未认证，
+
+                        window.location.reload()
+                    }
+                })
+            },
+            // 上传图片
+            uploadImg1:function(e){
+                var file = e.target.files[0];
+                let formData = new FormData();
+                formData.append('file', file);
+                axios.post('mortar_admin/storage/store?fileType=0&picLibNum=' + this.picNumber,formData,{
+                    headers: {
+                        Accept: 'application/json'
+                    }
+                }).then((res) => {
+                    if (res.code == 0){
+                        this.picNumber = res.data.number
+                        this.myImg1 = res.data
+                    }
+                    //上传成功
+                    if (res.code == 1) {
+                    }
+                }).catch();
+            },
+        }
+    })
+
+
+
+</script>
+
+

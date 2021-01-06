@@ -1,0 +1,398 @@
+#vkDivMaskPrc {
+	display: none;
+	z-index: 9999999;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: url(../images/header/maskbg.png);
+}
+
+#vkDivMaskContPrc {
+	width: 300px;
+	background-color: #fff;
+	color: #333;
+	margin: 0 auto;
+	margin-top: 28%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	border-radius: 20px;
+}
+
+.vkDivMaskContPrcBegin {
+	margin: 0 auto;
+	width: 80%;
+	height: 120px;
+	background-image: url(../images/header/tm.gif);
+	background-size: 40%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.vkDivMaskContPrcOk {
+	margin: 0 auto;
+	width: 80%;
+	height: 120px;
+	background-image: url(../images/header/ok.png);
+	background-size: 70%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.vkDivMaskContPrcErr {
+	margin: 0 auto;
+	width: 80%;
+	height: 120px;
+	background-image: url(../images/header/err.png);
+	background-size: 70%;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#vkDivMaskContPrcText {
+	margin: 0 auto;
+	width: 80%;
+	margin-top: 10px;
+	font-size: 16px;
+	text-align: center;
+}
+
+#vkDivMaskPicsShow {
+	display: none;
+	z-index: 9999999;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: url(../images/header/maskbg.png);
+}
+
+/* 页尾 */
+.footer {
+	margin-top: 30px;
+	padding: 30px 0;
+	overflow: hidden;
+	background: #333333;
+}
+
+.foot-box {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.foot-list {
+	border-right: #ddd 1px dashed;
+	width: 137px;
+	height: 160px;
+	padding-left: 30px;
+}
+
+.footImg {
+	float: left;
+	margin: 4px 10px 0 10px;
+}
+
+.foot-list .foot-tit {
+	font-size: 16px;
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 10px;
+	color: #FFFFFF;
+}
+
+.foot-list a {
+	color: #FFFFFF;
+	line-height: 24px;
+	display: inline-block;
+}
+
+.foot-list a:hover {
+	color: #6aaff7;
+}
+
+.foot-code {
+	float: left;
+	padding-left: 36px;
+	width: 340px;
+	height: 160px;
+}
+
+.code-list {
+	margin-left: 40px;
+}
+
+.code-list span {
+	border: #ddd 1px solid;
+	padding: 10px;
+	display: block;
+	height: 110px;
+	background: #FFFFFF;
+}
+
+.code-list img {
+	height: 100%;
+}
+
+.code-list p {
+	text-align: center;
+	line-height: 25px;
+	background: #0d80b7;
+	color: #FFFFFF;
+	margin-top: 3px;
+	border-radius: 2px;
+}
+
+.hotline {
+	width: 220px;
+	height: 160px;
+	text-align: center;
+	border-right: #ddd 1px dashed;
+	border-left: #ddd 1px dashed;
+	padding-right: 30px;
+}
+
+.foot-six {
+	border-right: #ddd 1px dashed;
+	border-left: #ddd 1px dashed;
+	width: 200px;
+	height: 160px;
+	margin-left: 20px;
+	line-height: 30px;
+}
+
+.foot-six a {
+	display: inline-block;
+}
+
+.foot-six p {
+	text-align: center;
+}
+
+.foot-six p a {
+	padding: 0 10px;
+}
+
+.six-five,
+.six-six {
+	width: 100%;
+	text-align: center;
+}
+
+.foot-six a:hover {
+	color: #6aaff7;
+}
+
+.hot-list1 {
+	width: 140px;
+}
+
+.hot-list2 {
+	color: #FFFFFF;
+	position: relative;
+	height: 60px;
+	margin-top: 10px;
+}
+
+.hot-list2 span {
+	position: absolute;
+	left: 44px;
+}
+
+.hotList-num {
+	line-height: 24px;
+	position: absolute;
+	left: 110px;
+	top: 0;
+}
+
+.hotline a:hover {
+	background: #6aaff7;
+	color: #FFFFFF;
+}
+
+.foot-about {
+	background: #333333;
+	padding-top: 30px;
+}
+
+.about-box {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.about-box p {
+	text-align: center;
+	line-height: 2em;
+	font-size: 13px;
+	color: #e5e5e5;
+}
+
+.about-box a {
+	display: inline-block;
+	color: #e5e5e5;
+}
+
+.about-box a:hover {
+	color: #6aaff7;
+}
+
+.about-box .red {
+	color: #6aaff7;
+}
+
+.about-box span {
+	color: #999;
+	padding-left: 10px;
+}
+
+.about-btm {
+	margin-bottom: 10px;
+}
+.about-btm a:last-child span{
+	display: none;
+}
+.about-btm a {
+	color: #e5e5e5;
+	padding-left: 10px;
+}
+
+.footLink span {
+	top: 12px;
+}
+
+.shop-step {
+	background: #FFFFFF;
+	padding: 20px 0;
+	text-align: center;
+}
+
+.stepList {
+	display: inline-block;
+	color: #6aaff7;
+}
+
+.stepList span {
+	display: block;
+	width: 60px;
+	height: 60px;
+	line-height: 60px;
+	border: 1px solid #6aaff7;
+	border-radius: 50%;
+	text-align: center;
+}
+
+.stepList img {
+	vertical-align: middle;
+	width: 30px;
+}
+
+.stepList p {
+	line-height: 30px;
+}
+
+.stepImg {
+	display: inline-block;
+	width: 50px;
+	margin: 10px 0 0 10px;
+}
+
+/* 红底步骤条 */
+.shop-btm-box {
+	width: 100%;
+	height: 40px;
+	padding: 20px 0;
+	background: #6aaff7;
+	/* margin-top: 30px; */
+}
+
+.shop-btm {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.shop-btm li {
+	float: left;
+	width: 79px;
+	position: relative;
+	padding-left: 70px;
+	border-left: #fff 1px solid;
+}
+
+.shop-btm li:first-child {
+	border-left: none;
+}
+
+.shop-btm li span {
+	position: absolute;
+	left: 30px;
+	top: 0;
+	font-size: 40px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #fff;
+}
+
+.shop-btm li p {
+	color: #fff;
+	line-height: 20px;
+}
+
+/* 右侧常住条 */
+.rightBox {
+	width: 66px;
+	position: fixed;
+	top: 50%;
+	right: 10px;
+	margin-top: -112px;
+	z-index: 999;
+	padding: 5px;
+	box-shadow: 0 0 5px #CCCCCC;
+	border-radius: 5px;
+	background: #FFFFFF;
+}
+
+.rightBox li {
+	position: relative;
+	padding: 10px 0;
+	margin-bottom: 2px;
+	border-bottom: 1px solid #c4c8cc;
+	background: #FFFFFF;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.rightBox li:last-child{
+	border: 0;
+}
+.rightBox li p{
+	margin-top: 5px;
+	color: #0d80b7;
+}
+.right-show {
+	display: block;
+	text-align: center;
+	position: relative;
+	z-index: 100;
+}
+
+.right-show img {
+	vertical-align: middle;
+}
+
+.right-show .cart-num {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	line-height: 20px;
+	font-size: 12px;
+	color: #ffffff;
+	text-align: center;
+	position: absolute;
+	left: -8px;
+	top: -8px;
+	z-index: 99;
+	background: #e82222;
+}

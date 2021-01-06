@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>关于我们</title>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/fang/gywm.css"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.gywmMainRight,.gywmMainRight img,.gywmMainRight p{
+				width: 100%;
+				height: auto;
+				margin-left: 0;
+			}
+			.gywmMain{
+				height: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="headerpage"></div>
+			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
+			<div class="gywmMain clearfix">
+				<div class="gywmMainRight" v-html="usList.value"></div>
+			</div>
+			
+			<div class="footerpage"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function() {
+			/*公共部分
+			 * 导航栏
+			 * footer CopyRight
+			 */
+			$(".headerpage").load("header.html");
+			$(".footerpage").load("footer.html?vid=0717");
+		});
+	</script>
+	<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qu-js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				usList:"",
+				pageBanner:"",
+			},
+			methods: {
+				//获取运营部电话
+				myYyNum: function() {
+					axios.get(allUrl.mageAbout, {
+						params: {
+							key: 'operate_phone',
+						}
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.yyPhone = result.data.value
+						}
+					})
+				},
+				// 获取关于我们
+				gatAboutUs:function(){
+					axios.get(allUrl.mageAbout, {
+						params: {
+							key:"about_us"
+						},
+						headers: {
+							Accept: 'application/json'
+						},
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							// this.pageId = result.data[0].id
+							this.usList = result.data
+						}
+					})
+				},
+				// 获取banner
+				gatBanner:function(){
+					axios.get(allUrl.article_list, {
+						params: {
+							articleSubTypeId:"696accbba8414552add81b392213de5a"
+						}
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.pageBanner =result.data.data[0]
+						}
+					})
+				},
+			},
+			mounted(){
+				this.gatAboutUs()
+				this.gatBanner()
+			}
+		})
+		</script>
+	
+</html>

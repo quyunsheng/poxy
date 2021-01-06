@@ -1,0 +1,237 @@
+.jzBox{
+	display: flex;
+	justify-content: space-between;
+    height: 640px;
+}
+.jzBox-center{
+	width:460px;
+}
+.jzBox-center>div{
+	background: #fff;
+	margin-bottom: 20px;
+    padding: 35px 25px;
+}
+.jzBox-center div:last-child{
+	margin-bottom: 0px;
+}
+.font-p{
+	height: 55px;
+    margin-bottom: 60px;
+	color: #666;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:3;
+}
+.jzBox-box{
+    display: flex;
+    justify-content: center;
+    height: 230px;
+}
+.jzBox-last{
+    width: 460px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.jzBox-last li{
+    display: inline-block;
+    width: 180px;
+    height: 280px;
+    padding: 10px 20px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+.jzBox-last li img{
+    height: 145px;
+}
+
+/* 公用 */
+.index-h1{
+    font-size: 20px;
+    color: #333333;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.index-h2{
+    display: inline-block;
+    font-size: 16px;
+    color: #333333;
+    /*margin-bottom: 10px;*/
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 155px;
+}
+.index-pay{
+    color: #f20214;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.index-span{
+    color: #666;
+    font-size: 14px;
+}
+.font-size{
+    width: 220px;
+}
+.main-tit{
+    color: #fff;
+    font-size: 20px;
+    padding: 10px 10px;
+    margin: 10px 0;
+    background: #003567;
+}
+.main-tit img{
+    height: 20px;
+    margin-right: 4px;
+    margin-top: 4px;
+}
+.main-more{
+    float: right;
+    color: #fff;
+    font-size: 16px;
+    line-height: 26px;
+    padding-right: 33px;
+    background: url("../../images/duan-img/right.png") right no-repeat;
+}
+.main-back-blue{background: #0d80b7;}
+.main-back-brown{background: #834b4c;}
+.main-back-blue2{background: #005982;}
+.main-back-blue{background: #0d80b7;}
+.main-back-green{background: #009999;}
+.main-back-purple{background: #5b5796;}
+.twoBox{
+    display: flex;
+    justify-content: space-between;
+}
+.twoBox>div{
+    width: 595px;
+}
+.twoBox-top{
+    display: flex;
+    justify-content:space-between;
+    margin-bottom: 10px;
+}
+.twoBox-topBox-font{
+    display: flex;
+    align-items: center;
+    width: 155px;
+}
+.twoBox-topBox>div{
+    width:345px;
+    height: 165px;
+    display: flex;
+    justify-content: flex-start;
+    background: #fff;
+    margin-bottom: 15px;
+}
+.twoBox-topBox>div:last-child{
+    margin-bottom: 0px;
+}
+.twoBox-bottom{
+   width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.twoBox-bottom li{
+    display: inline-block;
+    width: 176px;
+    height: 260px;
+    padding: 10px 10px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+.twoBox-bottom li img{
+    height: 165px;
+}
+.twoBox-bottom li .index-img2,.jzBox .index-img2{
+    margin-bottom: 10px;
+}
+.cu-center{
+    display: flex;
+    justify-content: space-between;
+}
+.cu-center>.jzBox-box{
+    width:450px;
+    background: #fff;
+    padding: 35px 5px;
+}
+.cuBox{
+    width: 208px;
+    background: #fff;
+    padding: 5px 15px;
+}
+.cu-font{
+    font-size: 16px;
+}
+.cuBig-box{
+    width: calc(100% - 20);
+    background: -webkit-linear-gradient(top,#dab477,#f7f4f0);
+    padding: 0 10px 20px;
+}
+.cu-huiFont{
+    color:#999;
+    text-decoration:line-through;
+    font-size: 16px;
+}
+.shop-cu{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.shop-cu .jzBox-box{
+    width: 32%;
+    height: 285px;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 20px;
+    margin-right: 24px;
+}
+.shop-cu .jzBox-box:nth-child(3n){
+    margin-right: 0px;
+}
+.index-img{
+    width:190px;
+    height: 230px;
+    text-align: center;
+    line-height: 230px;
+}
+.index-img img,.index-img2 img{
+    width: 100%;
+    vertical-align: middle;
+}
+.index-img{
+    height: 175px;
+    line-height: 175px;
+}
+.index-img2{
+    width:173px;
+    text-align: center;
+    line-height: 145px;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
