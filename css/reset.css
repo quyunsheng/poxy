@@ -128,7 +128,7 @@ textarea {
 }
 
 .headTop_box a:hover {
-	color: #003567;
+	color: #1bb252;
 }
 
 .headTop_box .head_reg {
@@ -144,8 +144,8 @@ textarea {
 }
 
 .head_login:hover {
-	color: #003567;
-	text-decoration: #003567;
+	color: #1bb252;
+	text-decoration: #1bb252;
 }
 
 .head_vip {
@@ -185,7 +185,7 @@ textarea {
 }
 
 .head_tel {
-	color: #003567;
+	color: #1bb252;
 	position: relative;
 }
 
@@ -205,11 +205,8 @@ textarea {
 }
 
 .head_mid {
-	margin: 10px auto 0;
-}
-
-.head_logo {
-	margin-top: 12px;
+	margin: 0 auto 10px;
+	padding-top: 15px;
 }
 
 .head_serch {
@@ -217,8 +214,7 @@ textarea {
 	height: 35px;
 	line-height: 35px;
 	margin-left: 85px;
-	margin-top: 13px;
-	border: 2px solid #003567;
+	border: 1px solid #1bb252;
 	position: relative;
 }
 
@@ -256,7 +252,7 @@ textarea {
 }
 
 .head_list li:hover {
-	color: #003567;
+	color: #1bb252;
 }
 
 .headSerch_m {
@@ -265,30 +261,39 @@ textarea {
 }
 
 .head_serch input {
-	width: 380px;
+	/* width: 380px; */
+	width: 100%;
 	line-height: 32px;
 	position: relative;
+	padding: 0 5px;
+	box-sizing: border-box;
 }
 
 .head_btn {
-	border: 2px solid #003567;
+	border: 1px solid #1bb252;
 	border-left: 0;
-	background: #003567;
+	background: #1bb252;
 	cursor: pointer;
 	line-height: 35px;
-	margin-top: 13px;
-	width: 130px;
+	width: 100px;
 	color: #FFFFFF;
 	text-align: center;
 	font-size: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-
+.head_btn img{
+	height: 19px;
+	margin-left: 10px;
+}
 .head_r {
 	margin-left: 80px;
 }
 
 .head_safeguard {
-	line-height: 50px;
+	display: flex;
+	align-items: center;
 }
 
 .head_person {
@@ -313,14 +318,15 @@ textarea {
 }
 
 .head_btm {
-	padding-top: 10px;
 	position: relative;
 }
-
+.head-bg{
+	background: #009900;
+}
 .head_type {
 	width: 200px;
 	height: 50px;
-	background: #003567;
+	background: #009900;
 	color: #FFFFFF;
 	text-align: center;
 	cursor: pointer;
@@ -331,7 +337,7 @@ textarea {
 .head_type img {
 	vertical-align: middle;
 	margin-right: 10px;
-	height: 28px;
+	height: 14px;
 }
 
 .head_nav {
@@ -345,54 +351,71 @@ textarea {
 	padding: 0 15px;
 	width: 120px;
 	box-sizing: border-box;
+	text-align: center;
 }
-
-.head_nav li a:hover {
-	color: #003567;
+.head_nav li a{
+	color: #FFFFFF;
 }
-
-.head_nav .active a {
-	color: #003567;
+/* .head_nav li a:hover {
+	color: #1bb252;
 }
+ */
+/* .head_nav .active a {
+	color: #1bb252;
+} */
 
-.head_safeguard span {
+.head_safeguard div {
 	margin-left: 24px;
+	text-align: center;
+	display: inline-block;
+	color: #666666;
 }
 
-.head_safeguard spa:first-child {
+.head_safeguard div:first-child {
 	margin-left: 0;
 }
 
 .head_safeguard img {
-	vertical-align: middle;
-	margin-right: 5px;
-	position: relative;
-	top: -1px;
+	margin-bottom: 3px;
 }
 
 .good_nav {
 	position: absolute;
 	left: 0;
-	top: 60px;
+	top: 50px;
 	width: 200px;
 	display: none;
 	z-index: 9;
 }
-
+.good_nav:hover .good_list{
+	border: 2px solid #1bb252;
+}
 .good_list {
 	text-align: center;
 	height: 500px;
-	background:rgba(0,53,103,0.8);
+	background: rgba(255,255,255,0.8);
+	overflow-y: auto;
+	box-sizing: border-box;
+	border: 2px solid rgba(255,255,255,0);
 }
 
 .good_nav .good_type {
-	color: #FFFFFF;
+	color: #333;
 	position: relative;
 	cursor: pointer;
 	line-height: 62px;
 	font-size: 17px;
 }
-
+.good_nav .good_type::after{
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 15px;
+	right: 15px;
+	height: 1px;
+	background: rgba(255,255,255,0.8);
+}
 .good_nav .good_right {
 	height: 12px;
 	position: absolute;
@@ -401,11 +424,12 @@ textarea {
 }
 
 .good_nav .on {
-	background: #0b71a2;
+	background: #84d9a1;
 }
 
 .good_list .good_type:hover {
-	background: #0b71a2;
+	background: #84d9a1;
+	color: #FFFFFF;
 }
 
 .good_serch {
@@ -455,7 +479,8 @@ textarea {
 	left: 200px;
 	top: 0;
 	height: 500px;
-	border: 3px solid #003567;
+	border: 2px solid #1bb252;
+	border-left: 0;
 	box-sizing: border-box;
 	background: #FFFFFF;
 	z-index: 9;
@@ -469,7 +494,7 @@ textarea {
 	top: 60px;
 	right: 0;
 	height: 500px;
-	border: 3px solid #003567;
+	border: 3px solid #1bb252;
 	box-sizing: border-box;
 	display: none;
 	background: #FFFFFF;
@@ -513,7 +538,7 @@ textarea {
 }
 
 .good_type2 ul li a:hover {
-	color: #003567;
+	color: #1bb252;
 }
 
 [v-cloak] {

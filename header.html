@@ -1,68 +1,66 @@
 <div class="header" id="headTop">
-	<div><img src="images/header/header-img.jpg" width="100%" alt=""></div>
-	<div class="head_top">
-		<div class="headTop_box allWidth clearfix">
-			<a class="fl" href="index.html"><img class="homeImg" src="images/header/head_home.png">云港湾</a>
-			<span v-if="loginIn == '0'" class="head_logBox fl">您好，请<a class="head_login" href="login.html">登录</a><i class="head_line">|</i><a class="head_reg"
-				 href="login.html">免费注册</a></span>
-			<!-- 登陆成功显示 -->
-			<span v-if="loginIn == '1'" class="head_logBox fl">hi,&nbsp;<a href="my-index.html">{{getUsers.nickname}}</a><i class="head_line">|</i><a @click="logOut">退出</a></span>
-			<span class="fr head_tel"><img src="images/header/head_tel.png"><strong style="display: inline-block;" v-html="kfPhone"></strong><i>平台热线</i></span>
-		</div>
-	</div>
 	<div class="head_mid clearfix allWidth">
-		<a href="index.html"><img class="fl head_logo" src="images/header/logo.png"></a>
+		<a href="index.html"><img class="fl head_logo" src="images/logo.png"></a>
 		<div class="head_serch fl clearfix">
-			<div class="headSerch_l fl">
+			<!-- <div class="headSerch_l fl">
 				<span class="head_select"><i>{{selectType}}</i><img src="images/header/head_down.png"></span>
 				<ul class="head_list">
 					<li @click="changeType(0)">产品</li>
 					<li @click="changeType(1)">店铺</li>
 				</ul>
-			</div>
-			<span class="fl headSerch_m">|</span>
-			<input type="text" name="" id="" value="" v-model="findTxt" placeholder="请输入名称" />
+			</div> -->
+			<!-- <span class="fl headSerch_m">|</span> -->
+			<input type="text" name="" id="" value="" v-model="findTxt" placeholder="请输入搜索关键字" />
 		</div>
-		<div class="head_btn fl" @click="searchGo">搜索</div>
-		<div class="head_r fl">
-			<img class="head_code" :src="qrCode">
-			<span><img src="images/header/head_heart.png">关注微信公众号</span>
+		<div class="head_btn fl" @click="searchGo">搜索<img src="images/icon-find.png" ></div>
+		<div class="head_safeguard fr clearfix">
+			<div>
+				<img src="images/icon-pin.png">
+				<p>品牌保障</p>
+			</div>
+			<div>
+				<img src="images/icon-zhi.png">
+				<p>品质保障</p>
+			</div>
+			<div>
+				<img src="images/icon-fu.png">
+				<p>服务保障</p>
+			</div>
 		</div>
 		<!-- 个人中心显示 -->
 		<div class="head_person fr hidden">
 			hi，欢迎您！
 		</div>
 	</div>
-	<div class="head_btm allWidth clearfix">
-		<span class="head_type fl" onclick="showNav()"><img src="images/header/head_nav.png">商品分类</span>
-		<ul class="fl head_nav clearfix">
-			<li><a href="index.html">商城首页</a></li>
-			<li><a href="shop-search-store.html" @click="removeSe">品牌商家</a></li>
-			<li><a href="shop.html" @click="removeSe">商品中心</a></li>
-			<li><a href="news.html">新闻中心</a></li>
-			<li><a href="gywm.html">关于我们</a></li>
-		</ul>
-		<div class="head_safeguard fr clearfix">
-			<span><img src="images/header/baoz.png">品牌保障</span>
-			<span><img src="images/header/zhil.png">品质保障</span>
-			<span><img src="images/header/fuw.png">服务保障</span>
-		</div>
-		<div class="good_nav" @mouseleave='navLeave()'>
-			<ul class="good_list">
-				<li class="good_type good_pt" v-for="item in navTypeList" @mouseenter="enter(item.classifyCode)">
-					{{item.title}}<img class="good_right" src="images/header/right.png">
-				</li>
+	<div class="head-bg">
+		<div class="head_btm allWidth clearfix">
+			<span class="head_type fl" onclick="showNav()"><img src="images/icon-nav.png">商品分类</span>
+			<ul class="fl head_nav clearfix">
+				<li><a href="index.html">商城首页</a></li>
+				<li><a href="shop-search-store.html" @click="removeSe">品牌商家</a></li>
+				<li><a href="shop.html" @click="removeSe">商品中心</a></li>
+				<li><a href="news.html">新闻中心</a></li>
+				<li><a href="gywm.html">关于我们</a></li>
 			</ul>
-			<div class="good_box" v-show="seen">
-				<div class="good_type2" v-for="item in goodsList">
-					<a class="good_tit" @click="storeDetail(item.classifyCode,item.title)">{{item.title}}</a>
-					<ul v-if="item.children != ''">
-						<li v-for="iList in item.children"><a  @click="storeDetail(iList.classifyCode,iList.title)">{{iList.title}}</a></li>
-					</ul>
+
+			<div class="good_nav" @mouseleave='navLeave()'>
+				<ul class="good_list">
+					<li class="good_type good_pt" v-for="item in navTypeList" @mouseenter="enter(item.classifyCode)">
+						{{item.title}}<img class="good_right" src="images/header/right.png">
+					</li>
+				</ul>
+				<div class="good_box" v-show="seen">
+					<div class="good_type2" v-for="item in goodsList">
+						<a class="good_tit" @click="storeDetail(item.classifyCode,item.title)">{{item.title}}</a>
+						<ul v-if="item.children != ''">
+							<li v-for="iList in item.children"><a @click="storeDetail(iList.classifyCode,iList.title)">{{iList.title}}</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
@@ -76,35 +74,36 @@
 				}
 			});
 		});
-		function showNav(){
+
+		function showNav() {
 			$('.good_nav').toggle()
 		}
 	</script>
 	<script type="text/javascript">
 		let allUrl = {
-			getUser:'yungangwan_app/user/current_user',//获取用户信息
-			typeList:'yungangwan_app/classify/classify_children',//商品分类
-			mroeList:'yungangwan_app/classify/classify_children_vo',//二级及以下分类
-			article_list:"yungangwan_app/article/list",//article总接口
-			mageAbout:'yungangwan_app/config/getByKey',
+			getUser: 'yungangwan_app/user/current_user', //获取用户信息
+			typeList: 'yungangwan_app/classify/classify_children', //商品分类
+			mroeList: 'yungangwan_app/classify/classify_children_vo', //二级及以下分类
+			article_list: "yungangwan_app/article/list", //article总接口
+			mageAbout: 'yungangwan_app/config/getByKey',
 		};
 		new Vue({
 			el: '#headTop',
 			data() {
 				return {
-					loginIn:'0',
-					getUsers:'',
-					userRoles:'',
-					isCompany:'',
-					token:'',
-					navTypeList:'',
-					goodsList:'',
-					seen:false,
-					classifyCode:'',
-					selectType:'产品',//搜索类型
-					findTxt:'',//搜索内容
-					qrCode:'',//二维码
-					kfPhone:'',//客服电话
+					loginIn: '0',
+					getUsers: '',
+					userRoles: '',
+					isCompany: '',
+					token: '',
+					navTypeList: '',
+					goodsList: '',
+					seen: false,
+					classifyCode: '',
+					selectType: '产品', //搜索类型
+					findTxt: '', //搜索内容
+					qrCode: '', //二维码
+					kfPhone: '', //客服电话
 				}
 			},
 			methods: {
@@ -126,25 +125,25 @@
 					})
 				},
 				// 退出登录
-				logOut:function(){
+				logOut: function() {
 					window.localStorage.removeItem(tkn);
 					window.location.href = window.location.href
 				},
 				// 点击验证是否登录
-				uOnLine:function(url) {
+				uOnLine: function(url) {
 					this.token = localStorage.getItem(tkn);
-					if(this.token && this.token != 'null' && this.token != 'undefined'){
+					if (this.token && this.token != 'null' && this.token != 'undefined') {
 						window.location.href = url;
-					}else{
+					} else {
 						window.location.href = 'login.html';
 						return false;
 					}
 				},
 				// 分类列表
-				getTypeList:function(){
-					axios.get(allUrl.typeList,{
+				getTypeList: function() {
+					axios.get(allUrl.typeList, {
 						params: {
-						    classifyCode: this.classifyCode
+							classifyCode: this.classifyCode
 						},
 					}).then((response) => {
 						if (response != "" && response.code == 0) {
@@ -153,11 +152,11 @@
 					})
 				},
 				// 鼠标移入显示二级分类
-				enter(ToclassifyCode){
+				enter(ToclassifyCode) {
 					this.seen = true;
-					axios.get(allUrl.mroeList,{
+					axios.get(allUrl.mroeList, {
 						params: {
-						    classifyCode: ToclassifyCode
+							classifyCode: ToclassifyCode
 						},
 					}).then((response) => {
 						if (response != "" && response.code == 0) {
@@ -166,43 +165,43 @@
 					})
 				},
 				// 鼠标移出关闭二级分类
-				navLeave:function(){
+				navLeave: function() {
 					this.seen = false;
 				},
 				// 跳转商品列表
-				storeDetail:function(goStoreId,goStoreName){
-					localStorage.setItem(storeId,goStoreId);
-					localStorage.setItem(storeName,goStoreName);
+				storeDetail: function(goStoreId, goStoreName) {
+					localStorage.setItem(storeId, goStoreId);
+					localStorage.setItem(storeName, goStoreName);
 					window.location.href = 'shop.html'
 				},
-				removeSe:function(){
-					localStorage.setItem(storeId,'');
-					localStorage.setItem(storeName,'');
-					localStorage.setItem(searchStore,'');
+				removeSe: function() {
+					localStorage.setItem(storeId, '');
+					localStorage.setItem(storeName, '');
+					localStorage.setItem(searchStore, '');
 				},
 				// 选择搜索类型
-				changeType:function(num){
-					if(num == 0){
+				changeType: function(num) {
+					if (num == 0) {
 						this.selectType = '产品'
-					}else{
+					} else {
 						this.selectType = '店铺'
 					}
 				},
 				// 搜索按钮
-				searchGo:function(){
-					if(this.findTxt){
-						if(this.selectType == '产品'){
-							localStorage.setItem(searchGood,this.findTxt);
+				searchGo: function() {
+					if (this.findTxt) {
+						if (this.selectType == '产品') {
+							localStorage.setItem(searchGood, this.findTxt);
 							window.location.href = 'shop-search-good.html'
-						}else if(this.selectType == '店铺'){
-							localStorage.setItem(searchStore,this.findTxt);
+						} else if (this.selectType == '店铺') {
+							localStorage.setItem(searchStore, this.findTxt);
 							window.location.href = 'shop-search-store.html'
 						}
-					}else{
+					} else {
 						alert('输入值不能为空！')
 						this.findTxt = ''
 					}
-					
+
 				},
 				//获取二维码
 				myQrcode: function() {
@@ -235,7 +234,7 @@
 			},
 			mounted() {
 				this.token = localStorage.getItem(tkn);
-				if(this.token && this.token != 'null' && this.token != 'undefined'){
+				if (this.token && this.token != 'null' && this.token != 'undefined') {
 					this.getPeople();
 				}
 				this.getTypeList();

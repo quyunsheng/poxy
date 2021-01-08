@@ -214,10 +214,15 @@
 }
 
 .foot-about {
-	background: #333333;
-	padding-top: 30px;
+	background: #EEEEEE;
+	padding-bottom: 30px;
 }
-
+.foot-about .main-width{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 50px 0;
+}
 .about-box {
 	width: 1200px;
 	margin: 0 auto;
@@ -342,36 +347,33 @@
 
 /* 右侧常住条 */
 .rightBox {
-	width: 66px;
+	width: 50px;
 	position: fixed;
 	top: 50%;
-	right: 10px;
+	right: 0px;
 	margin-top: -112px;
 	z-index: 999;
-	padding: 5px;
-	box-shadow: 0 0 5px #CCCCCC;
-	border-radius: 5px;
-	background: #FFFFFF;
 }
 
 .rightBox li {
 	position: relative;
-	padding: 10px 0;
-	margin-bottom: 2px;
-	border-bottom: 1px solid #c4c8cc;
-	background: #FFFFFF;
+	height: 50px;
 	box-sizing: border-box;
 	cursor: pointer;
+	background: #000000;
+}
+.rightBox li:hover{
+	background: #1ab151;
+	box-shadow: 0 2px 4px #fff;
 }
 .rightBox li:last-child{
 	border: 0;
-}
-.rightBox li p{
-	margin-top: 5px;
-	color: #0d80b7;
+	margin-top: 30px;
 }
 .right-show {
 	display: block;
+	height: 50px;
+	line-height: 50px;
 	text-align: center;
 	position: relative;
 	z-index: 100;
@@ -395,4 +397,30 @@
 	top: -8px;
 	z-index: 99;
 	background: #e82222;
+}
+
+.foot-left h2{
+	margin: 30px 0;
+	color: #666666;
+}
+.foot-left p{
+	color: #666666;
+	margin-top: 5px;
+}
+.foot-link{
+	color: #666666;
+}
+.foot-link p{
+	font-size: 18px;
+	margin-bottom: 20px;
+	font-weight: 700;
+}
+.foot-link a{
+	display: block;
+	margin-top: 20px;
+}
+.foot-btm{
+	text-align: center;
+	color: #666666;
+	font-size: 13px;
 }
