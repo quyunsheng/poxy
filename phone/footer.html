@@ -1,0 +1,36 @@
+<div class="footer clearfix">
+	<a href="phone.html">
+		<img class="footImg1" src="img/footer/home.png">
+		<img class="footImg2" src="img/footer/home-on.png">
+		<p>首页</p>
+	</a>
+	<a href="shop.html">
+		<img class="footImg1" src="img/footer/goods.png">
+		<img class="footImg2" src="img/footer/goods-on.png">
+		<p>商品中心</p>
+	</a>
+	<a href="more-store.html">
+		<img class="footImg1" src="img/footer/store.png">
+		<img class="footImg2" src="img/footer/store-on.png">
+		<p>合作企业</p>
+	</a>
+	<a href="news.html">
+		<img class="footImg1" src="img/footer/news.png">
+		<img class="footImg2" src="img/footer/news-on.png">
+		<p>新闻中心</p>
+	</a>
+	<a href="my.html">
+		<img class="footImg1" src="img/footer/user.png">
+		<img class="footImg2" src="img/footer/user-on.png">
+		<p>我的</p>
+	</a>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $(".footer a").each(function() {
+	        if($(this)[0].href == String(window.location)) {
+				$(this).addClass("active").siblings().removeClass('active');
+	        }
+	    });
+	});
+</script>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>云港湾</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body style="background: #f5f5f5;padding-top: 1.2rem;padding-bottom: 80px;">
+		<div id="index">
+			<div class="header headerBg">
+				<p>新闻中心</p>
+			</div>
+			<!-- 行业资讯 -->
+			<div class="information" style="margin-bottom: 0.2rem;">
+				<div class="infor-list clearfix" v-for="item in zxAll" @click="commentList(item.id)">
+					<div class="infor-left fl">
+						<h4>{{item.title}}</h4>
+						<span>{{item.updateTime}}</span>
+					</div>
+					<img class="infor-right fr" :src="item.cover">
+				</div>
+				<div class="more-load" v-if="isMoreLoad" @click="lookMore" style="text-align: center;">
+					<i v-if="loadingImg" v-else></i>
+					<span style="margin-top: 0.4rem;display: block;">查看更多</span>
+				</div>
+			</div>
+			<div class="more-load" v-if="loadLastText" style="text-align: center;">到底啦〜</div>
+			<div class="footerpage"></div>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+		</script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#index',
+				data() {
+					return {
+						loginIn: '0',
+						getUsers: '',
+						token: '',
+						activeNum: 0,
+						activeId: '',
+						typeId: "eb186ab5a3b94ae998675d5f3498070d",
+						zxAll: [],
+						//分页容器
+						page: 1, //显示的是哪一页
+						pageSize: 10, //每一页显示的数据条数
+						maxPage: '', //最大页数
+						myPage: 1, //跳转页面
+						isMoreLoad: false, // 是否显示加载更多
+						loadingImg: false, // 加载更多时显示loading图
+						loadLastText: false, // 到底了
+						totals: null, // 用来存放总数量
+					}
+				},
+				methods: {
+					// 获取咨询服务/新闻
+					newsListGet2: function() {
+						this.loadingImg = true; //加载下一页数据时显示加载图
+						let myJson = {
+							articleTypeId:'7b689546f1114499916ba6d2a0f1fec4',
+							pageSize:20,
+							pageIndex:this.pageNum
+						}
+						axios.post(allUrl.article_list,myJson).then((result) => {
+							if (result != "" && result.code == 0) {
+								var myList = result.data.data //当前页数据
+								this.zxAll.push.apply(this.zxAll, myList); //在数据列表里面添加新获取的数据
+								this.page = result.data.pageIndex; //显示的是哪一页
+								this.maxPage = result.data.pageCount; //最大页数
+								if (this.maxPage > this.page) {//当前页小于总页数时调用成功显示加载中图片
+									this.isMoreLoad = true;
+								} else {//当前页>=总页数时显示已经到底部文字
+									this.isMoreLoad = false;
+									this.loadLastText = true;
+								}
+								this.loadingImg = false;//赋值成功后移除加载中图片
+							} else {
+								alert(result.message)
+							}
+						}).catch((error) => {
+							//alert(error.message)
+						})
+					},
+					handleScroll() {
+						var _this = this;
+						if (_this.loadingImg) {// 防止多次加载(加载图显示时禁止继续滚动加载)
+							return;
+						}
+						//判断滚动到底部
+						var scr = document.documentElement.scrollTop || document.body.scrollTop; // 向上滚动的那一部分高度
+						var clientHeight = document.documentElement.clientHeight; // 屏幕高度也就是当前设备静态下你所看到的视觉高度
+						var scrHeight = document.documentElement.scrollHeight || document.body.scrollHeight; // 整个网页的实际高度，兼容Pc端
+						if (scr + clientHeight + 10 >= scrHeight) {
+							if (_this.isMoreLoad) { //this.isMoreLoad控制滚动是否加载更多
+								// _this.pageSize = _this.pageSize + 10; //每页加载更多
+								_this.page = _this.page + 1; // 加载更多页是page+1
+								_this.newsListGet2();
+							} else {
+								return;
+							}
+						}
+					},
+					// 跳转新闻详情
+					commentList: function(id) {
+						window.location.href = 'new-detail.html?id='+id
+					},
+					lookMore:function(){
+						this.page += this.page
+						this.newsListGet2();
+					}
+				},
+				mounted() {
+					//监听滚动
+					window.addEventListener('scroll', () => {
+						this.handleScroll();
+					});
+					this.newsListGet2();
+				}
+			})
+		</script>
+
+	</body>
+</html>

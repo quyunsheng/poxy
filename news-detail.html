@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>详情</title>
+		<!-- 若批评不自由，则赞美无意义 -->
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/news-xq.css"/>
+		<link rel="stylesheet" type="text/css" href="css/qys/zpageNav.css"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div class="headerpage"></div>
+			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
+			<div class="xqMain">
+				<div class="xqMain_title">
+					<p>{{pageMain.title}}</p>
+					<div v-html="pageMain.context"></div>
+				</div>
+			</div>
+			<div class="footerpage"></div>
+		</div>
+	</body>
+	<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			/*公共部分
+			 * 导航栏
+			 * footer CopyRight
+			 */
+			$(".headerpage").load("header.html");
+			$(".footerpage").load("footer.html?vid=0717");
+		});
+		
+		var vm = new Vue({
+			el:"#app",
+			data:{
+				commentList:"",
+				detailsId:getUrlParam('id'),
+				pageMain:"",
+				pageBanner:""
+			},
+			methods:{
+				// 技术交流详情页明细
+				detailsList: function(detailsId) {
+					axios.get(allUrl.article_detail, {
+						params: {
+							articleId: this.detailsId,
+						},
+						headers: {
+							Accept: 'application/json',
+						},
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.pageMain = result.data
+							$('title').html(this.pageMain.title)
+						}
+					})
+				},
+				// 获取banner
+				gatBanner:function(){
+					axios.get(allUrl.article_list, {
+						params: {
+							articleSubTypeId:"4506b55d50af45b7890b1b30f292b4fc"
+							
+						}
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.pageBanner =result.data.data[0]
+						}
+					}).catch((error) => {
+						//alert(error.message)
+					})
+				},
+			},
+			mounted(){
+				this.detailsList()
+				// this.gatBanner()
+			}
+			
+		})
+	</script>
+
+	
+</html>

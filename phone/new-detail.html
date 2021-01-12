@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>劳务详情</title>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/gclw.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+		<style type="text/css">
+			.lwxq_min img{
+				max-width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="lwxq_title"><a onclick="goBack()"><img src="img/fang-img/Left.png"></a></div>
+			<div class="lwxq_top">
+				<p>{{listMain.title}}</p>
+				<p><span>{{listMain.createTime}}</span></p>
+			</div>
+			<div class="lwxq_min" v-html="listMain.context">
+			</div>
+		</div>
+
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				detailsId: getUrlParam('id'),
+				listMain: ""
+			},
+			methods: {
+				detailsList: function(detailsId) {
+					axios.get(allUrl.article_detail, {
+						params: {
+							articleId: this.detailsId,
+						},
+						headers: {
+							Accept: 'application/json',
+						},
+					}).then((result) => {
+						if (result != "" && result.code == 0) {
+							this.listMain = result.data
+						} else {
+							alert(result.message)
+						}
+					}).catch((error) => {
+						//alert(error.message)
+					})
+				},
+			},
+			mounted() {
+				this.detailsList()
+			}
+
+
+		})
+	</script>
+
+
+</html>

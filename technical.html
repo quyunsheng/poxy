@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>新闻资讯</title>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/zpageNav.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div class="headerpage"></div>
+			<!-- <div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div> -->
+			<div class="tech-box main-width clearfix">
+				<div class="tech-left fl">
+					<div v-for="item in technicalType" @click="showFirst(item)" :class="firstCode == item.classifyCode?'help-list active':'help-list'">
+						<div class="help-tit active">
+						{{item.title}}
+						<img src="images/sj.png" v-if="firstCode != item.classifyCode">
+						<img src="images/sj2.png" v-if="firstCode == item.classifyCode">
+						</div>
+						<ul class="help-item" v-show="firstCode == item.classifyCode">
+							<li :class="secCode == list.classifyCode?'help-that':''" v-for="list in item.children">
+								<a href="#"  @click="showSec(list)">{{list.title}}</a>
+								<div v-show="secCode == list.classifyCode">
+									<div v-for="third in list.children" @click="showTechnical(third)" :class="thirdCode == third.classifyCode?'help-third on':'help-third'">{{third.title}}</div>	
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="help-right fl">
+					<div style="min-height: 500px;">
+						<div class="technical-list clearfix" v-for="item in technicalList">
+							<div class="technical-img">
+								<img src="images/05.png" >
+							</div>
+							<p>{{item.name}}</p>
+							<img @click="downFile(item)" class="help-down fr" src="images/down.png" >
+						</div>
+					</div>
+					<div class="wrap" id="wrap">
+						<zpagenav v-bind:page="pageNum" v-bind:page-size="pageSize" v-bind:total="total" v-bind:max-page="maxPage"
+						 v-on:pagehandler="pageHandler">
+						</zpagenav>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="footerpage"></div>
+	</body>
+</html>
+<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			technicalType: [],
+			technicalList: [],
+			//分页容器
+			pageNum: 1, //显示的是哪一页
+			pageSize: '', //每一页显示的数据条数
+			total: '', //记录总数
+			maxPage: '', //最大页数
+			allImg: "", //详情页的所有图片
+			pageBanner: "",
+			firstCode:'',
+			secCode:'',
+			thirdCode:''
+		},
+		methods: {
+			// 技术资料分类树
+			getTechnicalType: function() {
+				axios.get(allUrl.technicalType).then((result) => {
+					if (result != "" && result.code == 0) {
+						this.technicalType = result.data
+						this.firstCode = result.data[0].classifyCode
+						this.secCode =  result.data[0].children[0].classifyCode
+						this.thirdCode = result.data[0].children[0].children[0].classifyCode
+						this.getTechnicalList(result.data[0].children[0].children[0].id)
+					}
+				})
+			},
+			//分页
+			pageHandler: function(pageNum) {
+				this.pageNum = pageNum;
+				this.newsListGet();
+			},
+			// 跳转评论详情
+			commentList: function(goCommentId) {
+				localStorage.setItem(workId, goCommentId);
+				window.location.href = 'news-detail.html'
+			},
+			showFirst:function(item){
+				this.firstCode = item.classifyCode
+			},
+			showSec:function(list){
+				this.secCode = list.classifyCode
+			},
+			showTechnical:function(third){
+				if(this.thirdCode != third.classifyCode){
+					this.technicalList = []
+					this.thirdCode = third.classifyCode
+					this.getTechnicalList(third.id)
+				}
+			},
+			getTechnicalList:function(menuId){
+				const myJson = {
+					menuId: menuId,
+					pageNum: this.page,
+					pageSize:10
+				}
+				axios.post(allUrl.technicalList,myJson).then((response) => {
+					if (response != "" && response.code == 0) {
+						this.technicalList = response.data.data
+						this.page =  response.data.pageIndex//显示的是哪一页
+						this.pageSize = response.data.pageSize//每一页显示的数据条数
+						this.total = response.data.totalCount //记录总数
+						this.maxPage = response.data.pageCount //最大页数
+					}
+				})
+			},
+			downFile:function(item){
+				var ele = document.createElement('a');// 创建下载链接
+				    ele.download = item.name;//设置下载的名称
+				    ele.style.display = 'none';// 隐藏的可下载链接
+				    // 字符内容转变成blob地址
+				    var blob = new Blob([item.pictureLibNum]);
+				    ele.href = URL.createObjectURL(blob);
+				    // 绑定点击时间
+				    document.body.appendChild(ele);
+				    ele.click();
+				    // 然后移除
+				    document.body.removeChild(ele);
+			},
+			// 获取banner
+			gatBanner: function() {
+				axios.get(allUrl.article_list, {
+					params: {
+						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
+
+					}
+				}).then((result) => {
+					if (result != "" && result.code == 0) {
+						this.pageBanner = result.data.data[0]
+					}
+				}).catch((error) => {
+					//alert(error.message)
+				})
+			},
+
+		},
+		mounted() {
+			this.getTechnicalType()
+			// this.gatBanner()
+		}
+	})
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		/*公共部分
+		 * 导航栏
+		 * footer CopyRight
+		 */
+		$(".headerpage").load("header.html");
+		$(".footerpage").load("footer.html?vid=0717");
+	});
+</script>

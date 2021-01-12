@@ -1,0 +1,692 @@
+.topNav{
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color:#fff;
+    font-size: 16px;
+    background: #009900;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 99;
+}
+#app,#bigBox{
+	padding-top: 1rem;
+	padding-bottom: 0.3rem;
+}
+.topNav>div{
+    display: inline-block;
+    width:30px;
+    height: 26px;
+    position: absolute;
+    left: 0.2rem;
+    top:0.25rem;
+}
+.my-head{
+    width: 100%;
+    height: 190px;
+    background: url("../../img/duan-img/my-head.jpg") no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.my-head>div{
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 15px;
+}
+.head-font{
+    margin-left: 15px;
+}
+.head-font h1{
+    font-size: 18px;
+    margin-bottom: 10px;
+	margin-right: 30px;
+}
+.head-font span{
+    border:1px solid #333;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+.my-head>div>img{
+    width: 55px;
+    height: 55px;
+    background: url("../../img/duan-img/head-img.jpg") no-repeat;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+.head-set{
+    position: absolute;
+    right: 15px;
+	/* top: 15px; */
+    cursor: pointer;
+}
+.my-box{
+    padding: 0 15px;
+}
+.my-box>div{
+    padding: 0 20px;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.my-box .title{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f6f6f6;
+    font-size: 16px;
+}
+.my-chooseBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+}
+.my-chooseBox img{
+	height: 28px;
+}
+.my-chooseBox dl{
+    color: #333;
+}
+.my-chooseBox dt{
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.myShopping{
+    position: fixed;
+    right:20px;
+    bottom:1.5rem;
+    width: 50px;
+    height: 50px;
+    background: #f79500 url("../../img/duan-img/myShopping.jpg") center no-repeat;
+    background-size: 30px 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.title span{
+    float: right;
+    min-width: 20px;
+    min-height: 20px;
+    background: url("../../img/duan-img/right.png") center no-repeat;
+    background-size: 9px auto;
+}
+.title .but{
+    width: 100px;
+    height:24px;
+    line-height: 24px;
+    text-align: center;
+    background: none;
+    background: #323136;
+    color: #bdaf88;
+    font-size: 13px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+
+.alert-title{
+    padding: 0!important;
+}
+.alert-title h1{
+    height: 52px;
+    line-height: 52px;
+    color:#000;
+    text-align: center;
+    font-size: 16x;
+    background: #fff;
+
+}
+.close-but{
+    position: absolute;
+    right: 20px;
+    top:15px;
+    cursor: pointer;
+}
+
+/*--------------*/
+.my-setBox li{
+    padding: 0.2rem;
+    border-bottom:1px solid #e6e6e6;
+    position: relative;
+	display: flex;
+	align-items: center;
+}
+.my-setBox li .setBox-logo{
+	width: 1.2rem;
+	height: 1.2rem;
+	border: 1px solid #ddd;
+	text-align: left;
+	background: url(../../images/img-add.png) center no-repeat;
+	float: left;
+	position: relative;
+}
+.my-setBox li .setBox-logo input {
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+.my-setBox li .setBox-logo img {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.my-setBox .setBox-Img{
+	display: block;
+}
+.setBox-Img .setBox-list{
+	float: left;
+	width: 2.16rem;
+	height: 2.16rem;
+	border: 1px solid #ddd;
+	position: relative;
+	margin: 0.3rem 0.3rem 0 0;
+	box-sizing: border-box;
+}
+.setBox-Img .setBox-list input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.setBox-Img .setBox-list:nth-child(3n){
+	margin-right: 0;
+}
+.upZs{
+	background: url(../../images/img-add.png) center no-repeat;
+}
+.imgUrl {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+.imgMb {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    color: #FFFFFF;
+    align-items: center;
+    justify-content: center;
+    display: none;
+    cursor: pointer;
+}
+.showIng {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.my-setBox li a{
+    display:block;
+}
+.my-setBox li span{
+    display: inline-block;
+	width:80px;
+    color: #333;
+}
+.my-setBox li input{
+	height: 30px;
+}
+.my-setBox li textarea{
+	min-width: calc(100% - 80px);
+	max-width: calc(100% - 80px);
+	width: calc(100% - 80px);
+	border: 1px solid #999999;
+	height: 1rem;
+	padding: 5px;
+	box-sizing: border-box;
+}
+.my-setBox li .right{
+    width: 20px;
+    height: 20px;
+    background: url("../../img/duan-img/right.png") no-repeat;
+    background-size: 10px auto;
+    position: absolute;
+    right: 20px;
+    top:17px;
+}
+.my-but{
+    height:45px;
+    line-height: 45px;
+    background: #009900;
+    margin: 30px;
+    border-radius: 45px;
+	font-size: 16px;
+	text-align: center;
+	color: #FFFFFF;
+}
+.my-setAdd{
+    padding: 20px 15px;
+    color: #999;
+}
+.my-setAdd span{
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+.ocrBox{
+    overflow: hidden;
+}
+.ocrBox #test1{
+    width: 45%;
+    height: 120px;
+    border:1px solid #ddd;
+    text-align:left;
+    margin-left: 10px;
+    background: url("../../img/duan-img/ocr2.png") center no-repeat;
+    background-size: 80% auto;
+    float: left;
+}
+.ocrBox #test2{
+    width: 45%;
+    height: 120px;
+    border:1px solid #ddd;
+    text-align:left;
+    margin-left: 10px;
+    background: url("../../img/duan-img/ocr3.png") center no-repeat;
+    background-size: 50% auto;
+    float: left;
+}
+.ocrBox #test3{
+    width: 45%;
+    height: 120px;
+    border:1px solid #ddd;
+    text-align:left;
+    margin-left: 10px;
+    background: url("../../img/duan-img/ocr1.png") center no-repeat;
+    background-size: 80% auto;
+    float: left;
+}
+.ocrBox p{
+    margin: 20px 0 20px 15px;
+}
+
+/*---------------------*/
+.order-nav{
+    margin: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+.order-nav li{
+    padding: 20px 0 10px;
+}
+.order-nav li.choose{
+    border-bottom: 3px solid #0d80b7;
+    color: #0d80b7;
+}
+.orderList-box{
+    margin-top: 20px;
+}
+.orderList-box li{
+    margin: 0 15px 20px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 0 15px;
+}
+.orderList-box .title{
+    font-size: 16px;
+    width: calc(100% - 80px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+}
+.orderList{
+    overflow: hidden;
+}
+.orderList .title-r{
+    text-align: right;
+    float: right;
+}
+.orderList-d{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.orderList-d img{
+    width: 75px;
+    height: 75px;
+    overflow: hidden;
+	margin-right: 0.2rem;
+}
+.orderList-d .font{
+    width: calc(100% - 140px);
+}
+.orderList-d .font h1{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 10px;
+}
+.orderList-d .font p span{
+    font-size: 14px;
+    margin-right: 10px;
+    color: #999;
+}
+.orderList-d .pay{
+    width:50px;
+    text-align: right;
+}
+.orderList-d .pay h4{
+    margin-bottom: 10px;
+}
+.orderList-d .pay span{
+    color: #999;
+}
+.order-floatR{
+    float: right;
+    margin-bottom: 20px;
+}
+.order-floatR div{
+    display: inline-block;
+    padding: 5px 15px;
+    border: 1px solid #dddddd;
+    margin-top: 10px;
+    margin-left:10px;
+    border-radius: 20px;
+}
+.order-floatR .choose{
+    border: 1px solid #ff9600;
+    color: #ff9600;
+}
+.order-floatR p{
+    text-align: right;
+}
+
+/* 优惠券 */
+
+.coupon{
+    width:95%;
+    height:90px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.3);
+}
+
+.coupon .left{
+    width:120px;
+    height: 100%;
+    background-image: linear-gradient(to left,#fb606e 50px, #ff7c81);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+.coupon-hui.coupon .left{
+    background-image: linear-gradient(to left,#7a7a7a 50px, #8c8c8c);
+}
+.coupon .left{
+    color: #fff;
+}
+.coupon .left p{
+    font-size:14px;
+}
+.coupon .left p span{
+    font-size: 26px;
+}
+.coupon .right{
+    width: calc(100% - 140px);
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color: #535353;
+    padding:10px;
+    float: left;
+}
+.coupon .right h1{
+    font-size: 16px;
+}
+.coupon .right p{
+    font-size: 12px;
+    float: left;
+    line-height: 26px;
+}
+
+.coupon .bottom{
+    margin-top: 24px;
+    overflow: hidden;
+}
+.coupon .bottom div{
+    border: 1px solid #fa9600;
+    width:70px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    color:#fa9600;
+    border-radius: 30px;
+    font-size: 13px;
+    float: right;
+}
+.coupon-hui.coupon .bottom div{
+    color:#8c8c8c;
+    border: 1px solid #8c8c8c;
+}
+.couponBox{
+    display: none;
+}
+
+/*----------------*/
+.loan-top{
+    padding: 20px 15px;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #e6e6e6;
+}
+.loan-top dl{
+    width: 50%;
+}
+.loan-top dl dt{
+    color:#6e6e6e;
+}
+.loan-top dl dd{
+    color:#343434;
+    font-size: 18px;
+    font-weight: bold;
+}
+.loan-bottom{
+    padding: 0 15px;
+}
+.loan-bottom h1{
+    font-size: 16px;
+    margin-top: 20px;
+}
+.loan-bottom li{
+    width: 100%;
+    overflow: hidden;
+    padding: 15px 0;
+    border-bottom: 1px solid #e6e6e6;
+}
+.loan-bottom li p{
+    font-size:14px;
+    color: #191919;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 5px;
+}
+.loan-bottom li span{
+    font-size:14px;
+    color: #989898;
+}
+.loan-bottom li div:first-child{
+    width: calc(100% - 80px);
+    float: left;
+}
+.loan-bottom li .pay{
+    width: 80px;
+    float: right;
+    font-weight: bold;
+    text-align: right;
+}
+
+/*------------------*/
+.jf-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    color:#f39501;
+    font-size: 14px;
+    border-bottom: 8px solid #f6f6f6;
+}
+.jf-top span{
+    font-size: 22px;
+}
+.jf-top .more{
+    color: #f39501;
+    padding-right:20px;
+    background: url("../../img/duan-img/jf.jpg") right center no-repeat;
+    background-size: 15px;
+}
+.ji-bottom{
+    padding: 0 15px;
+}
+.ji-bottom h1{
+    font-size: 16px;
+    margin: 15px 0;
+}
+.ji-bottom {
+    font-size: 16px;
+}
+.ji-bottom li{
+    width: 46%;
+    margin-right: 4%;
+    float: left;
+}
+.ji-bottom li:nth-child(2n){
+    margin-right: 0;
+}
+.ji-bottom li img{
+    width: 100%;
+    height: auto;
+}
+.ji-bottom li h1{
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+.ji-bottom li span{
+    color:#e40700;
+}
+.ji-bottom li div{
+    color:#fff;
+    background: #f59502;
+    width:70px;
+    font-size: 14px;
+    text-align: center;
+    padding: 3px 5px;
+    border-radius: 25px;
+    margin-top: 5px;
+}
+.jf-top2{
+    color: #0d80b7;
+    justify-content: center;
+}
+.jf-box{
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+}
+.jf-box li{
+    width: 50%;
+    float: left;
+    text-align: center;
+    padding: 15px 0;
+}
+.jf-box li.choose{
+    color: #0d80b7;
+    border-bottom: 2px solid #0d80b7;
+}
+.jf-boxList li{
+    overflow: hidden;
+    padding: 15px 15px;
+    border-bottom: 1px solid #ddd;
+}
+.jf-boxList li .left{
+    width: 70%;
+    float: left;
+}
+.jf-oxList .left h1{
+    font-size: 14px;
+}
+.jf-boxList .left p,.jf-boxList li .right p{
+    color: #999;
+    overflow: hidden;
+    text-verflow:ellipsis;
+    white-space: nowrap;
+}
+.jf-boxList li .right{
+    text-align: right;
+    float: right;
+}
+.jf-boxList li .right .red{
+    color: #d00000;
+    font-weight: bold;
+}
+.jf-boxList li .right .green{
+    color: #23bc00;
+    font-weight: bold;
+}
+.jf-boxList{
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

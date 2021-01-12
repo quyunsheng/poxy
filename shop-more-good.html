@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="css/qys/shop.css"/>
+		<link rel="stylesheet" type="text/css" href="css/shop.css"/>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			[v-cloak]{
@@ -78,10 +78,8 @@
 						})
 					},
 					// 跳转商品详情
-					goodDetail:function(goGoodId,comtIds){
-						localStorage.setItem(goodsId,goGoodId);
-						localStorage.setItem(storeId,comtIds);
-						window.location.href = 'shop-detail.html'
+					goodDetail:function(id,code){
+						window.location.href = 'good-detail.html?id='+id+'&code='+code
 					},
 					// 跳转店铺页
 					shopDetail:function(goShopId){

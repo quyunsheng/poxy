@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>云港湾-商品详情</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="css/ljj-css/shop.css">
+		<style>
+			.mb {
+            z-index: 99;
+        }
+
+        .title {
+            color: rgb(255, 255, 255);
+            margin: auto;
+            position: absolute;
+            left: 50%;
+            margin-left: -28px;
+            top: 20px;
+        }
+    </style>
+	</head>
+	<body style="background-color: #f6f6f6;padding: 1.16rem 0 1.5rem 0;">
+		<div id="shop">
+			<div class="lwxq_title">
+				<div class="lwxq_title_txt">
+					<a href="javascript:history.back(-1)"><img src="img/fang-img/Left.png"></a>
+					<span class="title">商品详情</span>
+					<a href="#" class="delateSome hidden"><img src="img/q-img/navBtn.png"></a>
+				</div>
+			</div>
+			<div class="detail-nav">
+				<ul>
+					<li @click="navType(0)" :class="{active:navNum == 0}"><a href="#detail-swiper">宝贝</a></li>
+					<!-- <li><a>评价</a></li> -->
+					<li @click="navType(1)" :class="{active:navNum == 1}"><a href="#detail-mage">详情</a></li>
+					<li @click="navType(2)" :class="{active:navNum == 2}"><a href="#detail-recommend">推荐</a></li>
+				</ul>
+			</div>
+			<div class="bigImg detail-swiper swiper-container swiper-banner" id="detail-swiper">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" v-for="item in imgList" v-model="nowGg">
+						<img :src="item.url">
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			<div class="bigImg-list hidden">
+				<div class="imgSwiper swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide" v-for="item in imgList" v-model="nowGg">
+							<img :src="item.url">
+						</div>
+					</div>
+				</div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+			<div class="detail-pad">
+				<span>
+					<span class="detail-price" v-if="!getUsers.discount">￥{{goodsDetail.price}} <b style="font-size: 12px;color: #C0C0C0;">会员享更多折优惠</b></span>
+					<span class="detail-price" v-if="getUsers.discount">￥{{goodsDetail.price * getUsers.discount}}<i style="text-decoration: line-through;">{{goodsDetail.price}}</i></span>
+					<span class="fr">销量 {{goodsDetail.salesVolume == null ? 0 : goodsDetail.salesVolume}}</span>
+				</span>
+				<h3 class="detail-tit">{{goodsDetail.name}}</h3>
+				<p>{{goodsDetail.businessName}}</p>
+				<div class="good-operate"><img class="gray" src="../images/shop/collect.png">收藏</div>
+			</div>
+			<div class="detail-pad detail-send clearfix">
+				<p class="freight">运费：<i>{{goodsDetail.freightType == 0 ? '免邮' : (goodsDetail.freightType == 1 ?
+            goodsDetail.freight : '待商议')}}</i>(付款成功后48小时内安排发货)</p>
+				<!--        <span class="fr">销量 {{goodsDetail.salesVolume}}</span>-->
+			</div>
+			<div class="detail-type detail-send">
+				<p class="detail-pad clearfix"><i>类别：</i><span v-for="item in navList">{{item.value}} | </span></p>
+				<div class="detail-pad clearfix good-type">
+					规格：
+					<span v-for='item in goodsDetail.specsList' @click="changeGG(item,item.id)" :class="{checked:item.id == nowGg}">{{item.name}}</span>
+				</div>
+				<p class="detail-pad clearfix good-type" v-if="isShowGG">
+					参数：<span>{{ggList.name}}</span>
+					<span>{{ggList.price}}元(单价)</span>
+					<span>{{ggList.stock}}(库存)</span>
+					<!--            <span class="size-num">-->
+					<!--				<i @click="reduce()">-</i>-->
+					<!--				<input type="text" name="" value="1" v-model="num"/>-->
+					<!--                <i @click="add()">+</i>-->
+					<!--            </span>-->
+				</p>
+			</div>
+			<!-- 相关推荐 -->
+			<div class="detail-recommend" id="detail-recommend">
+				<div class="recommendTop">
+					<span>相关推荐</span>
+				</div>
+				<div class="recommendBox">
+					<div class="recommendList" v-for="(item,index) in shopRecGood.slice(0,3)" @click="goodDetail(item.id,item.classifyCode)">
+						<img :src="item.logo">
+						<p>{{item.name}}</p>
+						<span>￥{{item.price}}</span>
+					</div>
+				</div>
+			</div>
+			<!-- 产品详情 -->
+			<p class="detail-mage" id="detail-mage">产品详情</p>
+			<video width="100%" controls v-if="goodsDetail.video">
+				<source :src="goodsDetail.video" type="video/mp4">
+				</source>
+			</video>
+			<div class="detail-particulars" v-html="goodsDetail.description "></div>
+			<!-- 底部 -->
+			<div class="detail-btm">
+				<div class="btm-btn">
+					<span @click="addCart(ggList.id)">加入购物车</span>
+				</div>
+			</div>
+			<!-- 返回顶部 -->
+			<div class="go-top" @click="handleScrollTop">
+				<img src="img/q-img/go-top.png">
+				<p>顶部</p>
+			</div>
+		</div>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/request.js"></script>
+		<script src="js/qs.min.js"></script>
+		<script src="js/qurls.js"></script>
+		<script type="text/javascript">
+			$('.detail-nav a').click(function() {
+				$('.detail-nav .active').removeClass('active');
+				$(this).parent().addClass('active');
+			});
+		</script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						getUsers: '',
+						token: '',
+						navList: '', // 级别导航
+						childType: '', // 子集type列表
+						goodsDetail: '', //商品详情
+						shopRecGood: '', //推荐商品
+						isShowGG: false,
+						isShowPay: false,
+						shopId: getUrlParam('id'),
+						classifyCode: getUrlParam('code'),
+						oldPrice: '', //初始价格
+						oldImg: '', //初始商品图
+						imgList: '', //轮播图容器
+						ggList: '', //规格容器
+						num: 1, //商品数量
+						nowGg: '', //当前选中规格
+						screenMd: false, //遮罩层
+						navNum: 0,
+					}
+				},
+				methods: {
+					navType: function(num) {
+						this.navNum = num
+					},
+					shopPay: function(useId) {
+						this.token = localStorage.getItem(tkn);
+						if (this.nowGg == '') {
+							alert('请选择商品规格!');
+							return false;
+						} else {
+							let myJson = [{
+								businessId: this.goodsDetail.businessId,
+								num: this.num,
+								shopCartId: this.goodsDetail.id
+							}];
+							axios.post(allUrl.appendOrder, myJson, {
+								headers: {
+									Authorization: this.token,
+									Accept: 'application/json',
+								},
+							}).then((response) => {
+								if (response != "" && response.code == 0) {
+									this.chooseShop = [];
+									localStorage.setItem(shopPay, response.data);
+									window.location.href = 'shop-pay.html';
+								} else {
+									alert(response.message);
+								}
+							});
+						}
+					},
+					handleScrollTop: function() {
+						window.scrollTo(0, 0);
+					},
+					// 点击验证是否登录
+					uOnLine: function(url) {
+						this.token = localStorage.getItem(tkn);
+						if (this.token == '' || this.token != null || this.token == 'null' || this.token == 'undefined' || this.token ==
+							undefined) {
+							window.location.href = 'i-login.html';
+							return false;
+						}
+						window.location.href = url;
+					},
+					// 获取用户信息
+					getPeople: function() {
+						this.token = localStorage.getItem(tkn);
+						axios.get(allUrl.getUser, {
+							headers: {
+								Authorization: this.token,
+								Accept: 'application/json',
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.getUsers = response.data;
+							} else {
+								alert(response.message);
+								window.location.href = 'i-login.html';
+							}
+						})
+					},
+					// 获取导航级别
+					getNav: function() {
+						axios.get(allUrl.getShopNav, {
+							params: {
+								classifyCode: this.classifyCode,
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.navList = response.data;
+							} else {
+								alert(response.message);
+							}
+						})
+					},
+					// 点击分类导航
+					thizType: function(code) {
+						localStorage.setItem(classifyCode, code);
+						window.location.href = 'shop.html';
+					},
+					add() {
+						this.num++;
+						if (item.num > item.stock) {
+							alert('最大值不能超过库存!');
+							item.num--;
+							return false;
+						}
+					},
+					reduce() {
+						if (this.num == 1) return;
+						this.num--;
+					},
+					//输入框改变价格变动
+					calculate(item) {
+						let myPrice = /^[1-9]\d*$/;
+						if (!myPrice.test(this.num)) {
+							alert('请输入正确的数量！');
+							this.num = 1;
+						}
+						if (this.num > item.stock) {
+							alert('最大值不能超过库存！');
+							this.num = item.stock;
+						}
+					},
+					// 获取商品详情
+					getDetail: function() {
+						axios.get(allUrl.getgoodDetail, {
+							params: {
+								productId: this.shopId
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.goodsDetail = response.data;
+								this.imgList = response.data.picList;
+								this.oldImg = response.data.picList;
+								this.oldPrice = response.data.price;
+								this.classifyCode = response.data.classifyCode;
+								$('title').html(response.data.name)
+								this.getShopGood();
+								this.$nextTick(() => {
+									this.mySwiper();
+								})
+								this.getNav();
+							} else {
+								alert(response.message);
+							}
+						})
+					},
+					// 获取推荐商品
+					getShopGood: function() {
+						axios.get(allUrl.getRecGood, {
+							params: {
+								pageSize:10,
+								classifyCode: this.classifyCode,
+								recommend:true
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.shopRecGood = response.data.data
+							}
+						})
+					},
+					// 跳转商品详情
+					goodDetail: function(id, code) {
+						window.location.href = 'good-detail.html?id='+id+'&code='+code;
+					},
+					// 选择规格
+					changeGG: function(item, ggId) {
+						if (this.nowGg == ggId) {
+							this.nowGg = '';
+							this.imgList = this.oldImg;
+							this.goodsDetail.price = this.oldPrice;
+							this.isShowGG = false;
+
+							this.$nextTick(() => {
+								this.mySwiper();
+							})
+
+						} else {
+							this.imgList = '';
+							this.imgList = item.list;
+							this.goodsDetail.price = item.price;
+							this.ggList = item;
+							this.isShowGG = true;
+							this.nowGg = ggId;
+							this.$nextTick(() => {
+								this.mySwiper();
+							})
+						}
+					},
+					// 添加购物车
+					addCart: function(useId) {
+						this.screenMd = true;
+						// this.token = localStorage.getItem(tkn);
+						// if (this.nowGg == '') {
+						//     alert('请选择商品规格!');
+						//     return false;
+						// }
+						// if (this.token && this.token != 'null' && this.token != 'undefined') {
+						//     axios.get(allUrl.addShopCart, {
+						//         params: {
+						//             specsId: useId,
+						//             num: this.num
+						//         },
+						//         headers: {
+						//             Authorization: this.token,
+						//             Accept: 'application/json',
+						//         },
+						//     }).then((response) => {
+						//         if (response != "" && response.code == 0) {
+						//             alert('添加成功！');
+						//             this.getShopList();
+						//         } else {
+						//             alert(response.message);
+						//         }
+						//     })
+						// } else {
+						//     alert('请先登录！');
+						//     return false;
+						// }
+					},
+					pay: function() {
+						this.isShowPay = true;
+						this.screenMd = true;
+					},
+					//遮罩层
+					md: function() {
+						this.isShowPay = false;
+						this.screenMd = false;
+					},
+					// 直接购买
+					addOrder: function(useId) {
+						this.token = localStorage.getItem(tkn);
+						if (this.nowGg == '') {
+							alert('请选择商品规格!');
+							return false;
+						}
+						axios.get(allUrl.appendOrderDetail, {
+							params: {
+								specsId: useId,
+								num: this.num,
+							},
+							headers: {
+								Authorization: this.token,
+								Accept: 'application/json',
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								localStorage.setItem(shopRemId, response.data);
+								window.location.href = 'shop-pay.html';
+							} else {
+								alert(response.message);
+							}
+						}).catch(function() {
+							alert('出错了,请稍后购买');
+						})
+					},
+					mySwiper: function() {
+						var galleryTop = new Swiper('.bigImg', {
+							spaceBetween: 10,
+							autoplay: {
+								delay: 2000,
+							},
+							pagination: {
+								el: '.swiper-pagination',
+								type: 'fraction',
+							},
+							loop: true,
+							observer: true, //修改swiper自己或子元素时，自动初始化swiper
+							observeParents: true //修改swiper的父元素时，自动初始化swiper
+						});
+					}
+				},
+				mounted() {
+					this.getDetail();
+				}
+			})
+		</script>
+	</body>
+</html>

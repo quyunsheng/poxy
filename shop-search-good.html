@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="css/qys/zpageNav.css"/>
-		<link rel="stylesheet" type="text/css" href="css/qys/shop.css"/>
+		<link rel="stylesheet" type="text/css" href="css/zpageNav.css"/>
+		<link rel="stylesheet" type="text/css" href="css/shop.css"/>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
@@ -38,8 +38,8 @@
 		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/qu-js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			$(function() {
 				$(".headerpage").load("header.html");
@@ -64,19 +64,11 @@
 					}
 				},
 				methods: {
-					// 点击验证是否登录
-					uOnLine:function(url) {
-						this.token = localStorage.getItem(tkn);
-						if(this.token == '' || this.token != null || this.token == 'null' || this.token == 'undefined' || this.token == undefined){
-							window.location.href = 'login.html';
-							return false;
-						}
-						window.location.href = url;
-					},
 					getGoodList:function(){
-						axios.get(allUrl.searchGoods, {
+						axios.get(allUrl.searchMore, {
 							params:{
 								pageNum:this.page,
+								pageSize:20,
 								productName:this.productName
 							}
 						}).then((response) => {
@@ -92,18 +84,11 @@
 					// 分页
 					pageHandler: function (page) {
 					    this.page = page;
-						this.getShopList();
+						this.getGoodList();
 					},
 					// 跳转商品详情
-					goodDetail:function(goGoodId,comtIds){
-						localStorage.setItem(goodsId,goGoodId);
-						localStorage.setItem(storeId,comtIds);
-						window.location.href = 'shop-detail.html'
-					},
-					// 跳转店铺页
-					shopDetail:function(goShopId){
-						localStorage.setItem(shopsId,goShopId);
-						window.location.href = 'shop-store.html'
+					goodDetail:function(id,code){
+						window.location.href = 'good-detail.html?id='+id+'&code='+code
 					},
 				},
 				mounted() {

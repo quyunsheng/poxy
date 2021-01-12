@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>商城</title>
+		<title>中国环氧树脂网</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="css/index-duan.css" />
@@ -43,20 +43,19 @@
 					</div>
 					<div class="pagination"></div>
 				</div>
-				<!-- 免费注册 -->
 				<div class="main-width swiper-right">
 					<div class="swiper-news" style="overflow: hidden;height: 145px">
 						<div class="swiper-news-tit clearfix">
 							<img height="20" src="images/icon-voice.png">
 							<span>消息</span>
-							<a href="">更多>></a>
+							<a href="notice.html">更多&gt;&gt;</a>
 						</div>
 						<div v-for="(item,index) in bannerArticleList" v-if="index<3">
-							<p class="swiper-news-list" @click="commentList(item.id)"><i>[消息]</i>{{item.title}}</p>
+							<p class="swiper-news-list" @click="commentList(item.id)"><i>[{{item.articleTypeName}}]</i>{{item.title}}</p>
 						</div>
 					</div>
-					<div class="swiper-news-img">
-						<img src="images/0.png">
+					<div v-if="bannerArticleList.length>3" class="swiper-news-img" @click="commentList(bannerArticleList[3].id)">
+						<img :src="bannerArticleList[3].cover">
 					</div>
 				</div>
 			</div>
@@ -88,17 +87,17 @@
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
 					合作企业
-					<a @click="storeDetail(list.classifyCode,list.title)" class="main-more">
+					<a href="shop-list.html" class="main-more">
 						<span>+ 查看更多</span>
 					</a>
 				</p>
 				<ul class="cooperative clearfix">
-					<li>
-						<img src="images/logo2.png">
+					<li v-for="item in companyList">
+						<img :src="item.logo">
 					</li>
 				</ul>
 			</div>
-			<div class="main-width" v-for="(list,index) in getShopsList">
+			<div class="main-width" v-for="list in goodList">
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
 					{{list.title}}
@@ -111,7 +110,7 @@
 						<img :src="list.cover" width="188" height="620" alt="">
 					</div>
 					<ul class="jzBox-last">
-						<li v-for="(item,index) in list.productList" v-if="index>0 && index<3" @click="goodDetail(item.id,item.classifyCode)">
+						<li v-for="(item,index) in list.productList" v-if="index<8" @click="goodDetail(item.id,item.classifyCode)">
 							<a>
 								<div class="index-img">
 									<img height="100%" :src="item.logo">
@@ -126,42 +125,30 @@
 						</li>
 					</ul>
 				</div>
-				<img width="100%" style="margin: 30px 0;" src="images/021.png" >
+				<img width="100%" style="margin: 30px 0;" src="images/021.png">
 			</div>
-			
+
 			<div class="footerpage"></div>
 			<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
-			<script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
-			<script src="js/duan-js/url.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+			<script src="js/durl.js" type="text/javascript" charset="utf-8"></script>
 			<script type="text/javascript">
 				new Vue({
 					el: '#indexBox',
 					data() {
 						return {
-							loginIn: '0',
-							getUsers: '',
-							token: '',
-							remShops: '',
-							remGoods: '',
-							newUp: '', //最新成交
 							pageBanner: '', //banner
+							goodList:[],
+							companyList:[],//推荐企业
 							// 新闻
 							typeId: "eb186ab5a3b94ae998675d5f3498070d",
 							zxId: "93ee4d6f1ac34297b120fb6864155e97",
 							newsAll: "",
 							newsTj: "",
-							zxAll: '',
-							zxTj: '',
-							// 视频
-							videotypeId: "eb21c1f8f95c4610b72a2a1f2bb0f903",
-							videotypeId2: "b14449c5a51544a99574b1dbe7a35e70",
-							videoAll: "",
-							videoLb: "",
-							allLabourList: '', //工程劳务
 							/* banner 文章列表 */
 							bannerArticleList: '',
 							bannerGaoList: '',
@@ -169,61 +156,74 @@
 
 							advertisId: '64560152089345f48934587a4bd9ca8b',
 							advertising: '', //广告
-							getCuList: [] // 促销
 						}
 					},
 					methods: {
-						getPeople: function() {
-							this.token = localStorage.getItem(tkn);
-							axios.get(allUrl.getUser, {
-								headers: {
-									Authorization: this.token,
-									Accept: 'application/json',
-								},
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.getUsers = response.data
-									this.loginIn = '1'
-								} else if (response.code == 7) {
-									window.localStorage.removeItem(tkn);
-									alert('登录失效，请重新登录！')
-									window.location.href = 'login.html';
-								}
-							})
-						},
-						// 跳转商品列表
-						storeDetail: function(goStoreId, goStoreName) {
-							localStorage.setItem(storeId, goStoreId);
-							localStorage.setItem(storeName, goStoreName);
-							window.location.href = 'shop.html'
-						},
 						// 获取banner
 						gatBanner: function() {
-							axios.get(allUrl.article_list, {
+							axios.get(allUrl.getAnnunce, {
 								params: {
-									articleSubTypeId: "a2dc0ad7b2854dfa91de95f05264c9ab"
+									typeId: "1d604de8a1fa48e4b3db7bbeb2f5f028",
+									recommend:true
 								}
 							}).then((result) => {
 								if (result != "" && result.code == 0) {
-									this.pageBanner = result.data.data
+									this.pageBanner = result.data
 									this.$nextTick(() => {
 										this.bannerSwiper();
 									})
 								}
 							})
 						},
-						// 获取banner
-						getCu: function() {
-							axios.get(allUrl.promotionProduct, {
+						//企业
+						getCompanyList: function() {
+							axios.get(allUrl.bestCompany, {
 								params: {
+									recommend:true,
 									pageNum: 1,
-									pageSize: 3
+									pageSize: 12,
 								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.getCuList = result.data.data
+							}).then((response) => {
+								if (response != "" && response.code == 0) {
+									this.companyList = response.data
 								}
 							})
+						},
+						/* 公告消息 */
+						bannerArticle: function() {
+							axios.get(allUrl.getAnnunce, {
+								params: {
+									typeId: 'cb5f2bd0599f47088a119fe899213e2f',
+									recommend:true
+								}
+							}).then((response) => {
+								if (response != "" && response.code == 0) {
+									this.bannerArticleList = response.data
+								}
+							})
+						},
+						//首页商品
+						getIndexsList: function() {
+							axios.get(allUrl.classifyProduct, {
+								params: {
+									pageNum: 1,
+									pageSize: 10,
+								}
+							}).then((response) => {
+								if (response != "" && response.code == 0) {
+									this.goodList = response.data.data
+								}
+							})
+						},
+						// 跳转商品详情
+						goodDetail: function(id, code) {
+							window.location.href = 'good-detail.html?id='+id+'&code='+code
+						},
+						// 跳转商品列表
+						storeDetail: function(code, goStoreName) {
+							localStorage.setItem(classifyCode, code);
+							localStorage.setItem(storeName, goStoreName);
+							window.location.href = 'good-list.html'
 						},
 						// 获取广告
 						getAdvertise: function() {
@@ -236,162 +236,6 @@
 								if (result != "" && result.code == 0) {
 									this.advertising = result.data.data
 								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
-						chooseBox: function(id) {
-							this.step = id
-							if (this.step == 2) {
-								/* banner 公告列表 */
-								this.token = localStorage.getItem(tkn);
-								axios.get(allUrl1.articleList, {
-									params: {
-										articleTypeId: '315c614127b84c70bde7ae6f2d718804'
-									}
-								}, {
-									headers: {
-										Authorization: this.thoken,
-										Accept: 'application/json',
-									},
-								}).then((response) => {
-									if (response != "" && response.code == 0) {
-										this.bannerGaoList = response.data.data
-									}
-								})
-							}
-						},
-						/* banner 文章列表 */
-						bannerArticle: function() {
-							this.token = localStorage.getItem(tkn);
-							axios.get(allUrl1.articleList, {
-								params: {
-									articleTypeId: 'f50ca0db3a084b1f87544b36c5fa38ab'
-								}
-							}, {
-								headers: {
-									Authorization: this.thoken,
-									Accept: 'application/json',
-								},
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.bannerArticleList = response.data.data
-								}
-							})
-						},
-						/* 详情 */
-						commentList: function(goCommentId) {
-							localStorage.setItem(workId, goCommentId);
-							window.location.href = 'news-xq.html'
-						},
-						// 成交动态
-						getUps: function() {
-							axios.get(allUrl.uptrue, {
-								params: {
-									pageSize: 6
-								}
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.newUp = response.data
-								}
-							})
-						},
-						// 获取推荐商铺
-						getShops: function() {
-							axios.get(allUrl.bestShops, {
-								params: {
-									pageSize: 4
-								}
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.remShops = response.data
-								}
-							})
-						},
-						// 获取推荐商铺
-						getShopsList: function() {
-
-							axios.get(allUrl.classifyProduct, {
-								params: {
-									pageNum: 1,
-									pageSize: 6,
-								}
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.getShopsList = response.data.data
-									this.$forceUpdate();
-								}
-							})
-						},
-						// 获取推荐商品
-						getGoods: function() {
-							axios.get(allUrl.bestGoods, {
-								params: {
-									pageSize: 10
-								}
-							}).then((response) => {
-								if (response != "" && response.code == 0) {
-									this.remGoods = response.data
-									if (response.data.length > 5) {
-										var goodSwiper = new Swiper('.goods-swiper', {
-											slidesPerView: 5,
-											spaceBetween: 15,
-											autoplay: {
-												delay: 2000,
-												stopOnLastSlide: false,
-												disableOnInteraction: false,
-											},
-											navigation: {
-												nextEl: '.goods-right',
-												prevEl: '.goods-left',
-											},
-											loop: true,
-											observer: true, //修改swiper自己或子元素时，自动初始化swiper
-											observeParents: true //修改swiper的父元素时，自动初始化swiper
-										});
-									} else {
-										$('.goods-btn').hide();
-										var goodSwiper = new Swiper('.goods-swiper', {
-											slidesPerView: 5,
-											spaceBetween: 15,
-											navigation: {
-												nextEl: '.goods-right',
-												prevEl: '.goods-left',
-											},
-											observer: true, //修改swiper自己或子元素时，自动初始化swiper
-											observeParents: true //修改swiper的父元素时，自动初始化swiper
-										});
-									}
-								}
-							})
-						},
-						// 跳转店铺页
-						shopDetail: function(goShopId) {
-							localStorage.setItem(shopsId, goShopId);
-							window.location.href = 'shop-store.html'
-						},
-						// 跳转商品详情
-						goodDetail: function(goGoodId, comtIds) {
-							localStorage.setItem(goodsId, goGoodId);
-							localStorage.setItem(storeId, comtIds);
-							window.location.href = 'shop-detail.html'
-						},
-						// 新闻
-						// 获取所有新闻
-						newsListGet: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleTypeId: this.typeId,
-									pageNum: 1,
-									recommend: 0
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									// this.titList = result.data
-									this.newsAll = result.data.data
-								}
-							}).catch((error) => {
-								//alert(error.message)
 							})
 						},
 						// 获取推荐新闻
@@ -410,150 +254,12 @@
 								//alert(error.message)
 							})
 						},
-						// 获取咨询服务
-						newsListGet2: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleTypeId: this.zxId,
-									pageNum: 1,
-									recommend: 0
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									// this.titList = result.data
-									this.zxAll = result.data.data
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
-						// 获取推荐咨询服务
-						newsTjGet2: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleTypeId: this.zxId,
-									pageNum: 1,
-									recommend: 1
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.zxTj = result.data.data
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
 						// 跳转新闻详情
 						commentList: function(goCommentId) {
 							localStorage.setItem(workId, goCommentId);
-							window.location.href = 'news-xq.html'
-						},
-						// 跳转工程劳务详情
-						commentList2: function(goCommentId) {
-							localStorage.setItem(workId, goCommentId);
-							window.location.href = 'gclwZwxq.html'
-						},
-						// 获取所有视频
-						videoListGet: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleSubTypeId: this.videotypeId,
-									pageNum: 1
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.videoAll = result.data.data
-
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
-						// 获取轮播视频
-						videoListGet2: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleSubTypeId: this.videotypeId2,
-									pageNum: 1
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.videoLb = result.data.data
-									this.$nextTick(() => {
-										this.mySwiper()
-									})
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
-
-						mySwiper: function() {
-							var videoSwiper2 = new Swiper('.video-r', {
-								direction: 'vertical',
-								spaceBetween: 20,
-								slidesPerView: 7,
-								freeMode: true,
-								watchSlidesVisibility: true,
-								watchSlidesProgress: true,
-								observer: true, //修改swiper自己或子元素时，自动初始化swiper
-								observeParents: true //修改swiper的父元素时，自动初始化swiper
-							});
-							var videoSwiper = new Swiper('.video-l', {
-								slidesPerView: 1,
-								// effect : 'cube',
-								spaceBetween: 15,
-								thumbs: {
-									swiper: videoSwiper2,
-								},
-								on: {
-									slideChangeTransitionEnd: function() {
-										$('.video-l video').trigger('pause');
-									},
-								},
-								observer: true, //修改swiper自己或子元素时，自动初始化swiper
-								observeParents: true //修改swiper的父元素时，自动初始化swiper
-							});
-							//鼠标覆盖停止自动切换
-							videoSwiper.el.onmouseover = function() {
-								videoSwiper.autoplay.stop();
-							}
-							//鼠标离开开始自动切换
-							videoSwiper.el.onmouseout = function() {
-								videoSwiper.autoplay.start();
-							}
-							// 页面只有一个视频播放
-							var videos = document.getElementsByTagName('video');
-							for (var i = videos.length - 1; i >= 0; i--) {
-								(function() {
-									var p = i;
-									videos[p].addEventListener('play', function() {
-										for (var j = videos.length - 1; j >= 0; j--) {
-											if (j != p) videos[j].pause();
-										}
-									})
-								})()
-							}
+							window.location.href = 'news-detail.html'
 						},
 						// 获取所有劳务信息
-						gatALabour: function() {
-							axios.get(allUrl.get_labour, {
-								params: {
-									reqType: 0,
-									pageNum: 1,
-								},
-								headers: {
-									Accept: 'application/json'
-								},
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									// this.pageId = result.data[0].id
-									this.allLabourList = result.data.data
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
 						bannerSwiper: function() {
 							// 首页banner轮播
 							const headSwiper = new Swiper('.index-swiper', {
@@ -575,18 +281,10 @@
 					mounted() {
 						$(".headerpage").load("header.html");
 						$(".footerpage").load("footer.html?vid=0717");
-						this.token = localStorage.getItem(tkn);
-						if (this.token && this.token != 'null' && this.token != 'undefined') {
-							this.getPeople();
-						}
-						this.gatBanner();
-						this.getShops();
-						this.getGoods();
-						// this.getUps()
-						this.bannerArticle() //huodong
-						this.getAdvertise()
-						this.getCu()
-						this.getShopsList()
+						this.getIndexsList()
+						this.getCompanyList()
+						this.bannerArticle() //公告
+						this.gatBanner()
 					}
 				})
 			</script>

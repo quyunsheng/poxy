@@ -2,11 +2,13 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>新闻资讯</title>
+		<title>新闻中心</title>
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
-		<link rel="stylesheet" type="text/css" href="./css/qys/zpageNav.css" />
+		<link rel="stylesheet" type="text/css" href="css/zpageNav.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
@@ -23,7 +25,7 @@
 			width: auto;
 			height: auto;
 		}
-			.listFater{
+		.listFater{
 			width: 1200px;
 			margin: 0px auto;
 			display: flex;
@@ -33,11 +35,13 @@
 		}
 		.dataMain{
 			width: 370px;
-			height: 198px;
+			height: 250px;
 			margin-bottom: 10px ;
 			color: white;
 			padding-bottom: 20px;
 			margin-right: 45px;
+			position: relative;
+			background-size: cover;
 		}
 		.dataMain:nth-child(3n){
 			margin-right: 0px;
@@ -53,16 +57,20 @@
 			margin-right: 0px;
 		}
 		.main-h3{
-			margin-top: 50px;
 			padding-top: 5px;
 			padding-bottom: 15px;
 		}
 		.main-p{
 			font-size: 14px;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
 		}
 		.main-p2{
 			font-size: 14px;
 			margin-top: 10px;
+			color: #999999;
 		}
 		.main-p3{
 			font-size: 14px;
@@ -73,10 +81,19 @@
 			background: #f89611;
 		}
 		.liatMain{
-			background: red;
 			padding-top:10px ;
 			padding-left: 10px;
 			padding-bottom:20px ;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1));
+			background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,#000000));
+			background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
+			background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
+			background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
 		}
 		.liatMain2{
 			padding-top:10px ;
@@ -146,29 +163,124 @@
 		}
 		.thiz-banner {
 		    margin-top: 20px;
-		    /* background: url(images/fangImg/news.jpg); */
 		    height: 460px;
 		    background-position: center;
+		}
+		.newsBox{
+			width: 1200px;
+			margin: 30px auto;
+		}
+		.new-list{ overflow: hidden; margin-bottom: 20px;}
+		.new-list .left{
+		    width: 280px;
+		    height: 200px;
+		    float: left;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.new-list .right{
+		    width: calc(100% - 300px);
+		    height: 200px;
+		    float: right;
+		    padding: 0 20px;
+		    border: 1px solid #ccc;
+			position: relative;
+			box-sizing: border-box;
+		}
+		.new-list .p1{
+			border-radius:10px;
+		    height: 20px;
+			line-height: 20px;
+		    text-align: center;
+		    color: #999999;
+		    line-height: 16px;
+			position: absolute;
+			left: 15px;
+			bottom: 18px;
+		}
+		.kongjian-main{
+			width: 10%;
+		    height: 15px;
+		}
+		.new-list .right .p2{
+			font-weight: 700;
+			font-size: 18px;
+			cursor: pointer;
+		}
+		.new-list .right .p2:hover{
+			color: #1C79DC;
+		}
+		.btn-more0 a{
+			display: block;
+			width: 122px;
+			height: 40px;
+			line-height: 40px !important;
+			text-align: center;
+			border-radius: 30px;
+			border: 2px solid #E5E5E5;
+			color: #6e6e6e;
+			font-size: 13px;
+			margin: auto;
+			position: absolute;
+			z-index: 1;
+			transition: ease .65s;
+			bottom: 10px;
+			right: 15px;
+		}
+		.btn-more0 a:before{content:''; display:block; width:100%; height:100%; border-radius:30px; background:#009900; position:absolute; left:0; top:0; z-index:-1; transform:scale(0); opacity:0; transition:ease .65s;}
+		.btn-more0 a:hover{color:#fff !important; box-shadow:0 0 15px rgba(246,85,76,.25); border-color:#009900;}
+		.btn-more0 a:hover:before{opacity:1;transform:scale(.9);}
+		.dian2{
+			margin-top: 10px;
+			width: 93%;
+		    overflow: hidden;
+		    line-height: 25px;
+		    display: -webkit-box;
+		    display: -webkit-box;
+		    -webkit-box-orient: vertical;
+		    -webkit-line-clamp: 3;
+		    overflow: hidden;
+		}
+		.dian4{
+		    -webkit-line-clamp: 4;
+		}
+		.new-list .left img {
+			width: 100%;
+			height: 100%;
+			display: block;
+			min-width: 100%;
+			height: 100%;
+			object-fit: cover;
 		}
 	</style>
 	<body>
 		<div id="app">
 			<div class="headerpage"></div>
-			<!-- <div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div> -->
+			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
 			<div class="listFater">
-				<div v-for="item in newsTj" class="dataMain">
-					<div class="liatMain" :style="{'backgroundImage': 'url(' + item.cover + ')'}" @click="commentList(item.id)">
+				<a target="_blank" v-for="item in newsTj" class="dataMain" :href="['news-detail.html?id='+ item.id]" :style="{'backgroundImage': 'url(' + item.cover + ')'}"
+				 @click="commentList(item.id)">
+					<div class="liatMain">
 						<p class="main-h3">{{item.title}}</p>
 						<p class="main-p">{{item.description}}</p>
 						<p class="main-p2">{{item.source}}</p>
 					</div>
-				</div>
-				<div v-for="item2 in newsAll" class="dataText">
-					<div class="liatMain2" @click="commentList(item2.id)">
-						<img :src="item2.cover" class="liatMain2_pic">
-						<p class="mianP1">{{item2.title}}</p>
-						<p class="mianP2">{{item2.description}}</p>
-						<p class="mianP3">{{item2.source}}</p>
+				</a>
+			</div>
+			<div class="newsBox">
+				<div class="new-list" v-for="item2 in newsAll">
+					<div class="left"><img :src="item2.cover" alt=""></div>
+					<div class="right">
+						<p class="p1 right_fl">{{item2.createTime}}</p>
+						<p class="kongjian-main"></p>
+						<a target="_blank" @click="commentList(item2.id)" :href="['news-detail.html?id='+ item2.id]">
+							<p class="p2">{{item2.title}}</p>
+						</a>
+						<p class="p3 dian2">{{item2.description}}</p>
+						<p class="main-p2">{{item2.source}}</p>
+						<p class="btn-more0"><a @click="commentList(item2.id)" target="_blank" :href="['news-detail.html?id='+ item2.id]">查看更多</a></p>
 					</div>
 				</div>
 			</div>
@@ -181,16 +293,16 @@
 		<div class="footerpage"></div>
 	</body>
 </html>
-<script src="js/fang-js/urlList.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/request.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/qu-js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	var vm = new Vue({
 		el: "#app",
 		data: {
-			typeId: "eb186ab5a3b94ae998675d5f3498070d",
+			typeId: "7b689546f1114499916ba6d2a0f1fec4",
 			newsAll: "",
 			newsTj: "",
 			textMain: "",
@@ -199,46 +311,38 @@
 			pageSize: '', //每一页显示的数据条数
 			total: '', //记录总数
 			maxPage: '', //最大页数
-			allImg: "" ,//详情页的所有图片
-			pageBanner:""
+			allImg: "", //详情页的所有图片
+			pageBanner: ""
 		},
 		methods: {
 			// 获取所有新闻
 			newsListGet: function() {
-				axios.get(allUrl.article_list, {
-					params: {
-						articleTypeId: this.typeId,
-						pageNum: this.pageNum,
-						recommend: 0
-					}
-				}).then((result) => {
+				let myJson = {
+					articleTypeId: this.typeId,
+					pageSize: 20,
+					pageIndex: this.pageNum
+				}
+				axios.post(allUrl.article_list, myJson).then((result) => {
 					if (result != "" && result.code == 0) {
-						// this.titList = result.data
 						this.newsAll = result.data.data
 						this.pageNum = result.data.pageIndex //显示的是哪一页
 						this.pageSize = result.data.pageSize //每一页显示的数据条数
 						this.total = result.data.totalCount //记录总数
 						this.maxPage = result.data.pageCount //最大页数
 					}
-				}).catch((error) => {
-					//alert(error.message)
 				})
 			},
 			// 获取推荐新闻
 			newsTjGet: function() {
-				axios.get(allUrl.article_list, {
+				axios.get(allUrl.article_tj, {
 					params: {
 						articleTypeId: this.typeId,
-						pageNum: this.pageNum,
-						recommend: 1
+						recommend: true
 					}
 				}).then((result) => {
 					if (result != "" && result.code == 0) {
-						// this.titList = result.data
 						this.newsTj = result.data.data
 					}
-				}).catch((error) => {
-					//alert(error.message)
 				})
 			},
 			//分页
@@ -249,18 +353,19 @@
 			// 跳转评论详情
 			commentList: function(goCommentId) {
 				localStorage.setItem(workId, goCommentId);
-				window.location.href = 'news-xq.html'
+				// window.location.href = 'news-detail.html'
+				window.open("news-detail.html?id=" + goCommentId);
 			},
 			// 获取banner
-			gatBanner:function(){
+			gatBanner: function() {
 				axios.get(allUrl.article_list, {
 					params: {
-						articleSubTypeId:"a54d7146fe0e47f4897582a991d3ab14"
-						
+						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
+
 					}
 				}).then((result) => {
 					if (result != "" && result.code == 0) {
-						this.pageBanner =result.data.data[0]
+						this.pageBanner = result.data.data[0]
 					}
 				}).catch((error) => {
 					//alert(error.message)
@@ -271,7 +376,7 @@
 		mounted() {
 			this.newsListGet()
 			this.newsTjGet()
-			this.gatBanner()
+			// this.gatBanner()
 		}
 	})
 </script>
@@ -283,7 +388,7 @@
 		 * footer CopyRight
 		 */
 		$(".headerpage").load("header.html");
-		$(".footerpage").load("footer.html?vid=0717");
+		$(".footerpage").load("footer.html");
 	});
 	$(".liatMain2").each(function() {
 		var src = $(this).find("img").attr("src");

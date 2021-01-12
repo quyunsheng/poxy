@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>云港湾</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="css/fang-css/dpzz.css"/>
+    <link rel="stylesheet" type="text/css" href="css/shop.css"/>
+    <link rel="stylesheet" href="css/ljj-css/shop.css">
+    <link rel="stylesheet" type="text/css" href="css/fang-css/stores.css"/>
+    <script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="./css/footer.css"/>
+    <script src="js/axios.min.js"></script>
+    <script src="js/request.js"></script>
+    <script src="js/qs.min.js"></script>
+    <script src="js/ljj-js/urls.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+<div id="shop">
+    <div class="shop-header">
+        <a href="javascript:goBack(-1)"><img src="img/fang-img/Left.png"></a>
+        <!-- <input class="head-search" type="text" placeholder="请输入商品名称" v-model="findTxt" @keypress="searchGo"/> -->
+    </div>
+    <!-- 店铺列表 -->
+    <div class="allStore">
+        <div class="shopMain clearfix" v-for="iten in remShops">
+            <p><img :src="iten.logo"></p>
+            <div class="storeText">
+                <p>{{iten.name}}</p>
+                <!-- <p><span></span>累计销售</p> -->
+                <p>入驻年限<span style="color: #009999;">{{iten.settlementYears}}</span>年</p>
+                <p @click="shopDetail(iten.id)">进店看看</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="footerpage"></div>
+<script>
+    $(function () {
+        $(".headerpage").load("header.html");
+        $(".footerpage").load("footer.html?vid=0717");
+    });
+</script>
+<script type="text/javascript">
+    new Vue({
+        el: '#shop',
+        data() {
+            return {
+                index: false,
+                getUsers: '',
+                token: '',
+                goodList: [],
+                childShow: false,
+                showSell: false,
+                sellNum: '销量',
+                // 商品参数
+                classifyCode: localStorage.getItem(classifyCode),
+                businessName: '', //商户
+                productName: '', //商品名
+                // 商品详情,加入购物车~判断参数
+                typeModel: localStorage.getItem(typeModel),
+                pdlist: [],
+                outLink: 'javascript:;',
+                storeDetail: '', //店铺详情
+                businessId: localStorage.getItem(shopsId),
+                searchGood: localStorage.getItem(searchGood), //商品名
+                //分页容器
+                page: 1, //显示的是哪一页
+                maxPage: '', //最大页数
+                pageSize: '',
+                isMoreLoad: false, // 是否显示加载更多
+                loadingImg: false, // 加载更多时显示loading图
+                loadLastText: false, // 到底了
+                totals: null, // 用来存放总数量
+                remShops: '',//全部推荐店铺
+            }
+        },
+        methods: {
+
+            // 获取推荐商铺
+            getShops: function () {
+                axios.get(allUrl.bestShops, {
+                    params: {
+                        pageSize: 4
+                    }
+                }).then((response) => {
+                    if (response != "" && response.code == 0) {
+                        this.remShops = response.data
+                        console.log(this.remShops)
+                    } else {
+                        alert(response.message)
+                    }
+                })
+            },
+
+
+            // 跳转店铺页
+            shopDetail: function (goShopId) {
+                localStorage.setItem(shopsId, goShopId);
+                window.location.href = 'shangJia.html';
+            },
+            lookMore: function () {
+                this.page += this.page
+                this.getGoodList();
+            }
+        },
+        mounted: function () {
+            this.getShops()
+        }
+    })
+</script>
+</body>
+</html>

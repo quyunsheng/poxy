@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>公告</title>
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/zpageNav.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.notice-box{
+				width: 900px;
+				margin: 20px auto;
+			}
+			.notice-box li{
+				height: 30px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				border-bottom: 1px dashed #DDDDDD;
+				color: #666;
+				cursor: pointer;
+			}
+			.notice-box p{
+				flex-grow: 1;
+				margin-right: 20px;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.notice-box span{
+				font-size: 12px;
+				color: #999999;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" v-cloak>
+			<div class="headerpage"></div>
+			<ul class="notice-box">
+				<li v-for="item in bannerArticleList" @click="commentList(item.id)">
+					<p>[{{item.articleTypeName}}]{{item.title}}</p>
+					<span>{{item.updateTime}}</span>
+				</li>
+			</ul>
+			<div class="wrap" id="wrap">
+				<zpagenav v-bind:page="pageNum" v-bind:page-size="pageSize" v-bind:total="total" v-bind:max-page="maxPage"
+				 v-on:pagehandler="pageHandler">
+				</zpagenav>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+	</body>
+</html>
+<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: "#app",
+		data: {
+			typeId: "cb5f2bd0599f47088a119fe899213e2f",
+			bannerArticleList: [],
+			pageNum: 1, //显示的是哪一页
+			pageSize: '', //每一页显示的数据条数
+			total: '', //记录总数
+			maxPage: '', //最大页数
+			allImg: "", //详情页的所有图片
+		},
+		methods: {
+			bannerArticle: function() {
+				let myJson = {
+					articleTypeId: this.typeId,
+					pageSize: 20,
+					pageIndex: this.pageNum
+				}
+				axios.post(allUrl.article_list, myJson).then((result) => {
+					if (result != "" && result.code == 0) {
+						this.bannerArticleList = result.data.data
+						this.pageNum = result.data.pageIndex //显示的是哪一页
+						this.pageSize = result.data.pageSize //每一页显示的数据条数
+						this.total = result.data.totalCount //记录总数
+						this.maxPage = result.data.pageCount //最大页数
+					}
+				})
+			},
+			// 跳转评论详情
+			commentList: function(id) {
+				window.open("news-detail.html?id=" + id);
+			},
+			// 获取banner
+			gatBanner: function() {
+				axios.get(allUrl.article_list, {
+					params: {
+						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
+
+					}
+				}).then((result) => {
+					if (result != "" && result.code == 0) {
+						this.pageBanner = result.data.data[0]
+					}
+				}).catch((error) => {
+					//alert(error.message)
+				})
+			},
+			//分页
+			pageHandler: function(pageNum) {
+				this.pageNum = pageNum;
+				this.newsListGet();
+			},
+		},
+		mounted() {
+			this.bannerArticle()
+			// this.gatBanner()
+		}
+	})
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		/*公共部分
+		 * 导航栏
+		 * footer CopyRight
+		 */
+		$(".headerpage").load("header.html");
+		$(".footerpage").load("footer.html");
+	});
+	$(".liatMain2").each(function() {
+		var src = $(this).find("img").attr("src");
+		if (src == null) {
+			$(this).find(".liatMain2_pic").hide();
+		}
+	});
+</script>

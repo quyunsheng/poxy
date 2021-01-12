@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/zpageNav.css" />
+		<!-- <link rel="stylesheet" type="text/css" href="css/duan.css" /> -->
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.merchant-list {
+				margin-bottom: 30px;
+			}
+
+			.ocrBox {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.ocrBox>div {
+				margin-top: 38px;
+			}
+
+			.ocrBox dl {
+				overflow: hidden;
+				padding: 10px 0;
+			}
+
+			.ocrBox dt {
+				width: 100px;
+				text-align: right;
+				line-height: 38px;
+				float: left;
+			}
+
+			.ocrBox dd {
+				width: 458px;
+				text-align: left;
+				margin-left: 10px;
+				float: left;
+			}
+
+			.ocrBox select {
+				width: 100%;
+				height: 40px
+			}
+
+			.ocrBox textarea {
+				width: 100%;
+				max-width: 100%;
+				min-width: 100%;
+				height: 40px;
+				box-sizing: border-box;
+				padding: 5px;
+			}
+
+			.ocrBox .my-centerBox{
+				width: 100px;
+				height: 100px;
+				border: 1px solid #ddd;
+				text-align: left;
+				margin-left: 10px;
+				background: url("images/img-add.png") center no-repeat;
+				float: left;
+				position: relative;
+			}
+			.my-centerBox img{
+				width: 100%;
+				height: 100%;
+				display: none;
+			}
+			.ocrBox .my-centerBox input{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+			}
+			.ocrBox .my-centerBox2 input{
+				width: 100px;
+				height: 100px;
+				opacity: 0;
+			}
+			.ocrBox input {
+				width: 456px;
+				height: 38px;
+				border: none;
+				border: 1px solid #ddd;
+				text-indent: 1rem;
+				float: left;
+			}
+
+			.sub-but {
+				display: inline-block;
+				width: 150px;
+				height: 46px;
+				background: #009900;
+				color: #fff;
+				text-align: center;
+				line-height: 46px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			.ocrBox .my-centerBox2 li{
+				float: left;
+				width: 100px;
+				height: 100px;
+				border: 1px solid #ddd;
+				position: relative;
+				margin: 0 10px 10px 0;
+			}
+			.my-centerBox2 li:hover .imgMb{
+				display: flex;
+			}
+			.upZs{
+				background: url(images/img-add.png) center no-repeat;
+			}
+			.imgDel{
+				width: 15px;
+			}
+			.imgUrl{
+				width: 100%;
+				height: 100%;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.imgMb{
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				background: rgba(0,0,0,0.5);
+				color: #FFFFFF;
+				align-items: center;
+				justify-content: center;
+				display: none;
+				cursor: pointer;
+			}
+			.showIng{
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				background: rgba(255,255,255,0.4);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="shop">
+			<div class="headerpage"></div>
+			<div class="main-width">
+				<div class="ocrBox">
+					<div>
+						<dl>企业登记信息：</dl>
+						<dl>
+							<dt>logo</dt>
+							<dd id="test1" class="my-centerBox">
+								<input @change="uploadImg" type="file" name="file" accept="image/*" >
+								<img id="demo1" :src="logo" ref="demo1pic" />
+							</dd>
+						</dl>
+						<dl>
+							<dt>展示图</dt>
+							<dd id="test2" class="my-centerBox2">
+								<ul>
+									<li v-for="(item,index) in imgBox">
+										<img class="imgUrl" :src="item" />
+										<div class="imgMb" @click="imgDel(index)">
+											删除
+										</div>
+									</li>
+									<li class="upZs">
+										<input @change="uploadImg2" type="file" name="file" accept="image/*" >
+									</li>
+								</ul>
+							</dd>
+						</dl>
+						<dl>
+							<dt>单位性质</dt>
+							<dd>
+								<input placeholder="请输入单位性质" class="myOcompanyDw" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>公司名称</dt>
+							<dd>
+								<input placeholder="请输入公司名称" class="myOcompanyName" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>单位详址</dt>
+							<dd>
+								<input placeholder="请输入公司地址" class="myOcompanyAddress" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>电子信箱</dt>
+							<dd>
+								<input placeholder="请输入电子信箱" class="myOcompanyMail" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>单位网址</dt>
+							<dd>
+								<input placeholder="请输入单位网址" class="myOcompanyCom" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>联系人</dt>
+							<dd>
+								<input placeholder="请输入联系人" class="myOcompanyPeo" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>单位电话</dt>
+							<dd>
+								<input placeholder="请输入单位电话" class="myOcompanyCel" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>单位传真</dt>
+							<dd>
+								<input placeholder="请输入单位传真" class="myOcompanyCz" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>质量认证</dt>
+							<dd>
+								<input placeholder="请输入质量认证" class="myOcompanyRz" type="text">
+							</dd>
+						</dl>
+						<dl>
+							<dt>经营品种</dt>
+							<dd>
+								<textarea placeholder="请输入经营品种" class="myOcompanyType"></textarea>
+							</dd>
+						</dl>
+						<dl>
+							<dt>主要产品</dt>
+							<dd>
+								<textarea placeholder="请输入主要产品" class="myOcompanyTxt"></textarea>
+							</dd>
+						</dl>
+						<dl>
+							<dt>&nbsp;</dt>
+							<dd>
+								<div class="sub-but" @click="addCompany">提交</div>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="showIng">
+					<img src="images/header/tm.gif" >
+				</div>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			$(function() {
+				$(".headerpage").load("header.html");
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+		</script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						logo: '',
+						imgBox:[]
+					}
+				},
+				methods: {
+					addCompany: function() {
+						let myImgBox = JSON.stringify(this.imgBox)
+						let myJson = JSON.stringify({
+							"adress": $('.myOcompanyAddress').val(),
+							"cName": $('.myOcompanyName').val(),
+							"cellPhone": $('.myOcompanyCel').val(),
+							"certification": $('.myOcompanyRz').val(),
+							"email": $('.myOcompanyMail').val(),
+							"fax": $('.myOcompanyCz').val(),
+							"imgs": myImgBox,
+							"logo": this.logo,
+							"nature": $('.myOcompanyDw').val(),
+							"product": $('.myOcompanyTxt').val(),
+							"url": $('.myOcompanyCom').val(),
+							"userName": $('.myOcompanyPeo').val(),
+							"varieties": $('.myOcompanyType').val(),
+						})
+						axios.post(allUrl.companyAuth,myJson,{
+							headers: {
+								'Content-Type': 'application/json;charset=utf-8'
+							}
+						}).then((res) => {
+							if (res != "" && res.code == 0) {
+								alert('提交成功！')
+								window.location.href = 'shop-list.html'
+							}
+						})
+					},
+					uploadImg: function(e) {
+						$('.showIng').css('display','flex')
+						var file = e.target.files[0];
+						let formData = new FormData();
+						formData.append('file', file);
+						axios.post('/shuzhi/storage/store?fileType=0', formData, {
+							headers: {
+								Accept: 'application/json'
+							}
+						}).then((res) => {
+							if (res != "" && res.code == 0) {
+								this.logo = res.data
+								$('.my-centerBox img').show()
+								$('.showIng').hide()
+							}
+						}).catch();
+					},
+					uploadImg2: function(e) {
+						$('.showIng').css('display','flex')
+						var file = e.target.files[0];
+						let formData = new FormData();
+						formData.append('file', file);
+						axios.post('/shuzhi/storage/store?fileType=0', formData, {
+							headers: {
+								Accept: 'application/json'
+							}
+						}).then((res) => {
+							if (res != "" && res.code == 0) {
+								this.imgBox.push(res.data)
+								$('.showIng').hide()
+							}
+						}).catch();
+					},
+					imgDel:function(e){
+						this.imgBox.splice(e, 1)
+						if (this.imgBox.length < 9) {
+							$(".upZs").show()
+						}else{
+							$(".upZs").hide()
+						}
+						if (this.imgBox.length == 0) {
+							$(".upZs").show()
+							$('#file').val('')
+							this.imgBox = []
+						}
+					}
+				},
+				mounted() {}
+			})
+		</script>
+
+	</body>
+</html>

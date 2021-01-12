@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>企业认证</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/footer.css"/>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="css/duan.css"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div class="topNav">
+				<div onclick="goBack()"><img src="img/duan-img/Left.png" width="25" alt=""></div>
+				<span>企业认证</span>
+			</div>
+			<ul class="my-setBox">
+				<li>
+					<span>logo</span>
+					<div class="setBox-logo">
+						<input @change="uploadImg" type="file" name="file" accept="image/*" >
+						<img id="demo1" :src="logo" ref="demo1pic" />
+					</div>
+				</li>
+				<li>
+					<span>单位性质</span>
+					<input placeholder="请输入单位性质" class="myOcompanyDw" type="text">
+				</li>
+				<li>
+					<span>公司名称</span>
+					<input placeholder="请输入公司名称" class="myOcompanyName" type="text">
+				</li>
+				<li>
+					<span>单位详址</span>
+					<input placeholder="请输入公司地址" class="myOcompanyAddress" type="text">
+				</li>
+				<li>
+					<span>电子信箱</span>
+					<input placeholder="请输入电子信箱" class="myOcompanyMail" type="text">
+				</li>
+				<li>
+					<span>单位网址</span>
+					<input placeholder="请输入单位网址" class="myOcompanyCom" type="text">
+				</li>
+				<li>
+					<span>联系人</span>
+					<input placeholder="请输入联系人" class="myOcompanyPeo" type="text">
+				</li>
+				<li>
+					<span>单位电话</span>
+					<input placeholder="请输入单位电话" class="myOcompanyCel" type="text">
+				</li>
+				<li>
+					<span>单位传真</span>
+					<input placeholder="请输入单位传真" class="myOcompanyCz" type="text">
+				</li>
+				<li>
+					<span>质量认证</span>
+					<input placeholder="请输入质量认证" class="myOcompanyRz" type="text">
+				</li>
+				<li>
+					<span>经营品种</span>
+					<textarea placeholder="请输入经营品种" class="myOcompanyType"></textarea>
+				</li>
+				<li>
+					<span>主要产品</span>
+					<textarea placeholder="请输入主要产品" class="myOcompanyTxt"></textarea>
+				</li>
+				<li class="setBox-Img">
+					<div>展示图</div>
+					<div class="clearfix">
+						<div class="setBox-list" v-for="(item,index) in imgBox">
+							<img class="imgUrl" :src="item" />
+							<div class="imgMb" @click="imgDel(index)">
+								删除
+							</div>
+						</div>
+						<div class="upZs setBox-list">
+							<input @change="uploadImg2" type="file" name="file" accept="image/*" >
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="my-but" @click="addCompany">提交</div>
+			<div class="showIng">
+				<img src="../images/header/tm.gif" >
+			</div>
+		</div>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
+<script>
+	new Vue({
+		el: '#app',
+		data() {
+			return {
+				logo: '',
+				imgBox:[]
+			}
+		},
+		methods: {
+			addCompany: function() {
+				let myImgBox = JSON.stringify(this.imgBox)
+				let myJson = JSON.stringify({
+					"adress": $('.myOcompanyAddress').val(),
+					"cName": $('.myOcompanyName').val(),
+					"cellPhone": $('.myOcompanyCel').val(),
+					"certification": $('.myOcompanyRz').val(),
+					"email": $('.myOcompanyMail').val(),
+					"fax": $('.myOcompanyCz').val(),
+					"imgs": myImgBox,
+					"logo": this.logo,
+					"nature": $('.myOcompanyDw').val(),
+					"product": $('.myOcompanyTxt').val(),
+					"url": $('.myOcompanyCom').val(),
+					"userName": $('.myOcompanyPeo').val(),
+					"varieties": $('.myOcompanyType').val(),
+				})
+				axios.post(allUrl.companyAuth,myJson,{
+					headers: {
+						'Content-Type': 'application/json;charset=utf-8'
+					}
+				}).then((res) => {
+					if (res != "" && res.code == 0) {
+						alert('提交成功！')
+						window.location.href = 'shop-list.html'
+					}
+				})
+			},
+			uploadImg: function(e) {
+				$('.showIng').css('display','flex')
+				var file = e.target.files[0];
+				let formData = new FormData();
+				formData.append('file', file);
+				axios.post('/shuzhi/storage/store?fileType=0', formData, {
+					headers: {
+						Accept: 'application/json'
+					}
+				}).then((res) => {
+					if (res != "" && res.code == 0) {
+						this.logo = res.data
+						$('.setBox-logo img').show()
+						$('.showIng').hide()
+					}
+				}).catch();
+			},
+			uploadImg2: function(e) {
+				$('.showIng').css('display','flex')
+				var file = e.target.files[0];
+				let formData = new FormData();
+				formData.append('file', file);
+				axios.post('/shuzhi/storage/store?fileType=0', formData, {
+					headers: {
+						Accept: 'application/json'
+					}
+				}).then((res) => {
+					if (res != "" && res.code == 0) {
+						this.imgBox.push(res.data)
+						$('.showIng').hide()
+					}
+				}).catch();
+			},
+			imgDel:function(e){
+				this.imgBox.splice(e, 1)
+				if (this.imgBox.length < 9) {
+					$(".upZs").show()
+				}else{
+					$(".upZs").hide()
+				}
+				if (this.imgBox.length == 0) {
+					$(".upZs").show()
+					$('#file').val('')
+					this.imgBox = []
+				}
+			}
+		},
+		mounted() {}
+	})
+</script>

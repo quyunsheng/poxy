@@ -1,0 +1,35 @@
+.footer{
+	height: 1.38rem;
+	padding: 0.26rem 0 0.3rem;
+	box-sizing: border-box;
+	background: #FFFFFF;
+	border-top: 2px solid #f5f5f5;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.footer a{
+	float: left;
+	width: 20%;
+	text-align: center;
+	font-size: 0.24rem;
+}
+.footer img{
+	height: 0.4rem;
+}
+.footImg2{
+	display: none;
+}
+.footer p{
+	margin-top: 0.12rem;
+}
+.footer .active .footImg1{
+	display: none;
+}
+.footer .active .footImg2{
+	display: inline-block;
+}
+.footer .active p{
+	color: #0c70a1;
+}

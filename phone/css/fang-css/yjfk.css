@@ -1,0 +1,78 @@
+.lwxq_title {
+	width: 100%;
+	height: 1.16rem;
+	background: #009900;
+}
+.lwxq_title_txt {
+	width: 90%;
+	margin: 0px auto;
+	height: auto;
+	display: flex;
+	padding-top: 0.35rem;
+	justify-content: space-between;
+
+}
+.lwxq_title_txt>a {
+	color: white;
+	font-size: 18px;
+	line-height: 0.54rem;
+}
+.iptMain>textarea{
+	padding-top: 10px;
+	width: 100%;
+	height: 5.5rem;
+	border-left: none;
+	border-right: none;
+	font-size: 15px;
+	border-top: none;
+	border-bottom: solid 1px #eeeeee;
+	resize: none;
+}
+.iptMain2{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: solid 1px #eeeeee;
+}
+.iptMain2>p{
+	width: 35%;
+	height: 0.7rem;
+	line-height: 0.7rem;
+	text-indent: 0.3rem;
+	font-size: 15px;
+	color: #3b3b3b;
+}
+.iptMain2>textarea{
+	padding-top: 10px;
+	width: 90%;
+	height: 0.7rem;
+	font-size: 15px;
+	border: none;
+	resize: none;
+	text-align: right;
+	margin-right: 10px;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #979797;
+	text-indent: 0.3rem;
+	font-size: 15px;
+	margin-top: 20px;
+}
+.iptPhone{
+	width: 95%;
+	margin: 0px auto;
+	color: #9b9b9b;
+	margin-top: 10px;
+}
+#app>:last-child{
+	width: 70%;
+	height: 1rem;
+	border-radius: 0.5rem;
+	background: #009900;
+	color: white;
+	text-align: center;
+	line-height: 1rem;
+	font-size: 16px;
+	margin: 0px auto;
+	margin-top: 1rem;
+}

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商城</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<link rel="stylesheet" href="css/ljj-css/shop.css">
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/request.js"></script>
+		<script src="js/qs.min.js"></script>
+		<script src="js/qurls.js"></script>
+		<script src="js/vue.min.js"></script>
+		<style type="text/css">
+			.shopSwiper .swiper-slide a{
+				background-size: cover !important;
+			}
+			.mescroll {
+				padding-top: 1rem;
+			}
+			.shop-nav {
+				z-index: 98;
+			}
+			.good-select {
+				position: fixed;
+				top: 1.16rem;
+				left: 0;
+				right: 0;
+				z-index: 97;
+				background: #FFFFFF;
+			}
+			.good-select span {
+				height: 0.5rem;
+				display: flex;
+				align-items: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="shop" v-cloak>
+			<div id="index">
+				<div class="header">
+					<input class="head-search" type="text" v-model="findTxt" @keypress="searchGo" placeholder="请输入商品名称" />
+				</div>
+				<div class="shop-cont">
+					<ul class="shop-nav">
+						<li class="good-all" v-if="classifyCode" @click="allNav()">全部分类</li>
+						<!-- 大分类 -->
+						<li class="good-type" v-for="item in allNavs" @click="thizNavType(item.classifyCode)" v-if="!classifyCode">
+							{{item.title}}
+						</li>
+						<!-- 小分类 -->
+						<li class="good-type" v-for="item in childType" v-if="classifyCode" @click="thizType(item.classifyCode)">
+							{{item.title}}
+						</li>
+					</ul>
+					<!-- 商品分类 -->
+					<!-- 顶部轮播 -->
+					<div class="shopSwiper swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" v-for="item in pageBanner">
+								<a href="" :style="{'backgroundImage': 'url(' + item.cover + ')'}"></a>
+							</div>
+						</div>
+						<div class="pagination"></div>
+					</div>
+					<!-- 所有商品 -->
+					<div class="goodAll">
+						<h4 class="allTit">商品推荐</h4>
+						<ul class="clearfix">
+							<li class="good-list fl" v-for="item in shopRecGood" @click="goodDetail(item.id,item.classifyCode)">
+								<div class="good-img">
+									<img :src="item.logo">
+								</div>
+								<p>{{item.name}}</p>
+							</li>
+						</ul>
+					</div>
+					<!-- 分类显示商品 -->
+					<div class="goodBox">
+						<div class="good-select clearfix">
+							<span class="fr" @click="screen">筛选<img src="img/q-img/select.png"></span>
+						</div>
+						<div id="mescroll" class="mescroll">
+							<div v-for="(item,index) in goodList" :key="index" class="goodList">
+								<h4>{{item.name}}</h4>
+								<p>{{item.businessName}}</p>
+								<span class="good-money">￥<i>{{item.price || '面议'}}</i></span>
+								<p>销量：{{item.salesVolume}}</p>
+								<span class="goDetail" @click="goodDetail(item.id,item.classifyCode)">商品详情</span>
+							</div>
+						</div>
+					</div>
+					<div class="more-load" v-if="isMoreLoad" @click="lookMore" style="text-align: center;">
+						<i v-if="loadingImg" v-else></i>
+						<span style="margin: 0.4rem 0 0.3rem;display: block;">查看更多</span>
+					</div>
+					<div class="more-load" v-if="loadLastText" style="text-align: center;color: #C0C0C0;">到底啦〜</div>
+				</div>
+				<!-- 筛选 -->
+				<div class="mb" :class="{block:screenMd}" @click="md"></div>
+				<div class="shop-jump" :class="{block:screenJump}">
+					<ul class="shop-screenNav">
+						<li v-for="item in navList"><a @click="thizType(item.key,item.model)">&nbsp;|&nbsp;{{item.value}}</a></li>
+					</ul>
+					<div>
+						<div class="jump-list">
+							<p><span>价格区间</span><img src="img/q-img/down.png"></p>
+							<input type="text" v-model="startPrice" style="margin-right: 0;" class="price-range" />
+							<span>~</span>
+							<input type="text" v-model="endPrice" class="price-range" />
+						</div>
+						<div class="jump-list">
+							<p><span>价格排序</span><img src="img/q-img/down.png"></p>
+							<ul class="jumpList">
+								<li :class="{scren:moneyShow == index}" v-for="(item, index) in moneyScreen" :key="index" @click="moneyBorder(index)">
+									{{item.name}}
+								</li>
+							</ul>
+						</div>
+						<div class="jump-list">
+							<p><span>销量排序</span><img src="img/q-img/down.png"></p>
+							<ul class="jumpList">
+								<li :class="{scren:salesShow == index}" v-for="(item, index) in salesScreen" :key="index" @click="salesBorder(index)">
+									{{item.name}}
+								</li>
+							</ul>
+						</div>
+						<span class="findShop" @click="findShop">搜索</span>
+					</div>
+				</div>
+				<div class="footerpage"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+				$(".footerpage").load("footer.html");
+			});
+			localStorage.removeItem(searchGood);
+		</script>
+
+		<script type="text/javascript">
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						shopRecGood: '', //推荐商品
+						tabs: true,
+						getUsers: '',
+						token: '',
+						activeIndex: -1, // 初始化点击的索引值
+						goodList: [],
+						navList: '', // 级别导航
+						childType: '', // 子集type列表
+						childShow: false,
+						showSell: false,
+						sellNum: '销量',
+						startPrice: '', // 价格区间（小）
+						endPrice: '', // 价格区间（大）
+						priceSort: false, //是否按价格排序（true = 是，false = 否）
+						priceOrder: false, //价格顺序（1 = 降序，0 = 升序
+						salesVolumeSort: false, //是否按销量排序（true = 是，false = 否）
+						salesVolumeOrder: false, //销量顺序（1 = 降序，0 = 升序）
+						// 商品参数
+						classifyCode: getUrlParam('code'),
+						businessName: '', //商户
+						productName: '', //商品名
+						allNavs: '', // 最大分类列表
+						screenMd: false, //遮罩层
+						screenJump: false, //筛选框
+						provinceId: '', //省份id
+						cityId: '',
+						districtId: '',
+						provinceList: [],
+						cityList: [],
+						districtList: [],
+						districtName: '',
+						moneyShow: '',
+						salesShow: '',
+						moneyScreen: [{
+								name: '默认价格排序'
+							},
+							{
+								name: '价格从低到高'
+							},
+							{
+								name: '价格从高到低'
+							}
+						],
+						salesScreen: [{
+								name: '默认销量排序'
+							},
+							{
+								name: '销量从低到高'
+							},
+							{
+								name: '销量从高到低'
+							}
+						],
+						pdlist: [],
+						findTxt: '', //搜索内容
+						//分页容器
+						page: 1, //显示的是哪一页
+						pageSize: '', //每一页显示的数据条数
+						total: '', //记录总数
+						maxPage: '', //最大页数
+						pageBanner: '',
+						isMoreLoad: false, // 是否显示加载更多
+						loadingImg: false, // 加载更多时显示loading图
+						loadLastText: false, // 到底了
+						totals: null, // 用来存放总数量
+					}
+				},
+				methods: {
+					// 全部分类
+					allNav: function() {
+						$('.goodAll').show();
+						$('.goodBox').hide();
+						$('.wrap').hide();
+						localStorage.removeItem(classifyCode);
+						this.classifyCode = '';
+						axios.get(allUrl.typeList, {
+							params: {
+								classifyCode: ''
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								$('.shopSwiper').show()
+								this.loadLastText = false
+								if (!this.classifyCode) {
+									this.allNavs = response.data;
+									this.childType = response.data;
+								}
+							}
+						});
+					},
+					// 获取下级分类
+					getNav: function() {
+						axios.get(allUrl.getShopNav, {
+							params: {
+								classifyCode: this.classifyCode,
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.navList = response.data;
+							} else {
+								alert(response.message);
+							}
+						})
+					},
+					// 点击总分类列表
+					thizNavType: function(code, m) {
+						$('.shopSwiper').hide();
+						$('.goodAll').hide();
+						$('.goodBox').show();
+						this.classifyCode = code
+						this.page = 1
+						this.goodList = []
+						this.loadingImg = false;
+						this.getTypeList()
+						if(m == 0){
+							this.getShopTabList()
+						}else{
+							this.getGoodList()
+						}
+					},
+					// 点击分类导航
+					thizType: function(code, m) {
+						$('.shopSwiper').hide();
+						$('.goodAll').hide();
+						$('.goodBox').show();
+						this.classifyCode = code
+						this.page = 1
+						this.goodList = []
+						this.loadingImg = false;
+						this.getTypeList()
+						this.getGoodList()
+					},
+					//获取下级分类列表
+					getTypeList: function() {
+						axios.get(allUrl.typeList, {
+							params: {
+								classifyCode: this.classifyCode
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								if (response.data.length > 0) {
+									this.childType = response.data;
+								}
+							} 
+						})
+					},
+					getGoodList: function() {
+						// 防止多次加载
+						if (this.loadingImg) {
+							return;
+						}
+						const myJson = {
+							classifyCode: this.classifyCode,
+							endPrice: this.endPrice,
+							order: this.order,
+							pageNum: this.page,
+							startPrice: this.startPrice,
+							priceOrder: this.priceOrder, //价格顺序（true = 降序，false = 升序）
+							priceSort: this.priceSort, //是否按价格排序（true = 是，false = 否）
+							salesVolumeOrder: this.salesVolumeOrder, //销量顺序（true = 降序，false = 升序)
+							salesVolumeSort: this.salesVolumeSort, //是否按销量排序（true = 是，false = 否）
+						};
+						axios.post(allUrl.getShop, myJson).then((response) => {
+							if (response != "" && response.code == 0) {
+								var myList = response.data.data
+								this.goodList.push.apply(this.goodList, myList);
+								this.page = response.data.pageIndex; //显示的是哪一页
+								this.maxPage = response.data.pageCount; //最大页数
+								if (this.maxPage > this.page) {
+									this.isMoreLoad = true;
+								} else {
+									this.isMoreLoad = false;
+									this.loadLastText = true;
+								}
+								this.loadingImg = false;
+							} else {
+								alert(response.message);
+							}
+						})
+					},
+					// 获取分类推荐商品
+					getShopGood: function() {
+						axios.get(allUrl.getRecGood, {
+							params: {
+								pageSize:10,
+								classifyCode: '',
+								recommend:true
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.shopRecGood = response.data.data
+							}
+						})
+					},
+					// 搜索
+					findShop: function() {
+						this.page = 1
+						this.goodList = []
+						this.getGoodList();
+						this.md();
+					},
+					//分页
+					pageHandler: function(pageNum) {
+						this.page = pageNum;
+						this.getNav(); // 筛选导航条
+						this.getGoodList();
+						this.getTypeList();
+					},
+					// 判断cityId是否为空
+					ifCityId: function() {
+						if (this.cityId == '') {
+							this.cityId = '请选择城市'
+						}
+					},
+					// 切换省份
+					changeS: function() {
+						this.showCity(this.provinceId)
+					},
+					// 列表搜索
+					findShop0: function() {
+						this.page = 1
+						this.getGoodList();
+						this.md();
+					},
+					//筛选点击
+					screen: function() {
+						this.screenJump = true;
+						this.screenMd = true;
+					},
+					//遮罩层
+					md: function() {
+						this.screenJump = false;
+						this.screenMd = false;
+					},
+					//获取地址//省份
+					showProvince: function() {
+						axios.get(allUrl.getPoint, {
+							params: {
+								areaType: 'province',
+								areaId: ''
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.provinceList = response.data;
+							} else {
+								alert(response.message)
+							}
+						})
+					},
+					//获取地址//城市
+					showCity: function(code) {
+						axios.get(allUrl.getPoint, {
+							params: {
+								areaType: 'city',
+								areaId: code
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.cityList = response.data;
+								this.cityId = '';
+							} else {
+								alert(response.message)
+							}
+						})
+					},
+					showDistrict: function(code) {
+						axios.get(allUrl.getPoint, {
+							params: {
+								areaType: 'district',
+								areaId: code
+							},
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.districtList = response.data;
+								this.districtId = '';
+							}
+						})
+					},
+					// 切换省份
+					changeS: function() {
+						this.showCity(this.provinceId)
+					},
+					// 切换城市
+					changeCity: function() {
+						this.showDistrict(this.cityId)
+					},
+					//价格选择
+					moneyBorder(index) {
+						this.moneyShow = index;
+						if (index != 0) {
+							this.priceSort = true;
+							if (index == 1) {
+								this.priceOrder = false;
+							} else if (index == 2) {
+								this.priceOrder = true;
+							}
+						} else {
+							this.priceSort = false;
+							this.priceOrder = false;
+						}
+					},
+					//销量选择
+					salesBorder(index) {
+						this.salesShow = index;
+						if (index != 0) {
+							this.salesVolumeSort = true;
+							if (index == 1) {
+								this.salesVolumeOrder = false;
+							} else if (index == 2) {
+								this.salesVolumeOrder = true;
+							}
+						} else {
+							this.salesVolumeSort = false;
+							this.salesVolumeOrder = '';
+						}
+					},
+					lookMore: function() {
+						this.page += this.page
+						this.getGoodList();
+					},
+					// 跳转商品详情
+					goodDetail: function (id,code) {
+						window.location.href = 'good-detail.html?id='+ id+'&code='+code
+					},
+					// 搜索
+					searchGo: function() {
+						if (this.findTxt) {
+							localStorage.setItem(searchGood, this.findTxt);
+							window.location.href = 'shop-searchList.html';
+						} else {
+							alert('输入值不能为空！');
+							this.findTxt = '';
+						}
+					},
+					// 获取banner
+					gatBanner: function() {
+						axios.get(allUrl.article_list, {
+							params: {
+								articleSubTypeId: "500aaba1129a47eeacc21427deae8684"
+							}
+						}).then((result) => {
+							if (result != "" && result.code == 0) {
+								this.pageBanner = result.data.data;
+								this.$nextTick(() => {
+									this.bannerSwiper();
+								})
+
+							} else {
+								alert(result.message)
+							}
+						})
+					},
+					bannerSwiper: function() {
+						// 轮播图
+						var mySwiper = new Swiper('.shopSwiper', {
+							watchSlidesProgress: true,
+							slidesPerView: 'auto',
+							centeredSlides: true,
+							loop: true,
+							loopedSlides: 3,
+							pagination: {
+								el: '.pagination',
+								clickable: true,
+							},
+							autoplay: true,
+							paginationClickable: true,
+							//用户操作swiper之后，是否禁止autoplay.默认为true：停止。
+							autoplayDisableOnInteraction: false,
+							//拖动释放时不会输出信息，阻止click冒泡。拖动Swiper时阻止click事件。
+							preventLinksPropagation: true,
+							on: {
+								progress: function(progress) {
+									for (i = 0; i < this.slides.length; i++) {
+										var slide = this.slides.eq(i);
+										var slideProgress = this.slides[i].progress;
+										modify = 1;
+										if (Math.abs(slideProgress) > 1) {
+											modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+										}
+										translate = slideProgress * modify * 25 + 'px';
+										scale = 1 - Math.abs(slideProgress) / 5;
+										zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+										slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+										slide.css('zIndex', zIndex);
+										slide.css('opacity', 1);
+										if (Math.abs(slideProgress) > 3) {
+											slide.css('opacity', 0);
+										}
+									}
+								},
+								setTransition: function(transition) {
+									for (var i = 0; i < this.slides.length; i++) {
+										var slide = this.slides.eq(i);
+										slide.transition(transition);
+									}
+								}
+							}
+						});
+					},
+				},
+				mounted: function() {
+					if (this.classifyCode) {
+						$('.shopSwiper').hide()
+						this.getTypeList();
+						this.getNav(); // 筛选导航条
+						this.getGoodList();
+						$('.goodAll').hide();
+						$('.goodBox').show();
+					} else {
+						$('.shopSwiper').show()
+						this.allNav();
+						this.getShopGood()
+					}
+					var _this = this;
+					window.addEventListener('scroll', function() {
+						var scr = document.documentElement.scrollTop || document.body.scrollTop; // 向上滚动的那一部分高度
+						var clientHeight = document.documentElement.clientHeight; // 屏幕高度也就是当前设备静态下你所看到的视觉高度
+						var scrHeight = document.documentElement.scrollHeight || document.body.scrollHeight; // 整个网页的实际高度，兼容Pc端
+						if (scr + clientHeight + 10 >= scrHeight) {
+							if (_this.isMoreLoad) { //this.isMoreLoad控制滚动是否加载更多
+								_this.page = _this.page + 1; // 加载更多页是page+1
+								_this.getGoodList();
+							} else {
+								return;
+							}
+						}
+					});
+					// this.gatBanner();
+				}
+			})
+		</script>
+	</body>
+</html>

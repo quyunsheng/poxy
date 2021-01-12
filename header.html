@@ -36,16 +36,18 @@
 		<div class="head_btm allWidth clearfix">
 			<span class="head_type fl" onclick="showNav()"><img src="images/icon-nav.png">商品分类</span>
 			<ul class="fl head_nav clearfix">
-				<li><a href="index.html">商城首页</a></li>
-				<li><a href="shop-search-store.html" @click="removeSe">品牌商家</a></li>
-				<li><a href="shop.html" @click="removeSe">商品中心</a></li>
+				<li><a href="technical.html">技术资料</a></li>
+				<li><a href="cooperation.html">环氧论坛</a></li>
+				<li><a href="shop-list.html">企业名录</a></li>
+				<li><a href="">环氧BBS</a></li>
 				<li><a href="news.html">新闻中心</a></li>
-				<li><a href="gywm.html">关于我们</a></li>
+				<li><a href="">合作咨询</a></li>
+				<li><a href="about.html">关于我们</a></li>
 			</ul>
 
 			<div class="good_nav" @mouseleave='navLeave()'>
 				<ul class="good_list">
-					<li class="good_type good_pt" v-for="item in navTypeList" @mouseenter="enter(item.classifyCode)">
+					<li class="good_type good_pt" v-for="item in navTypeList" @mouseenter="enter(item.classifyCode,item)">
 						{{item.title}}<img class="good_right" src="images/header/right.png">
 					</li>
 				</ul>
@@ -81,11 +83,8 @@
 	</script>
 	<script type="text/javascript">
 		let allUrl = {
-			getUser: 'yungangwan_app/user/current_user', //获取用户信息
-			typeList: 'yungangwan_app/classify/classify_children', //商品分类
-			mroeList: 'yungangwan_app/classify/classify_children_vo', //二级及以下分类
-			article_list: "yungangwan_app/article/list", //article总接口
-			mageAbout: 'yungangwan_app/config/getByKey',
+			typeList: '/shuzhi/home/tree', //商品分类
+			searchMore:'/shuzhi/home/overall_product',//搜索
 		};
 		new Vue({
 			el: '#headTop',
@@ -107,44 +106,12 @@
 				}
 			},
 			methods: {
-				// 获取用户信息
-				getPeople: function() {
-					this.token = localStorage.getItem(tkn);
-					axios.get(allUrl.getUser, {
-						headers: {
-							Authorization: this.token,
-							Accept: 'application/json',
-						},
-					}).then((response) => {
-						if (response != "" && response.code == 0) {
-							this.getUsers = response.data
-							this.userRoles = response.data.userRoles
-							this.isCompany = response.data.isCompany
-							this.loginIn = '1'
-						}
-					})
-				},
-				// 退出登录
-				logOut: function() {
-					window.localStorage.removeItem(tkn);
-					window.location.href = window.location.href
-				},
-				// 点击验证是否登录
-				uOnLine: function(url) {
-					this.token = localStorage.getItem(tkn);
-					if (this.token && this.token != 'null' && this.token != 'undefined') {
-						window.location.href = url;
-					} else {
-						window.location.href = 'login.html';
-						return false;
-					}
-				},
 				// 分类列表
 				getTypeList: function() {
 					axios.get(allUrl.typeList, {
-						params: {
-							classifyCode: this.classifyCode
-						},
+						// params: {
+						// 	classifyCode: this.classifyCode
+						// },
 					}).then((response) => {
 						if (response != "" && response.code == 0) {
 							this.navTypeList = response.data
@@ -152,30 +119,31 @@
 					})
 				},
 				// 鼠标移入显示二级分类
-				enter(ToclassifyCode) {
+				enter(ToclassifyCode,item) {
 					this.seen = true;
-					axios.get(allUrl.mroeList, {
-						params: {
-							classifyCode: ToclassifyCode
-						},
-					}).then((response) => {
-						if (response != "" && response.code == 0) {
-							this.goodsList = response.data
-						}
-					})
+					this.goodsList = item.children
+					// axios.get(allUrl.mroeList, {
+					// 	params: {
+					// 		classifyCode: ToclassifyCode
+					// 	},
+					// }).then((response) => {
+					// 	if (response != "" && response.code == 0) {
+					// 		this.goodsList = response.data
+					// 	}
+					// })
 				},
 				// 鼠标移出关闭二级分类
 				navLeave: function() {
 					this.seen = false;
 				},
 				// 跳转商品列表
-				storeDetail: function(goStoreId, goStoreName) {
-					localStorage.setItem(storeId, goStoreId);
+				storeDetail: function(code, goStoreName) {
+					localStorage.setItem(classifyCode, code);
 					localStorage.setItem(storeName, goStoreName);
-					window.location.href = 'shop.html'
+					window.location.href = 'good-list.html'
 				},
 				removeSe: function() {
-					localStorage.setItem(storeId, '');
+					localStorage.setItem(classifyCode, '');
 					localStorage.setItem(storeName, '');
 					localStorage.setItem(searchStore, '');
 				},
@@ -190,13 +158,8 @@
 				// 搜索按钮
 				searchGo: function() {
 					if (this.findTxt) {
-						if (this.selectType == '产品') {
-							localStorage.setItem(searchGood, this.findTxt);
-							window.location.href = 'shop-search-good.html'
-						} else if (this.selectType == '店铺') {
-							localStorage.setItem(searchStore, this.findTxt);
-							window.location.href = 'shop-search-store.html'
-						}
+						localStorage.setItem(searchGood, this.findTxt);
+						window.location.href = 'shop-search-good.html'
 					} else {
 						alert('输入值不能为空！')
 						this.findTxt = ''
@@ -233,13 +196,7 @@
 				},
 			},
 			mounted() {
-				this.token = localStorage.getItem(tkn);
-				if (this.token && this.token != 'null' && this.token != 'undefined') {
-					this.getPeople();
-				}
 				this.getTypeList();
-				this.myQrcode();
-				this.myKfNum();
 			}
 		})
 	</script>
