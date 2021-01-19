@@ -3,19 +3,18 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>中国环氧树脂网</title>
+		<title>企业名录</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/shop.css" />
-		<link rel="stylesheet" type="text/css" href="css/footer.css"/>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
-
+		<script src="js/vue.min.js"></script>
 		<script src="js/axios.min.js"></script>
 		<script src="js/request.js"></script>
 		<script src="js/qs.min.js"></script>
-		<script src="js/ljj-js/urls.js"></script>
-		<script src="js/vue.min.js"></script>
+		<script src="js/qurls.js"></script>
 		<style type="text/css">
 			.title {
 				color: rgb(255, 255, 255);
@@ -25,35 +24,42 @@
 				margin-left: -28px;
 				top: 20px;
 			}
-			.commodity-list{
-				height: 3.6rem;
+
+			.commodity-list {
+				height: auto;
+				padding: 0.1rem 0.2rem;
 			}
-			.commodity-list h4{
-				height: 0.8rem;
+			.commodity-list h4 {
+				height: 0.4rem;
+				line-height: 0.4rem;
 				margin-bottom: 0;
+				margin-top: 0.1rem;
 			}
 		</style>
 	</head>
 	<body style="background-color: #f6f6f6;padding: 1.16rem 0 1.5rem 0;">
 		<div id="shop">
-			<div id="index">
-				<div class="lwxq_title">
-					<div class="lwxq_title_txt"><a href="javascript:history.back(-1)"><img src="img/fang-img/Left.png"></a> 
-						<span class="title">合作企业</span> 
-						<a href="#" class="delateSome hidden"><img src="img/q-img/navBtn.png"></a>
-					</div>
-				</div>
-				<div class="shopCont">
-					<div class="clearfix">
-						<a class="commodity-list" v-for="item in remShops" @click="shopDetail(item.id)">
-							<div class="commodity-img">
-								<img :src="item.logo">
-							</div>
-							<h4>{{item.name}}</h4>
-						</a>
-					</div>
+			<div class="head-title">
+				<div class="head-title-box"><a href="javascript:history.back(-1)"><img src="img/Left.png"></a>
+					<span class="title">企业名录</span>
+					<a href="shop-add.html" class="delateSome">申请+</a>
 				</div>
 			</div>
+			<div class="shopCont">
+				<div class="clearfix">
+					<a class="commodity-list" v-for="item in remShops" @click="shopDetail(item.id)">
+						<div class="commodity-img">
+							<img :src="item.logo">
+						</div>
+						<h4>{{item.cName}}</h4>
+					</a>
+				</div>
+				<div class="more-load" v-if="isMoreLoad" @click="lookMore" style="text-align: center;">
+					<i v-if="loadingImg" v-else></i>
+					<span style="margin-top: 0.4rem;display: block;">查看更多</span>
+				</div>
+			</div>
+			<div class="more-load" v-if="loadLastText" style="text-align: center;margin-top: 20px;">到底啦〜</div>
 			<div class="footerpage"></div>
 		</div>
 		<script type="text/javascript">
@@ -64,61 +70,50 @@
 				el: '#shop',
 				data() {
 					return {
-						getUsers: '',
-						token: '',
 						remShops: [],
 						//分页容器
-						pageSize: '',
+						//分页容器
+						page: 1, //显示的是哪一页
+						pageSize: 10, //每一页显示的数据条数
+						maxPage: '', //最大页数
+						myPage: 1, //跳转页面
+						isMoreLoad: false, // 是否显示加载更多
+						loadingImg: false, // 加载更多时显示loading图
+						loadLastText: false, // 到底了
+						totals: null, // 用来存放总数量
 					}
 				},
 				methods: {
-					// 点击验证是否登录
-					uOnLine: function(url) {
-						this.token = localStorage.getItem(tkn);
-						if (this.token == '' || this.token != null || this.token == 'null' || this.token == 'undefined' || this.token ==
-							undefined) {
-							window.location.href = 'i-login.html';
-							return false;
-						}
-						window.location.href = url;
-					},
-					// 获取用户信息
-					getPeople: function() {
-						this.token = localStorage.getItem(tkn);
-						axios.get(allUrl.getUser, {
-							headers: {
-								Authorization: this.token,
-								Accept: 'application/json',
-							},
-						}).then((response) => {
-							if (response != "" && response.code == 0) {
-								this.getUsers = response.data;
-							} else if (response.code == 7) {
-								window.localStorage.removeItem(tkn);
-								alert('登录失效，请重新登录！')
-								window.location.href = 'i-login.html';
-							}
-						})
-					},
-					// 获取推荐商铺
+					// 获取企业
 					getShops: function() {
-						axios.get(allUrl.bestShops,{
-							params:{
-								pageSize:0
-							}
-						}).then((response) => {
-							if (response != "" && response.code == 0) {
-								this.remShops = response.data
-							} else {
-								alert(response.message)
+						let myJson = {
+							pageIndex: this.page,
+							pageSize: 20,
+							dismount:2
+						}
+						axios.post(allUrl.companyList, myJson).then((result) => {
+							if (result != "" && result.code == 0) {
+								var myList = result.data.data //当前页数据
+								this.remShops.push.apply(this.remShops, myList); //在数据列表里面添加新获取的数据
+								this.page = result.data.pageIndex; //显示的是哪一页
+								this.pageSize = result.data.pageSize //每一页显示的数据条数
+								this.total = result.data.totalCount //记录总数
+								this.maxPage = result.data.pageCount //最大页数
+								if (this.maxPage > this.page) { //当前页小于总页数时调用成功显示加载中图片
+									this.isMoreLoad = true;
+								} else { //当前页>=总页数时显示已经到底部文字
+									this.isMoreLoad = false;
+									this.loadLastText = true;
+								}
+								this.loadingImg = false; //赋值成功后移除加载中图片
 							}
 						})
 					},
 					// 跳转店铺页
-					shopDetail:function(goShopId){
-						localStorage.setItem(shopsId,goShopId);
+					shopDetail: function(goShopId) {
+						localStorage.setItem(shopsId, goShopId);
 						// window.location.href = 'shangJia.html'
-						window.location.href = 'shangJia.html?id='+ goShopId;
+						window.location.href = 'shangJia.html?id=' + goShopId;
 					},
 					lookMore: function() {
 						this.page += this.page
@@ -126,10 +121,6 @@
 					}
 				},
 				mounted: function() {
-					this.token = localStorage.getItem(tkn);
-					if (this.token && this.token != 'null' && this.token != 'undefined') {
-						this.getPeople();
-					}
 					this.getShops();
 				}
 			})

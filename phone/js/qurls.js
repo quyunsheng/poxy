@@ -8,18 +8,24 @@ let allUrl = {
 	typeList:'/shuzhi/home/classify_children',//通过code获得子分类
 	getgoodDetail:'/shuzhi/home/detail_product',//获取商品详情
 	getRecGood:'/shuzhi/home/getRelevantProduct',//通过商品classifyCode获取相关推荐
+	addOrder:'/shuzhi/order/add_or_update',//提交订单
 	// 全局搜索
 	searchGoods:'yungangwan_app/product/overall_product',//搜索产品
 	//内容相关
 	mageAbout:'yungangwan_app/config/getByKey',//关于我们
+	article_tj:'/shuzhi/home/getGoodArticle',//推荐文章
 	article_list:"/shuzhi/home/articleList",//article总接口
 	article_detail:'/shuzhi/home/articleDetail',//article详情
 	companyAuth:'/shuzhi/commpany/addOrUpdateCommpany',//企业认证
+	companyList:'/shuzhi/home/CommpanyPagingList',//企业列表
+	companyDetail:'/shuzhi/home/detailCommpany',//企业详情
 	//上传
 	upLoad:'/shuzhi/storage/store',//单文件上传
+	upMessage:'/shuzhi/message/addOrUpdateMessage',//留言
 	searchMore:'/shuzhi/home/overall_product',//搜索
 	technicalType:'/shuzhi/home/menuTree',//技术资料分类树
 	technicalList:'/shuzhi/home/technicalList',//技术资料分页显示
 	technicalDetail:'/shuzhi/home/technicalDetail',//技术资料详情
 	getColumn:'/shuzhi/home/subTypeList',//获取栏目信息
+	getBanner:'/shuzhi/home/getArticleBanner',//获取栏目banner
 };

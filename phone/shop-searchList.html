@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>云港湾</title>
+		<title>搜索结果</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/fang-css/dpzz.css" />
 		<link rel="stylesheet" type="text/css" href="css/shop.css" />
@@ -17,24 +17,29 @@
 		<script src="js/qurls.js"></script>
 		<script src="js/vue.min.js"></script>
 	</head>
-	<body>
+	<body style="padding-top: 1.2rem;">
 		<div id="shop">
 			<div id="index">
-				<div class="shop-header">
-					<a href="javascript:goBack(-1)"><img src="img/fang-img/Left.png"></a>
+				<div class="head-title">
+					<div class="head-title-box">
+						<a href="javascript:goBack(-1)"><img src="img/Left.png"></a>
+						<a style="margin: 0 auto;">{{productName}}</a>
+						<a class="delateSome" style="opacity: 0;"><img src="img/navBtn.png"></a>
+					</div>
 				</div>
 				<div class="shopCont">
 					<!-- 商品分类 -->
 					<!-- 分类显示商品 -->
 					<div class="goodBox">
 						<div id="mescroll" class="mescroll">
-							<div v-for="item in goodList" class="goodList">
-								<h4>{{item.businessName}}</h4>
+							<div v-for="item in goodList" class="goodList" @click="goodDetail(item.id,item.classifyCode)">
+								<h4>{{item.name}}</h4>
+								<img :src="item.logo" >
 								<!--<p>{{item.businessName}}</p>-->
 								<!--<span class="goodList-xx">库存：{{item.productSpecsStock}}</span><span class="goodList-xx">规格：{{item.productSpecsName}}</span>-->
-								<span class="good-money">￥<i>{{item.price}}</i></span>
+								<span class="good-money"><i>{{item.price}}￥</i></span>
 								<p>销量：{{item.salesVolume}}</p>
-								<span class="goDetail" @click="goodDetail(item.id,item.classifyCode)">商品详情</span>
+								<span class="goDetail">商品详情 →</span>
 							</div>
 						</div>
 						<div class="more-load" v-if="isMoreLoad" @click="lookMore" style="text-align: center;">
@@ -51,23 +56,9 @@
 				el: '#shop',
 				data() {
 					return {
-						index: false,
-						getUsers: '',
-						token: '',
 						goodList: [],
-						childShow: false,
-						showSell: false,
-						sellNum: '销量',
 						// 商品参数
-						classifyCode: localStorage.getItem(classifyCode),
-						businessName: '', //商户
-						productName: '', //商品名
-						// 商品详情,加入购物车~判断参数
-						pdlist: [],
-						outLink: 'javascript:;',
-						storeDetail: '', //店铺详情
-						businessId: localStorage.getItem(shopsId),
-						searchGood: localStorage.getItem(searchGood), //商品名
+						productName: localStorage.getItem('searchGood'), //商品名
 						//分页容器
 						page: 1, //显示的是哪一页
 						maxPage: '', //最大页数
@@ -79,9 +70,6 @@
 					}
 				},
 				methods: {
-					addCart: function() {
-
-					},
 					getGoodList: function() {
 						// 防止多次加载
 						if (this.loadingImg) {

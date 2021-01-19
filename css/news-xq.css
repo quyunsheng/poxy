@@ -1,10 +1,3 @@
-.thiz-banner {
-	margin-top: 20px;
-	background: url(../../images/fangImg/news.jpg);
-	height: 460px;
-	background-position: center;
-
-}
 .xqMain{
 	width: 1200px;
 	height: auto;
@@ -119,6 +112,8 @@
 	display: flex;
 	justify-content: space-around;
 }
-.listPic>img{
-	max-height: 210px;
+.xqMain_title img{
+	display: block;
+	max-width: 90%;
+	margin: 20px auto;
 }

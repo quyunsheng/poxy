@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>技术资料</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.technical-top{
+				position: fixed;
+				top: 1.16rem;
+				left: 0;
+				right: 0;
+				overflow-y: auto;
+				background: #FFFFFF;
+				z-index: 9999;
+			}
+			.technical-nav{
+				padding: 0.3rem;
+				overflow-x: auto;
+				border-bottom: 1px solid #009900;
+				position: relative;
+			}
+			.technical-nav .on{
+				color: #009900;
+			}
+			.technical-nav span{
+				padding: 5px 10px;
+			}
+			.tech-left{
+				background: #FFFFFF;
+			}
+			.help-list{
+				border-bottom: #009900 1px solid;
+			}
+			.help-list .active{
+				background: #009900;
+				color: #fff;
+			}
+			.help-tit{
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				padding: 0 20px 0 30px;
+				font-size: 16px;
+				font-weight: 500;
+				background: #fff;
+				cursor: pointer;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.help-tit:hover{
+				background: #009900;
+				color: #FFFFFF;
+			}
+			.help-tit i{
+				position: absolute;
+				right: 20px;
+				top: 11px;
+				-webkit-transition: -webkit-transform 0.2s ease-out;
+				-moz-transition: -moz-transform 0.2s ease-out;
+				-o-transition: -o-transform 0.2s ease-out;
+				-ms-transition: -ms-transform 0.2s ease-out;
+				transform:rotate(0deg);
+			}
+			.help-tit:hover .fa-caret-right{
+				transform:rotate(90deg);
+			}
+			.help-item .help-that{
+				background: #eee;
+			}
+			.help-item li a{
+				height: 40px;
+				line-height: 40px;
+			}
+			.help-item .help-that a{
+				height: 40px;
+				line-height: 40px;
+				color: #FFFFFF;
+				font-weight: bold;
+				background: rgba(108,208,108,0.8);
+			}
+			.help-third{
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				margin: 0 10px;
+				border-bottom: 1px dashed #FFFFFF;
+				cursor: pointer;
+			}
+			.help-item li:hover{
+				background: #eee;
+				border-left: #009900 3px solid;
+			}
+			.help-item li:hover a{
+				color: #FFFFFF;
+				font-weight: bold;
+				background: rgba(108,208,108,0.8);
+			}
+			.help-item li a{
+				display: block;
+				text-align: center;
+			}
+			.help-item li .on{
+				color: #009900;
+			}
+			.help-item li .help-third:hover{
+				color: #009900;
+			}
+			.tech-btn{
+				position: fixed;
+				bottom: 1.4rem;
+				left: 0;
+				right: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.technical-mage{
+				margin-top: 60px;
+				padding-bottom: 1.4rem;
+			}
+			.technical-list{
+				padding: 0.2rem 0.3rem;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				background: #FFFFFF;
+				margin-bottom: 10px;
+			}
+			.technical-list .technical-img{
+				float: left;
+				width: 90px;
+				height: 90px;
+				overflow: hidden;
+				text-align: center;
+			}
+			.technical-img img{
+				max-width: 100%;
+				max-height: 100%;
+				width: auto;
+				height: auto;
+			}
+			.technical-list p{
+				flex-grow: 1;
+				margin-right: 20px;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+			}
+			.help-down{
+				width: 20px;
+			}
+		</style>
+	</head>
+	<body style="background: #f5f5f5;padding-top: 1.16rem;">
+		<div id="app" v-cloak>
+			<div class="head-title">
+				<div class="head-title-box">
+					<a href="javascript:goBack(-1)"><img src="img/Left.png"></a>
+					<a>技术资料</a>
+					<a class="delateSome" style="opacity: 0;"><img src="img/navBtn.png"></a>
+				</div>
+			</div>
+			<div class="technical-top">
+				<div class="technical-nav">
+					<span v-for="item in technicalType" :class="firstCode == item.classifyCode?'on':''"  @click="showFirst(item)">{{item.title}}</span>
+				</div>
+				<div class="tech-left" v-show="showNav">
+					<div class="help-list active">
+						<ul class="help-item">
+							<li class="help-that" v-for="list in secList.children">
+								<a href="#"  @click="showSec(list)">{{list.title}}</a>
+								<div v-show="secCode == list.classifyCode">
+									<div v-for="third in list.children" @click="showTechnical(third)" :class="thirdCode == third.classifyCode?'help-third on':'help-third'">{{third.title}}</div>	
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>	
+			</div>
+			<div class="mb" @click="hideNav"></div>
+			<div class="technical-mage">
+				<div class="technical-list clearfix" v-for="item in technicalList">
+					<div class="technical-img">
+						<img src="../images/05.png" >
+					</div>
+					<p>{{item.name}}</p>
+					<img @click="downFile(item)" class="help-down fr" src="../images/down.png" >
+				</div>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+			new Vue({
+				el: '#app',
+				data() {
+					return {
+						technicalType: [],
+						technicalList: [],
+						secList:[],
+						activeId:'',
+						//分页容器
+						pageNum: 1, //显示的是哪一页
+						pageSize: '', //每一页显示的数据条数
+						total: '', //记录总数
+						maxPage: '', //最大页数
+						allImg: "", //详情页的所有图片
+						pageBanner: "",
+						firstCode:'',
+						secCode:'',
+						thirdCode:'',
+						showNav:false,
+						firstCode2:'',
+						secCode2:'',
+					}
+				},
+				methods: {
+					// 技术资料分类树
+					getTechnicalType: function() {
+						axios.get(allUrl.technicalType).then((result) => {
+							if (result != "" && result.code == 0) {
+								this.technicalType = result.data
+								this.firstCode = result.data[0].classifyCode
+								this.secCode =  result.data[0].children[0].classifyCode
+								this.thirdCode = result.data[0].children[0].children[0].classifyCode
+								this.activeId = result.data[0].children[0].children[0].id
+								this.firstCode2 = result.data[0].classifyCode
+								this.secCode2 = result.data[0].children[0].classifyCode
+								this.getTechnicalList()
+							}
+						})
+					},
+					//分页
+					pageHandler: function(pageNum) {
+						this.pageNum = pageNum;
+						this.newsListGet();
+					},
+					// 跳转评论详情
+					commentList: function(goCommentId) {
+						localStorage.setItem(workId, goCommentId);
+						window.location.href = 'news-detail.html'
+					},
+					showFirst:function(item){
+						this.firstCode = item.classifyCode
+						this.secList = item
+						this.showNav = true
+						$('.mb').show()
+					},
+					hideNav:function(){
+						this.showNav = false
+						this.firstCode = this.firstCode2
+						this.secCode = this.secCode2
+						$('.mb').hide()
+					},
+					showSec:function(list){
+						this.secCode = list.classifyCode
+					},
+					showTechnical:function(third){
+						if(this.thirdCode != third.classifyCode){
+							this.thirdCode = third.classifyCode
+							this.firstCode2 = this.firstCode
+							this.activeId = third.id
+							this.technicalList = []
+							this.getTechnicalList()
+						}else{
+							this.firstCode = this.firstCode2
+							this.secCode = this.secCode2
+						}
+						this.showNav = false
+						$('.mb').hide()
+					},
+					getTechnicalList:function(){
+						const myJson = {
+							menuId: this.activeId,
+							pageNum: this.page,
+							pageSize:10
+						}
+						axios.post(allUrl.technicalList,myJson).then((response) => {
+							if (response != "" && response.code == 0) {
+								this.technicalList = response.data.data
+								this.page =  response.data.pageIndex//显示的是哪一页
+								this.pageSize = response.data.pageSize//每一页显示的数据条数
+								this.total = response.data.totalCount //记录总数
+								this.maxPage = response.data.pageCount //最大页数
+							}
+						})
+					},
+					downFile:function(item){
+						var ele = document.createElement('a');// 创建下载链接
+						    ele.download = item.name;//设置下载的名称
+						    ele.style.display = 'none';// 隐藏的可下载链接
+						    // 字符内容转变成blob地址
+						    var blob = new Blob([item.pictureLibNum]);
+						    ele.href = URL.createObjectURL(blob);
+						    // 绑定点击时间
+						    document.body.appendChild(ele);
+						    ele.click();
+						    // 然后移除
+						    document.body.removeChild(ele);
+					},
+				},
+				mounted() {
+					this.getTechnicalType()
+				}
+			})
+		</script>
+	</body>
+</html>

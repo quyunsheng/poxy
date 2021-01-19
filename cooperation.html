@@ -113,29 +113,21 @@
 				},
 				// 获取banner
 				gatBanner:function(){
-					axios.get(allUrl.article_list, {
+					axios.get(allUrl.getBanner, {
 						params: {
-							articleSubTypeId:"e7555bae030e4a7a9840a68d799f5ef5"
+							articleSubTypeId: "53ed4d362beb44af8f056a4ac5e3e09e",
 						}
 					}).then((result) => {
 						if (result != "" && result.code == 0) {
-							this.pageBanner =result.data.data[0]
+							this.pageBanner = result.data[0]
 						}
 					})
 				},
-				addHt:function(){
-					this.token = localStorage.getItem(tkn);
-					if(this.token && this.token != 'null' && this.token != 'undefined'){
-						window.location.href = 'add-huati_PC.html'
-					}else{
-						alert('请先登录！')
-					}
-				}
 			},
 			
 			mounted() {
 				this.titleListGet()
-				// this.gatBanner()
+				this.gatBanner()
 			}	
 		})
 	</script>

@@ -382,7 +382,29 @@
 .right-show img {
 	vertical-align: middle;
 }
-
+.rightBox .right-jump{
+	position: absolute;
+	right: 50px;
+	top: 5px;
+	padding-right: 5px;
+	display: none;
+}
+.rightBox span{
+	background: #F5F5F5;
+	border-radius: 5px;
+	width: 120px;
+	height: 40px;
+	box-sizing: border-box;
+	text-align: center;
+	line-height: 40px;
+	display: block;
+}
+.rightBox li:hover .right-jump{
+	display: block;
+}
+.rightBox span img{
+	width: 100%;
+}
 .right-show .cart-num {
 	display: block;
 	width: 20px;
@@ -410,14 +432,21 @@
 .foot-link{
 	color: #666666;
 }
+.foot-link li{
+	float: left;
+}
+.foot-link span{
+	float: left;
+	padding: 0 20px;
+}
 .foot-link p{
-	font-size: 18px;
-	margin-bottom: 20px;
-	font-weight: 700;
+	margin-top: 20px;
 }
 .foot-link a{
 	display: block;
-	margin-top: 20px;
+}
+.foot-link a:hover{
+	color: #009900;
 }
 .foot-btm{
 	text-align: center;

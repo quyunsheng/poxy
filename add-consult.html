@@ -61,7 +61,7 @@
 	<body>
 		<div id="app" v-cloak>
 			<div class="headerpage"></div>
-			<!-- <div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div> -->
+			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
 			<div class="consult-box">
 				<h2>合作咨询</h2>
 				<div class="consult-list">
@@ -90,7 +90,9 @@
 <script type="text/javascript">
 	var vm = new Vue({
 		el: "#app",
-		data: {},
+		data: {
+			pageBanner:''
+		},
 		methods: {
 			upConsult: function() {
 				if (!$('.cname').val()) {
@@ -128,22 +130,21 @@
 				})
 			},
 			// 获取banner
-			gatBanner: function() {
-				axios.get(allUrl.article_list, {
+			gatBanner:function(){
+				axios.get(allUrl.getBanner, {
 					params: {
-						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
-
+						articleSubTypeId: "5de1a94d3935468ba76535f20ce8fe2c",
 					}
 				}).then((result) => {
 					if (result != "" && result.code == 0) {
-						this.pageBanner = result.data.data[0]
+						this.pageBanner = result.data[0]
 					}
 				})
 			},
 
 		},
 		mounted() {
-			// this.gatBanner()
+			this.gatBanner()
 		}
 	})
 </script>

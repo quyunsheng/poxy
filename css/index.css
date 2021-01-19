@@ -226,7 +226,7 @@
 }
 
 .merchant-top img {
-	width: 100px;
+	max-width: 100%;
 	height: 100px;
 	border-radius: 3px;
 }
@@ -268,7 +268,7 @@
 }
 
 .merchant-mage {
-	padding: 14px 20px;
+	padding: 14px 15px;
 }
 
 .merchant-cont {
@@ -286,13 +286,15 @@
 	width: 125px;
 	height: 34px;
 	line-height: 34px;
-	color: #FFFFFF;
-	text-align: center;
-	background: #f09700;
+	color: #999;
+	text-align: right;
+	/* background: #f09700; */
 	border-radius: 17px;
-	margin: 20px 20px 20px 0;
+	margin: 20px 0;
 }
-
+.merchant-shop:hover{
+	color: #0d80b7;
+}
 .merchant-shop img {
 	vertical-align: middle;
 	margin-right: 5px;
@@ -1005,7 +1007,7 @@
 }
 
 .jzBox-last li img {
-	height: 145px;
+	/* height: 145px; */
 }
 
 /* 公用 */
@@ -1056,7 +1058,8 @@
 
 .index-img {
 	text-align: center;
-	height: 180px;
+	/* height: 180px; */
+	height: 195px;
 	line-height: 180px;
 	background: #EDEDEE;
 }
@@ -1195,7 +1198,7 @@
 	height: 60px;
 	text-align: center;
 	position: sticky;
-	top: 88px;
+	top: 0;
 	line-height: 60px;
 	box-shadow: 0 1px 2px #d2c8c8;
 	z-index: 11;
@@ -1217,4 +1220,7 @@
 .about-link .active {
     background: #64d264;
     color: #FFFFFF;
+}
+.about-mage{
+	margin: 30px auto;
 }

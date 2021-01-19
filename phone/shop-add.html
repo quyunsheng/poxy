@@ -4,25 +4,145 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>企业认证</title>
-		<link rel="stylesheet" type="text/css" href="css/index.css"/>
-		<link rel="stylesheet" type="text/css" href="css/footer.css"/>
-		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="css/duan.css"/>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.my-setBox li {
+				padding: 10px 0.3rem;
+				border-bottom: 1px solid #e6e6e6;
+				position: relative;
+				display: flex;
+				align-items: center;
+			}
+
+			.my-setBox li a {
+				display: block;
+			}
+
+			.my-setBox li span {
+				display: inline-block;
+				width: 80px;
+				color: #333;
+				line-height: 30px;
+			}
+			.my-setBox li input{
+				height: 30px;
+			}
+			.my-but {
+			    width: 80%;
+			    height: 45px;
+			    line-height: 45px;
+			    background: #009900;
+			    margin: 50px auto 0;
+			    border-radius: 45px;
+			    color: #fff;
+			    text-align: center;
+			}
+			.setBox-logo {
+				display: inline-block;
+				position: relative;
+				width: 90px;
+				height: 90px;
+				background: url(img/upImg.png);
+				background-size: cover;
+			}
+			.setBox-logo img{
+				width: 100%;
+				height: 100%;
+			}
+			.my-setBox .setBox-logo input{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+			}
+			.my-setBox textarea{
+				width: calc(100% - 80px);
+				min-width: calc(100% - 80px);
+				max-width: calc(100% - 80px);
+				min-height: 60px;
+				border: 1px solid #999999;
+				padding: 5px;
+				box-sizing: border-box;
+				height: 60px;
+			}
+			.showIng{
+				position: fixed;
+				z-index: 99;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				display: none;
+			}
+			.setBox-list{
+			    float: left;
+			    width: 2.1rem;
+			    height: 2.1rem;
+			    border: 1px solid #ddd;
+				box-sizing: border-box;
+			    position: relative;
+			    margin: 10px 10px 0 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.my-setBox .setBox-list input{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+			}
+			.upZs{
+				background: url(img/upImg.png);
+				background-size: cover;
+				border: 0 !important;
+			}
+			.imgUrl{
+				max-width: 100%;
+				max-height: 100%;
+				width: auto;
+				height: auto;
+			}
+			.imgMb{
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0,0,0,0.5);
+				color: #FFFFFF;
+				text-align: center;
+				font-size: 13px;
+				padding: 3px 0;
+			}
+		</style>
 	</head>
-	<body>
-		<div id="app">
-			<div class="topNav">
-				<div onclick="goBack()"><img src="img/duan-img/Left.png" width="25" alt=""></div>
-				<span>企业认证</span>
+	<body style="padding-top: 1.2rem;">
+		<div id="app" v-cloak>
+			<div class="head-title">
+				<div class="head-title-box">
+					<a href="javascript:goBack(-1)"><img src="img/Left.png"></a>
+					<a>企业认证</a>
+					<a class="delateSome" style="opacity: 0;"><img src="img/navBtn.png"></a>
+				</div>
 			</div>
 			<ul class="my-setBox">
 				<li>
 					<span>logo</span>
 					<div class="setBox-logo">
-						<input @change="uploadImg" type="file" name="file" accept="image/*" >
-						<img id="demo1" :src="logo" ref="demo1pic" />
+						<input @change="uploadImg" type="file" name="file" accept="image/*">
+						<img v-show="logo" :src="logo" ref="demo1pic" />
 					</div>
 				</li>
 				<li>
@@ -70,23 +190,25 @@
 					<textarea placeholder="请输入主要产品" class="myOcompanyTxt"></textarea>
 				</li>
 				<li class="setBox-Img">
-					<div>展示图</div>
-					<div class="clearfix">
-						<div class="setBox-list" v-for="(item,index) in imgBox">
-							<img class="imgUrl" :src="item" />
-							<div class="imgMb" @click="imgDel(index)">
-								删除
+					<div>
+						<div>展示图</div>
+						<div class="clearfix">
+							<div class="setBox-list" v-for="(item,index) in imgBox">
+								<img class="imgUrl" :src="item" />
+								<div class="imgMb" @click="imgDel(index)">
+									删除
+								</div>
 							</div>
-						</div>
-						<div class="upZs setBox-list">
-							<input @change="uploadImg2" type="file" name="file" accept="image/*" >
+							<div class="upZs setBox-list">
+								<input @change="uploadImg2" type="file" name="file" accept="image/*">
+							</div>
 						</div>
 					</div>
 				</li>
 			</ul>
 			<div class="my-but" @click="addCompany">提交</div>
 			<div class="showIng">
-				<img src="../images/header/tm.gif" >
+				<img src="../images/header/tm.gif">
 			</div>
 		</div>
 		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
@@ -101,11 +223,50 @@
 		data() {
 			return {
 				logo: '',
-				imgBox:[]
+				imgBox: []
 			}
 		},
 		methods: {
 			addCompany: function() {
+				if(!$('.myOcompanyDw').val()){
+					alert('请输入单位性质！')
+					return false
+				}
+				if(!$('.myOcompanyName').val()){
+					alert('请输入单位名称！')
+					return false
+				}
+				if(!$('.myOcompanyAddress').val()){
+					alert('请输入单位详址！')
+					return false
+				}
+				if(!$('.myOcompanyPeo').val()){
+					alert('请输入联系人！')
+					return false
+				}
+				if(!$('.myOcompanyCel').val()){
+					alert('请输入单位电话！')
+					return false
+				}
+				if(!$('.myOcompanyMail').val()){
+					alert('请输入单位邮箱！')
+					return false
+				}
+				if(!$('.myOcompanyType').val()){
+					alert('请输入经营品种！')
+					return false
+				}
+				
+				var re = /^1\d{10}$/ 
+				if (!re.test($('.myOcompanyCel').val())) {
+					alert("请输入正确的电话格式！");
+					return false
+				}
+				var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
+				if(re2.test($('.myOcompanyMail').val())){
+					alert("请输入正确的邮箱格式！");
+					return false
+				}
 				let myImgBox = JSON.stringify(this.imgBox)
 				let myJson = JSON.stringify({
 					"adress": $('.myOcompanyAddress').val(),
@@ -122,7 +283,7 @@
 					"userName": $('.myOcompanyPeo').val(),
 					"varieties": $('.myOcompanyType').val(),
 				})
-				axios.post(allUrl.companyAuth,myJson,{
+				axios.post(allUrl.companyAuth, myJson, {
 					headers: {
 						'Content-Type': 'application/json;charset=utf-8'
 					}
@@ -134,7 +295,7 @@
 				})
 			},
 			uploadImg: function(e) {
-				$('.showIng').css('display','flex')
+				$('.showIng').css('display', 'flex')
 				var file = e.target.files[0];
 				let formData = new FormData();
 				formData.append('file', file);
@@ -151,7 +312,7 @@
 				}).catch();
 			},
 			uploadImg2: function(e) {
-				$('.showIng').css('display','flex')
+				$('.showIng').css('display', 'flex')
 				var file = e.target.files[0];
 				let formData = new FormData();
 				formData.append('file', file);
@@ -166,11 +327,11 @@
 					}
 				}).catch();
 			},
-			imgDel:function(e){
+			imgDel: function(e) {
 				this.imgBox.splice(e, 1)
 				if (this.imgBox.length < 9) {
 					$(".upZs").show()
-				}else{
+				} else {
 					$(".upZs").hide()
 				}
 				if (this.imgBox.length == 0) {

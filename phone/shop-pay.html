@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品结算</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.cart-good {
+				margin-left: 0;
+			}
+
+			.order-mage {
+				padding: 0 0.3rem;
+				background: #FFFFFF;
+				margin-bottom: 30px;
+			}
+
+			.form-group,
+			.order-rec,
+			.mage-list{
+				margin-top: 0.3rem;
+				color: #666666;
+				padding: 0 0.3rem;
+			}
+
+			.form-group label {
+				display: block;
+			}
+
+			.form-group select {
+				width: 100%;
+				height: 30px;
+				outline: none;
+				border: 1px solid #999999;
+				border-radius: 5px;
+				margin-top: 10px;
+			}
+
+			.order-rec input,.mage-list input {
+				width: 100%;
+				height: 30px;
+				outline: none;
+				border: 1px solid #999999;
+				border-radius: 5px;
+				margin-top: 10px;
+				padding: 0 5px;
+				box-sizing: border-box;
+			}
+			.mage-list textarea{
+				width: 100%;
+				min-width: 100%;
+				max-width: 100%;
+				height: 100px;
+				padding: 5px;
+				margin-top: 10px;
+				border: 1px solid #999999;
+				border-radius: 3px;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+	<body style="padding-top: 1.4rem;">
+		<div id="shop" v-cloak>
+			<div class="head-title">
+				<div class="head-title-box">
+					<a href="javascript:goBack(-1)"><img src="img/Left.png"></a>
+					<a style="margin: 0 auto;">结算</a>
+					<a class="delateSome" style="opacity: 0;"><img src="img/navBtn.png"></a>
+				</div>
+			</div>
+			<div class="box-blue"></div>
+			<div class="cart-box">
+				<div class="cart-all">
+					<div class="cart-list">
+						<ul>
+							<li class="cartList">
+								<img class="cart-good" :src="cartList.logo">
+								<div class="cart-mage">
+									<p>{{cartList.name}}</p>
+									<span>规格：{{productSpecs.name}}</span>
+									<span>运费：{{cartList.freight == 0?'包邮': (cartList.freight + '￥')}}</span>
+								</div>
+								<div class="cart-amount">
+									<p>￥{{productSpecs.price}}</p>
+									<span>x{{orderMage.productSpecsNum}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="order-mage">
+					<h3>收货地址：</h3>
+					<div id="distpicker5">
+						<div class="form-group">
+							<label class="sr-only" for="province10">省：</label>
+							<select class="form-control provinceName" id="province10"></select>
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="city10">市：</label>
+							<select class="form-control cityName" id="city10"></select>
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="district10">区：</label>
+							<select class="form-control districtName" id="district10"></select>
+						</div>
+						<div class="order-rec">
+							<p>详细地址：</p>
+							<input class="receiveAddress" type="text" name="" id="" value="" placeholder="请输入详细地址" />
+						</div>
+					</div>
+				</div>
+				<div class="order-mage">
+					<h3>信息：</h3>
+					<div class="mage-list" style="margin-top: 30px;">
+						<span>公司名称:</span>
+						<input type="text" class="cName" name="" id="" value="" placeholder="请输入公司名称" />
+					</div>
+					<div class="mage-list">
+						<span>联系人:</span>
+						<input type="text" class="userName" name="" id="" value="" placeholder="请输入联系人" />
+					</div>
+					<div class="mage-list">
+						<span>联系电话:</span>
+						<input type="text" class="cPhone" name="" id="" value="" placeholder="请输入联系电话" />
+					</div>
+					<div class="mage-list">
+						<span>收货人名称:</span>
+						<input type="text" class="receiverName" name="" id="" value="" placeholder="请输入收货人名称" />
+					</div>
+					<div class="mage-list">
+						<span>收货人电话:</span>
+						<input type="text" class="cellPhone" name="" id="" value="" placeholder="请输入收货人电话" />
+					</div>
+					<div class="mage-list">
+						<p>备注：</p>
+						<textarea class="msg" placeholder="请输入备注信息"></textarea>
+					</div>
+				</div>
+				<button class="pay-sure" @click="goAddOrder">确认提交</button>
+			</div>
+		</div>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js"></script>
+		<script src="js/request.js"></script>
+		<script src="js/qs.min.js"></script>
+		<script src="js/qurls.js"></script>
+		<script src="js/js/distpicker.data.js"></script>
+		<script src="js/js/distpicker.js"></script>
+		<script src="js/js/main.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						cartList: '', //数据,
+						hasAddressList: '', //收获地址
+						orderMage: '',
+						productSpecs: '',
+						textMain:''
+					}
+				},
+				methods: {
+					goAddOrder: function() {
+						if (!$('.provinceName').val()) {
+							alert('请选择地区！')
+							return false
+						}
+						if (!$('.cityName').val()) {
+							alert('请选择地区！')
+							return false
+						}
+						if (!$('.districtName').val()) {
+							alert('请选择地区！')
+							return false
+						}
+						if (!$('.receiveAddress').val()) {
+							alert('请输入详细地址！')
+							return false
+						}
+						if (!$('.cName').val()) {
+							alert('请输入公司名称！')
+							return false
+						}
+						if (!$('.userName').val()) {
+							alert('请输入联系人！')
+							return false
+						}
+						if (!$('.cPhone').val()) {
+							alert('请输入联系人电话！')
+							return false
+						}
+						if (!$('.receiverName').val()) {
+							alert('请输入收货人姓名！')
+							return false
+						}
+						if (!$('.cellPhone').val()) {
+							alert('请输入收货人电话！')
+							return false
+						}
+						this.textChange()
+						let myJson = JSON.stringify({
+							cName: $('.cName').val(),
+							userName: $('.userName').val(),
+							cPhone: $('.cPhone').val(),
+							receiverName: $('.receiverName').val(),
+							cellPhone: $('.cellPhone').val(),
+							provinceName: $('.provinceName').val(),
+							cityName: $('.cityName').val(),
+							districtName: $('.districtName').val(),
+							receiveAddress: $('.receiveAddress').val(),
+							msg:this.textMain,
+							productId: this.cartList.id,
+							productSpecsId: this.productSpecs.id,
+							productSpecsNum: this.orderMage.productSpecsNum,
+							orderDetails: [{
+								productId: this.cartList.id,
+								productSpecsId: this.productSpecs.id,
+								productSpecsNum: this.orderMage.productSpecsNum,
+							}],
+						})
+						axios.post(allUrl.addOrder, myJson, {
+							headers: {
+								'Content-Type': 'application/json;charset=utf-8'
+							}
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								alert('提交成功，请耐心等待！')
+								window.location.href = 'phone.html'
+							}
+						})
+					},
+					textChange:function(){
+						this.textMain = $(".msg").val().replace(/\n/g,"<br/>");
+						var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
+						var str = this.textMain
+						str = str.replace(patt, function(char){
+							var H, L, code;
+							if (char.length===2) {
+								H = char.charCodeAt(0); // 取出高位
+								L = char.charCodeAt(1); // 取出低位
+								code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法
+								return "&#" + code + ";";
+							} else {
+								return char;
+							}
+						});
+						this.textMain = str
+					},
+				},
+				mounted() {
+					this.orderMage = JSON.parse(localStorage.getItem('order'))
+					this.cartList = this.orderMage.prodect
+					this.productSpecs = this.orderMage.productSpecs
+				}
+			})
+		</script>
+	</body>
+</html>

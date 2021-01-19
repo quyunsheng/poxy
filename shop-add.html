@@ -286,21 +286,60 @@
 				},
 				methods: {
 					addCompany: function() {
+						if(!$('.myOcompanyDw').val()){
+							alert('请输入单位性质！')
+							return false
+						}
+						if(!$('.myOcompanyName').val()){
+							alert('请输入单位名称！')
+							return false
+						}
+						if(!$('.myOcompanyAddress').val()){
+							alert('请输入单位详址！')
+							return false
+						}
+						if(!$('.myOcompanyPeo').val()){
+							alert('请输入联系人！')
+							return false
+						}
+						if(!$('.myOcompanyCel').val()){
+							alert('请输入单位电话！')
+							return false
+						}
+						if(!$('.myOcompanyMail').val()){
+							alert('请输入单位邮箱！')
+							return false
+						}
+						if(!$('.myOcompanyType').val()){
+							alert('请输入经营品种！')
+							return false
+						}
+						
+						var re = /^1\d{10}$/ 
+						if (!re.test($('.myOcompanyCel').val())) {
+							alert("请输入正确的电话格式！");
+							return false
+						}
+						var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
+						if(re2.test($('.myOcompanyMail').val())){
+							alert("请输入正确的邮箱格式！");
+							return false
+						}
 						let myImgBox = JSON.stringify(this.imgBox)
 						let myJson = JSON.stringify({
-							"adress": $('.myOcompanyAddress').val(),
-							"cName": $('.myOcompanyName').val(),
-							"cellPhone": $('.myOcompanyCel').val(),
-							"certification": $('.myOcompanyRz').val(),
-							"email": $('.myOcompanyMail').val(),
-							"fax": $('.myOcompanyCz').val(),
-							"imgs": myImgBox,
-							"logo": this.logo,
-							"nature": $('.myOcompanyDw').val(),
-							"product": $('.myOcompanyTxt').val(),
-							"url": $('.myOcompanyCom').val(),
-							"userName": $('.myOcompanyPeo').val(),
-							"varieties": $('.myOcompanyType').val(),
+							adress: $('.myOcompanyAddress').val(),
+							cName: $('.myOcompanyName').val(),
+							cellPhone: $('.myOcompanyCel').val(),
+							certification: $('.myOcompanyRz').val(),
+							email: $('.myOcompanyMail').val(),
+							fax: $('.myOcompanyCz').val(),
+							imgs: myImgBox,
+							logo: this.logo,
+							nature: $('.myOcompanyDw').val(),
+							product: $('.myOcompanyTxt').val(),
+							url: $('.myOcompanyCom').val(),
+							userName: $('.myOcompanyPeo').val(),
+							varieties: $('.myOcompanyType').val(),
 						})
 						axios.post(allUrl.companyAuth,myJson,{
 							headers: {

@@ -3,170 +3,92 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>云港湾</title>
-		<script src="js/duan-js/duanCommon.js"></script>
+		<title>中国环氧树脂网</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<style>
-		.sy-alert{
-			width: 80%!important;
-			max-height: 90% !important;
-		}
-		.sy-content p{
-			margin-bottom: 15px;
-		}
 		[v-cloak]{
 		    display: none;
 		}
 	</style>
-<body style="background: #f5f5f5;">
-<div id="myIndex" v-cloak>
-    <!-- 修改密码 -->
-    <div class="sy-alert sy-alert-model animated" sy-enter="zoomIn" sy-leave="zoomOut" sy-type="confirm" sy-mask="true"
-         id="quanYi">
-        <div class="sy-title alert-title">
-            <div class="close-but" onClick="syalert.syhide('quanYi')"><img src="img/duan-img/close-but.png" alt="">
-            </div>
-            <h1></h1>
-        </div>
-    </div>
-    <div class="my-head">
-        <div>
-            <img :src="getUsers.headImg" alt="">
-            <div class="head-font">
-                <h1>{{getUsers.nickname}}</h1>
-                <div>
-                    <a href="my-ocrP.html"><span>个人信息</span></a>
-                </div>
-            </div>
-            <!-- <div class="head-set">
-                <a href="my-set.html">
-                    <img src="img/duan-img/head-set.png" width="30" height="30" alt="">
-                </a>
-            </div> -->
-        </div>
-    </div>
-    <div class="my-box">
-        <div class="hidden">
-            <div class="title" @click="goOrder(9)">我的订单 <span></span></div>
-            <div class="my-chooseBox hidden">
-                <a @click="goOrder(0)">
-                    <dl>
-                        <dt><img src="img/duan-img/my-img1.jpg" width="30" height="28" alt=""></dt>
-                        <dd>待付款</dd>
-                    </dl>
-                </a>
-                <a @click="goOrder(1)">
-                    <dl>
-                        <dt><img src="img/duan-img/my-img2.jpg" width="30" height="25" alt=""></dt>
-                        <dd>待发货</dd>
-                    </dl>
-                </a>
-                <a @click="goOrder(3)">
-                    <dl>
-                        <dt><img src="img/duan-img/my-img3.jpg" width="32" height="28" alt=""></dt>
-                        <dd>待收货</dd>
-                    </dl>
-                </a>
-                <a @click="goOrder(3)">
-                    <dl>
-                        <dt><img src="img/duan-img/my-img4.jpg" width="30" height="25" alt=""></dt>
-                        <dd>已完成</dd>
-                    </dl>
-                </a>
-            </div>
-        </div>
-        <div>
-            <div class="title">常用工具</div>
-            <div class="my-chooseBox">
-                <a href="my-setCall.html">
-                    <dl>
-						<dt><img src="img/duan-img/my-img11.jpg" alt=""></dt>
-                        <dd>关于我们</dd>
-                    </dl>
-                </a>
-                <a href="my-setPassword.html">
-                    <dl>
-                        <dt><img src="img/duan-img/gongc.png" alt=""></dt>
-                        <dd>密码设置</dd>
-                    </dl>
-                </a>
-                <a @click="goOrder(9)">
-                    <dl>
-                        <dt><img src="img/duan-img/my-img44.jpg" alt=""></dt>
-                        <dd>我的订单</dd>
-                    </dl>
-                </a>
-            </div>
-        </div>
-		<div class="my-but" @click="logOut">退出登录</div>
-    </div>
-</div>
-<div class="footerpage"></div>
-<div style="height: 80px"></div>
-<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/qu-js/urls.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    $(function () {
-        $(".footerpage").load("footer.html?vid=0717");
-    });
-
-    localStorage.removeItem(storeId);
-    localStorage.setItem(modelBtn, 2);
-</script>
-</body>
+	<body style="background: #f5f5f5;">
+		<div id="myIndex" v-cloak>
+			<div class="my-box">
+				<div>
+					<div class="title">常用工具</div>
+					<div class="my-chooseBox">
+						<a href="about.html">
+							<dl>
+								<dt><img src="img/my-imggy.png" alt=""></dt>
+								<dd>关于我们</dd>
+							</dl>
+						</a>
+						<a href="shop-add.html">
+							<dl>
+								<dt><img src="img/my-imgQy.png" alt=""></dt>
+								<dd>企业认证</dd>
+							</dl>
+						</a>
+						<a href="add-consult.html">
+							<dl>
+								<dt><img src="img/my-imghz.png" alt=""></dt>
+								<dd>合作咨询</dd>
+							</dl>
+						</a>
+					</div>
+				</div>
+				<div>
+					<div class="title">常用工具</div>
+					<div class="my-chooseBox">
+						<a href="cooperation.html">
+							<dl>
+								<dt><img src="img/gongc.png" alt=""></dt>
+								<dd>环氧论坛</dd>
+							</dl>
+						</a>
+						<a href="#">
+							<dl>
+								<dt><img src="img/my-imgbbs.png" alt=""></dt>
+								<dd>环氧BBS</dd>
+							</dl>
+						</a>
+						<a href="technical.html">
+							<dl>
+								<dt><img src="img/my-imgjs.png" alt=""></dt>
+								<dd>技术资料</dd>
+							</dl>
+						</a>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+		<div style="height: 80px"></div>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+			new Vue({
+				el: '#myIndex',
+				data() {
+					return {
+						getUsers: '',
+						token: '',
+					}
+				},
+				methods: {},
+				mounted() {}
+			})
+		</script>
+	</body>
 </html>
-<script>
-    function ok(id) {
-        syalert.syhide(id);
-    }
-    new Vue({
-        el: '#myIndex',
-        data() {
-            return {
-                getUsers: '',
-                token: '',
-            }
-        },
-        methods: {
-            // 获取用户信息
-            getPeople: function () {
-                this.token = localStorage.getItem(tkn);
-                axios.get(allUrl.getUser, {
-                    headers: {
-                        Authorization: this.token,
-                        Accept: 'application/json',
-                    },
-                }).then((response) => { 
-                    if (response != "" && response.code == 0) {
-                        this.getUsers = response.data;
-                    } else {
-                        alert(response.message);
-                        window.location.href = 'i-login.html'
-                    }
-                })
-            },
-            // 查看订单
-            goOrder: function (num) {
-                localStorage.setItem(orderNav, num);
-                window.location.href = 'my-order.html'
-            },
-			// 退出登录
-			logOut: function () {
-			    window.localStorage.removeItem(tkn);
-				window.location.href = 'i-login.html';
-			},
-        },
-        mounted() {
-            this.token = localStorage.getItem(tkn);
-            if (this.token && this.token != 'null' && this.token != 'undefined' && this.token != undefined) {
-                this.getPeople();
-            } else {
-                window.location.href = 'i-login.html';
-            }
-        }
-    })
-</script>

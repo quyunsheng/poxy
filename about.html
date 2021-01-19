@@ -18,7 +18,7 @@
 					<li v-for="item in aboutType" :class="pageId == item.id?'active':''" @click="showType(item)">{{item.name}}</li>
 				</ul>
 			</div>
-			<div class="about-box allWidth">
+			<div class="about-mage allWidth">
 				<div v-html="usList.context"></div>
 			</div>
 			<div class="footerpage"></div>
@@ -87,20 +87,20 @@
 				},
 				// 获取banner
 				gatBanner:function(){
-					axios.get(allUrl.article_list, {
+					axios.get(allUrl.getBanner, {
 						params: {
-							articleSubTypeId:"696accbba8414552add81b392213de5a"
+							articleSubTypeId: "ddc026da828e49ca8a36d0e6b748092d",
 						}
 					}).then((result) => {
 						if (result != "" && result.code == 0) {
-							this.pageBanner =result.data.data[0]
+							this.pageBanner = result.data[0]
 						}
 					})
 				},
 			},
 			mounted(){
 				this.titleListGet()
-				// this.gatBanner()
+				this.gatBanner()
 			}
 		})
 		</script>

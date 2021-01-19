@@ -974,7 +974,7 @@
 
 .table-list-cont td {
 	background: #f5f5f5;
-	padding: 20px 0;
+	padding: 20px 10px;
 }
 
 .table-img {
@@ -1281,13 +1281,12 @@
 	line-height: 65px;
 }
 .store-top .store-logo{
-	height: 47px;
-	margin-top: 9px;
+	height: 60px;
 	margin-right: 5px;
 }
 .store-top span{
-	font-size: 30px;
-	color: #1271db;
+	font-size: 26px;
+	color: #333;
 	display: inline-block;
 	line-height: 65px;
 }

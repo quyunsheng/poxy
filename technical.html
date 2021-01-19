@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>新闻资讯</title>
+		<title>技术资料</title>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
@@ -14,7 +14,7 @@
 	<body>
 		<div id="app" v-cloak>
 			<div class="headerpage"></div>
-			<!-- <div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div> -->
+			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
 			<div class="tech-box main-width clearfix">
 				<div class="tech-left fl">
 					<div v-for="item in technicalType" @click="showFirst(item)" :class="firstCode == item.classifyCode?'help-list active':'help-list'">
@@ -144,24 +144,21 @@
 			},
 			// 获取banner
 			gatBanner: function() {
-				axios.get(allUrl.article_list, {
+				axios.get(allUrl.getBanner, {
 					params: {
-						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
-
+						articleSubTypeId: "ae30b396f31c40deb8e92505f0e7da87",
 					}
 				}).then((result) => {
 					if (result != "" && result.code == 0) {
-						this.pageBanner = result.data.data[0]
+						this.pageBanner = result.data[0]
 					}
-				}).catch((error) => {
-					//alert(error.message)
 				})
 			},
 
 		},
 		mounted() {
 			this.getTechnicalType()
-			// this.gatBanner()
+			this.gatBanner()
 		}
 	})
 </script>

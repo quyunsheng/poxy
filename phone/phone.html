@@ -20,7 +20,7 @@
 		<script src="js/zpageNav.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body style="background: #f5f5f5;">
-		<div id="index">
+		<div id="index" v-cloak>
 			<div class="header">
 				<input class="head-search" type="text" v-model="findTxt" @keypress="searchGo" placeholder="请输入商品名称" />
 			</div>
@@ -30,7 +30,6 @@
 				</div>
 				<div class="pagination"></div>
 			</div>
-			<!-- 建筑材料专区 -->
 			<div class="commodity" v-for="item in goodList">
 				<div class="merchant-tit clearfix">
 					<h3>{{item.title}}</h3>
@@ -74,21 +73,11 @@
 				el: '#index',
 				data() {
 					return {
-						loginIn: '0',
-						getUsers: '',
-						token: '',
 						companyList: '',
-						remGoods: '',
 						navTypeList: '',
 						pageBanner: '', //banner
-						activeNum: 0,
-						activeId: '',
-						typeId: "eb186ab5a3b94ae998675d5f3498070d",
-						zxId: "93ee4d6f1ac34297b120fb6864155e97",
-						zxAll: '',
 						findTxt: '', //搜索内容
-						goodList:'',
-						getCuList:'',
+						goodList:''
 					}
 				},
 				methods: {
@@ -109,25 +98,10 @@
 						})
 					},
 					// 获取banner
-					getCu:function(){
-						axios.get(allUrl.promotionProduct, {
+					gatBanner:function(){
+						axios.get(allUrl.getBanner, {
 							params: {
-								pageNum:1,
-								pageSize:4
-							}
-						}).then((result) => {
-							if (result != "" && result.code == 0) {
-								this.getCuList = result.data.data
-								console.log(this.getCuList)
-							}
-						})
-					},
-					// 获取banner
-					gatBanner: function() {
-						axios.get(allUrl.getAnnunce, {
-							params: {
-								typeId: "1d604de8a1fa48e4b3db7bbeb2f5f028",
-								recommend:true
+								articleSubTypeId: "845d02cfd00c4eeeb4a041adea231364",
 							}
 						}).then((result) => {
 							if (result != "" && result.code == 0) {
@@ -145,6 +119,7 @@
 								recommend:true,
 								pageNum: 1,
 								pageSize: 12,
+								dismount:2
 							}
 						}).then((response) => {
 							if (response != "" && response.code == 0) {
@@ -165,11 +140,6 @@
 							}
 						})
 					},
-					// 跳转店铺页
-					shopDetail: function(goShopId) {
-						localStorage.setItem(shopsId, goShopId);
-						window.location.href = 'shangJia.html';
-					},
 					// 跳转商品详情
 					goodDetail: function(id,code) {
 						window.location.href = 'good-detail.html?id='+id+'&code='+code;
@@ -177,36 +147,12 @@
 					// 搜索
 					searchGo: function() {
 						if (this.findTxt) {
-							localStorage.setItem(searchGood, this.findTxt);
+							localStorage.setItem('searchGood', this.findTxt);
 							window.location.href = 'shop-searchList.html';
 						} else {
 							alert('输入值不能为空！');
 							this.findTxt = '';
 						}
-					},
-					changeMage: function(num) {
-						axios.get(allUrl.article_list, {
-							params: {
-								articleTypeId: this.typeId,
-								pageNum: 1,
-								recommend: 0
-							}
-						}).then((result) => {
-							if (result != "" && result.code == 0) {
-								this.zxAll = result.data.data
-							} else {
-								alert(result.message)
-							}
-						})
-					},
-					// 获取咨询服务/新闻
-					newsListGet2: function() {
-
-					},
-					// 跳转新闻详情
-					commentList: function(goCommentId) {
-						localStorage.setItem(workId, goCommentId);
-						window.location.href = 'new-detail.html'
 					},
 					bannerSwiper: function() {
 						// 首页banner轮播
@@ -227,8 +173,7 @@
 					},
 					// 跳转商品列表
 					storeDetail: function (code) {
-					    localStorage.setItem(classifyCode, code);
-					    window.location.href = 'shop.html';
+					    window.location.href = 'shop.html?classifyCode='+code;
 					},
 				},
 				mounted() {
@@ -237,8 +182,8 @@
 						this.getPeople();
 					}
 					this.gatBanner();
-					this.getCompanyList();
 					this.getIndexsList();
+					this.getCompanyList();
 				}
 			})
 		</script>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>订单支付</title>
+		<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<style>
+			.order-mage{
+				margin-top: 30px;
+				color: #666666;
+			}
+			.order-mage select{
+				width: 100px;
+				height: 30px;
+				outline: none;
+				border: 1px solid #999999;
+			}
+			#distpicker5{
+				margin: 20px 0;
+				padding-left: 20px;
+			}
+			.order-mage .form-group{
+				display: inline-block;
+				margin-right: 20px;
+			}
+			.order-rec{
+				display: inline-block;
+			}
+			.order-rec span{
+				display: inline-block;
+				line-height: 30px;
+			}
+			.receiveAddress{
+				width: 200px;
+				height: 30px;
+				border: 1px solid #999999;
+				border-radius: 3px;
+				padding: 0 5px;
+			}
+			.mage-list{
+				margin-top: 10px;
+				padding-left: 20px;
+				padding-bottom: 10px;
+				border-bottom: 1px dashed #DDDDDD;
+				color: #666666;
+			}
+			.mage-list div{
+				display: inline-block;
+				margin-right: 10px;
+			}
+			.mage-list span{
+				display: inline-block;
+				line-height: 30px;
+				width: 80px;
+			}
+			.mage-list input{
+				width: 200px;
+				height: 30px;
+				border: 1px solid #999999;
+				border-radius: 3px;
+				padding: 0 5px;
+			}
+			.mage-list textarea{
+				width: 60%;
+				min-width: 60%;
+				max-width: 60%;
+				height: 100px;
+				padding: 5px;
+				margin-top: 10px;
+				border: 1px solid #999999;
+				border-radius: 3px;
+			}
+			.upBtn{
+				display: block;
+				width: 100px;
+				height: 30px;
+				line-height: 30px;
+				margin: 30px auto;
+				text-align: center;
+				background: #009900;
+				color: #FFFFFF;
+				border-radius: 5px;
+			}
+		</style>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=63W4wCS4i4SEEmKbNqLuzV55zOy1enim"></script>
+	</head>
+	<body>
+		<div class="headerpage"></div>
+		<div id="shop" v-cloak>
+			<div class="main-width">
+				<table class="cart-table">
+					<thead>
+						<tr>
+							<th>产品</th>
+							<th>规格</th>
+							<th>单价</th>
+							<th>数量</th>
+							<th width="120">运费</th>
+							<th>金额</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="table-list-cont">
+							<td width="310" class="clearfix">
+								<img class="fl table-img" :src="cartList.logo">
+								<h4>{{cartList.name}}</h4>
+							</td>
+							<td>
+								{{productSpecs.name}}
+							</td>
+							<td>{{productSpecs.price}}￥</td>
+							<td class="clearfix table-num">{{orderMage.productSpecsNum}}</td>
+							<td>{{cartList.freight == 0?'包邮': cartList.freight}}</td>
+							<td class="table-price">{{productSpecs.price*orderMage.productSpecsNum}}￥</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<div class="order-mage">
+					<h3>收货地址：</h3>
+					<div id="distpicker5">
+						<div class="form-group">
+							<label class="sr-only" for="province10">省：</label>
+							<select class="form-control provinceName" id="province10"></select>
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="city10">市：</label>
+							<select class="form-control cityName" id="city10"></select>
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="district10">区：</label>
+							<select class="form-control districtName" id="district10"></select>
+						</div>
+						<div class="order-rec">
+							<span>详细地址：</span>
+							<input class="receiveAddress" type="text" name="" id="" value=""  placeholder="请输入详细地址"/>
+						</div>
+					</div>
+					
+				</div>
+				<div class="order-mage">
+					<h3>信息：</h3>
+					<div class="mage-list" style="margin-top: 30px;">
+						<span>公司名称:</span>
+						<input type="text" class="cName" name="" id="" value="" placeholder="请输入公司名称" />
+					</div>
+					<div class="mage-list">
+						<div>
+							<span>联系人:</span>
+							<input type="text" class="userName" name="" id="" value="" placeholder="请输入联系人" />
+						</div>
+						<div>
+							<span>联系电话:</span>
+							<input type="text" class="cPhone" name="" id="" value="" placeholder="请输入联系电话" />
+						</div>
+					</div>
+					<div class="mage-list">
+						<div>
+							<span>收货人名称:</span>
+							<input type="text" class="receiverName" name="" id="" value="" placeholder="请输入收货人名称" />
+						</div>
+						<div>
+							<span>收货人电话:</span>
+							<input type="text" class="cellPhone" name="" id="" value="" placeholder="请输入收货人电话" />
+						</div>
+					</div>
+					<div class="mage-list">
+						<p>备注：</p>
+						<textarea class="msg" placeholder="请输入备注信息"></textarea>
+					</div>
+				</div>
+				<a class="upBtn" @click="goAddOrder">提交</a>
+			</div>
+		</div>
+		<div class="footerpage"></div>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/js/distpicker.data.js"></script>
+		<script src="js/js/distpicker.js"></script>
+		<script src="js/js/main.js"></script>
+		<script>
+			$(function() {
+				$(".headerpage").load("header.html");
+				$(".footerpage").load("footer.html");
+			});
+		</script>
+		<script type="text/javascript">
+			// let payLink = 'http://101.201.220.183:9997/mortar_app/'
+			new Vue({
+				el: '#shop',
+				data() {
+					return {
+						cartList: '', //数据,
+						hasAddressList: '', //收获地址
+						orderMage: '',
+						productSpecs:'',
+						textMain:''
+					}
+				},
+				methods: {
+					goAddOrder:function(){
+						if(!$('.provinceName').val()){
+							alert('请选择地区！')
+							return false
+						}
+						if(!$('.cityName').val()){
+							alert('请选择地区！')
+							return false
+						}
+						if(!$('.districtName').val()){
+							alert('请选择地区！')
+							return false
+						}
+						if(!$('.receiveAddress').val()){
+							alert('请输入详细地址！')
+							return false
+						}
+						if(!$('.cName').val()){
+							alert('请输入公司名称！')
+							return false
+						}
+						if(!$('.userName').val()){
+							alert('请输入联系人！')
+							return false
+						}
+						if(!$('.cPhone').val()){
+							alert('请输入联系人电话！')
+							return false
+						}
+						if(!$('.receiverName').val()){
+							alert('请输入收货人姓名！')
+							return false
+						}
+						if(!$('.cellPhone').val()){
+							alert('请输入收货人电话！')
+							return false
+						}
+						this.textChange()
+						let myJson = JSON.stringify({
+							cName: $('.cName').val(),
+							userName: $('.userName').val(),
+							cPhone: $('.cPhone').val(),
+							receiverName: $('.receiverName').val(),
+							cellPhone: $('.cellPhone').val(),
+							provinceName: $('.provinceName').val(),
+							cityName: $('.cityName').val(),
+							districtName: $('.districtName').val(),
+							receiveAddress: $('.receiveAddress').val(),
+							msg: this.textMain,
+							orderDetails: [
+								{
+									productId: this.cartList.id,
+									productSpecsId:this.productSpecs.id,
+									productSpecsNum: this.orderMage.productSpecsNum,
+								}
+							],
+						})
+						axios.post(allUrl.addOrder,myJson,{
+							headers: {
+								'Content-Type': 'application/json;charset=utf-8'
+							}
+						}).then((response) => {
+							if (response != "" && response.code == 0) {
+								alert('提交成功，请耐心等待！')
+								window.location.href = 'index.html'
+							}
+						})
+					},
+					textChange:function(){
+						this.textMain = $(".msg").val().replace(/\n/g,"<br/>");
+						var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
+						var str = this.textMain
+						str = str.replace(patt, function(char){
+							var H, L, code;
+							if (char.length===2) {
+								H = char.charCodeAt(0); // 取出高位
+								L = char.charCodeAt(1); // 取出低位
+								code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法
+								return "&#" + code + ";";
+							} else {
+								return char;
+							}
+						});
+						this.textMain = str
+					},
+				},
+				mounted() {
+					this.orderMage = JSON.parse(localStorage.getItem('order'))
+					this.cartList = this.orderMage.prodect
+					this.productSpecs = this.orderMage.productSpecs
+				}
+			})
+		</script>
+	</body>
+</html>

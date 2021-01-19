@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>云港湾</title>
+		<title>新闻中心</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
@@ -27,9 +27,13 @@
 				<div class="infor-list clearfix" v-for="item in zxAll" @click="commentList(item.id)">
 					<div class="infor-left fl">
 						<h4>{{item.title}}</h4>
+						<p>{{item.description}}</p>
 						<span>{{item.updateTime}}</span>
+						<i>{{item.source}}</i>
 					</div>
-					<img class="infor-right fr" :src="item.cover">
+					<div class="infor-right fr">
+						<img :src="item.cover || noImg">
+					</div>
 				</div>
 				<div class="more-load" v-if="isMoreLoad" @click="lookMore" style="text-align: center;">
 					<i v-if="loadingImg" v-else></i>
@@ -49,6 +53,7 @@
 				el: '#index',
 				data() {
 					return {
+						noImg:'img/noImg.png',
 						loginIn: '0',
 						getUsers: '',
 						token: '',
@@ -60,7 +65,6 @@
 						page: 1, //显示的是哪一页
 						pageSize: 10, //每一页显示的数据条数
 						maxPage: '', //最大页数
-						myPage: 1, //跳转页面
 						isMoreLoad: false, // 是否显示加载更多
 						loadingImg: false, // 加载更多时显示loading图
 						loadLastText: false, // 到底了

@@ -97,3 +97,6 @@ textarea {
 .orange{
 	color:#e39727;
 }
+[v-cloak] {
+	display: none;
+}

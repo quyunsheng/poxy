@@ -48,7 +48,7 @@
 	background: #FFFFFF;
 }
 .header input::-webkit-input-placeholder {
-	background: url(../img/q-img/find.png) no-repeat 10px 0;
+	background: url(../img/find.png) no-repeat 10px 0;
 	background-position: 0;
 	background-size: 0.36rem 0.36rem;
 	text-indent: 0.50rem;
@@ -106,8 +106,7 @@
 }
 /* 行业资讯 */
 .information{
-	background: #FFFFFF;
-	padding-bottom: 0.4rem;
+	padding: 0.3rem;
 }
 .information ul{
 	padding: 0 0.4rem;
@@ -124,14 +123,27 @@
 	border-bottom: 3px solid #3475ad;
 }
 .infor-list{
-	padding: 0.2rem 0.4rem;
-	border-bottom: 1px solid #f5f5f5;
+	padding: 0.2rem;
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 0 2px 2px #CCCCCC;
+	margin-bottom: 0.3rem;
 }
 .infor-left{
 	width: 4.2rem;
 }
 .infor-right{
 	width: 2.16rem;
+	height: 2.16rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.infor-right img{
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
 }
 .newsMore{
 	padding-top: 0.2rem;
@@ -143,11 +155,24 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
+	height: 38px;
+}
+.infor-left p{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	color: #666666;
+}
+.infor-left i{
+	display: block;
+	margin-top: 0.1rem;
+	color: #999999;
+	font-size: 0.24rem;
 }
 .infor-left span{
 	display: inline-block;
 	font-size: 0.24rem;
-	color: #8c8c8c;
+	color: #999999;
 	margin-top: 0.2rem;
 }
 /* 商家推荐 */
@@ -204,7 +229,7 @@
 	background: #FFFFFF;
 	margin-top: 0.1rem;
 	margin-right: 0.1rem;
-	padding: 0 0.3rem;
+	padding: 0 0.2rem;
 	box-sizing: border-box;
 }
 .commodity-img{
@@ -213,8 +238,8 @@
 	text-align: center;
 }
 .commodity-img img{
-	max-width: 90%;
-	max-height: 90%;
+	max-width: 100%;
+	max-height: 100%;
 	vertical-align: middle;
 }
 .commodity-list h4{
@@ -258,7 +283,7 @@
 }
 .upImg .imgBtn{
 	float: left; 
-	background-image: url(../img/q-img/upImg.png);
+	background-image: url(../img/upImg.png);
 	background-size: 100% 100%; 
 	width: 1.3rem; 
 	height: 1.3rem;
@@ -280,7 +305,7 @@
 .imgBox i{
 	width: 0.3rem;
 	height: 0.3rem;
-	background: url(../img/q-img/imgRemove.png);
+	background: url(../img/imgRemove.png);
 	background-size: cover;
 	position: absolute;
 	right: -0.16rem;

@@ -97,7 +97,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="main-width" v-for="list in goodList">
+			<div class="main-width" v-for="(list,index) in goodList" v-if="list.productList.length>0">
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
 					{{list.title}}
@@ -116,16 +116,16 @@
 									<img height="100%" :src="item.logo">
 								</div>
 								<h2 class="index-h2">{{item.name}}</h2>
-								<div class="index-tag">
+								<!-- <div class="index-tag">
 									<span>标签</span>
-								</div>
+								</div> -->
 								<p class="index-pay">￥<i>{{item.price}}</i></p>
 								<span class="buyBtn">预约下单</span>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<img width="100%" style="margin: 30px 0;" src="images/021.png">
+				<img width="100%" style="margin: 30px 0;" :src="bannerGaoList[index].cover" v-if="bannerGaoList[index]" @click="commentList(bannerGaoList[index].id)">
 			</div>
 
 			<div class="footerpage"></div>
@@ -150,9 +150,8 @@
 							newsAll: "",
 							newsTj: "",
 							/* banner 文章列表 */
-							bannerArticleList: '',
-							bannerGaoList: '',
-							step: 1,
+							bannerArticleList: [],
+							bannerGaoList: [],
 
 							advertisId: '64560152089345f48934587a4bd9ca8b',
 							advertising: '', //广告
@@ -160,11 +159,10 @@
 					},
 					methods: {
 						// 获取banner
-						gatBanner: function() {
-							axios.get(allUrl.getAnnunce, {
+						gatBanner:function(){
+							axios.get(allUrl.getBanner, {
 								params: {
-									typeId: "1d604de8a1fa48e4b3db7bbeb2f5f028",
-									recommend:true
+									articleSubTypeId: "845d02cfd00c4eeeb4a041adea231364",
 								}
 							}).then((result) => {
 								if (result != "" && result.code == 0) {
@@ -175,6 +173,19 @@
 								}
 							})
 						},
+						//获取广告
+						gatAdver:function(){
+							let myJson = {
+								articleTypeId: '17546009030a4b1aa66422ed5bab6381',
+								pageSize: 20,
+								pageIndex: 1
+							}
+							axios.post(allUrl.article_list, myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.bannerGaoList = result.data.data
+								}
+							})
+						},
 						//企业
 						getCompanyList: function() {
 							axios.get(allUrl.bestCompany, {
@@ -182,6 +193,7 @@
 									recommend:true,
 									pageNum: 1,
 									pageSize: 12,
+									dismount:2
 								}
 							}).then((response) => {
 								if (response != "" && response.code == 0) {
@@ -225,41 +237,10 @@
 							localStorage.setItem(storeName, goStoreName);
 							window.location.href = 'good-list.html'
 						},
-						// 获取广告
-						getAdvertise: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleSubTypeId: this.advertisId,
-									pageNum: 1
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.advertising = result.data.data
-								}
-							})
-						},
-						// 获取推荐新闻
-						newsTjGet: function() {
-							axios.get(allUrl.article_list, {
-								params: {
-									articleTypeId: this.typeId,
-									pageNum: 1,
-									recommend: 1
-								}
-							}).then((result) => {
-								if (result != "" && result.code == 0) {
-									this.newsTj = result.data.data
-								}
-							}).catch((error) => {
-								//alert(error.message)
-							})
-						},
 						// 跳转新闻详情
-						commentList: function(goCommentId) {
-							localStorage.setItem(workId, goCommentId);
-							window.location.href = 'news-detail.html'
+						commentList: function(id) {
+							window.open('news-detail.html?id='+id)
 						},
-						// 获取所有劳务信息
 						bannerSwiper: function() {
 							// 首页banner轮播
 							const headSwiper = new Swiper('.index-swiper', {
@@ -285,6 +266,7 @@
 						this.getCompanyList()
 						this.bannerArticle() //公告
 						this.gatBanner()
+						this.gatAdver()
 					}
 				})
 			</script>

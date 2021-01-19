@@ -8,6 +8,7 @@
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/jsjh.css"/>
 		<link rel="stylesheet" type="text/css" href="css/zpageNav.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
@@ -20,239 +21,6 @@
 		#app{
 			width: auto;
 			height: auto;
-		}
-		.titlePic{
-			width: auto;
-			height: auto;
-		}
-		.listFater{
-			width: 1200px;
-			margin: 0px auto;
-			display: flex;
-			justify-content: flex-start;
-			flex-wrap: wrap;
-			margin-top: 20px;
-		}
-		.dataMain{
-			width: 370px;
-			height: 250px;
-			margin-bottom: 10px ;
-			color: white;
-			padding-bottom: 20px;
-			margin-right: 45px;
-			position: relative;
-			background-size: cover;
-		}
-		.dataMain:nth-child(3n){
-			margin-right: 0px;
-		}
-		
-		.dataText{
-			width: 370px;
-			margin-bottom: 37px ;
-			color: white;
-			margin-right: 45px;
-		}
-		.dataText:nth-child(3n){
-			margin-right: 0px;
-		}
-		.main-h3{
-			padding-top: 5px;
-			padding-bottom: 15px;
-		}
-		.main-p{
-			font-size: 14px;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 2;
-			overflow: hidden;
-		}
-		.main-p2{
-			font-size: 14px;
-			margin-top: 10px;
-			color: #999999;
-		}
-		.main-p3{
-			font-size: 14px;
-			margin-top: 10px;
-			width: 35px;
-			height: 20px;
-			text-align: center;
-			background: #f89611;
-		}
-		.liatMain{
-			padding-top:10px ;
-			padding-left: 10px;
-			padding-bottom:20px ;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1));
-			background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,#000000));
-			background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
-			background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
-			background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,#000000 100%);
-		}
-		.liatMain2{
-			padding-top:10px ;
-			padding-left: 10px;
-			height: 130px;
-			border-bottom: solid 1px #999999;
-			cursor:pointer
-		}
-		.liatMain2{
-			clear: both;
-			position: relative;
-			margin-top: 20px;
-		}
-		.liatMain2_pic{
-			width: 100px;
-			height: 100px;
-			float: left;
-			margin-right: 15px;
-		}
-		.mianP1{
-			font-size: 15px;
-			color: #666666;
-			font-family: "微软雅黑";
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 1;
-			overflow: hidden;
-			height: 35px;
-			height: 19px;
-		}
-		.mianP2{
-			margin-top: 10px;
-			font-size: 13px;
-			color: #666666;
-			font-family: "微软雅黑";
-			    display: -webkit-box;
-			    -webkit-box-orient: vertical;
-			    -webkit-line-clamp: 2;
-			    overflow: hidden;
-				height: 35px;
-		}
-		.mianP3{
-			margin-top: 18px;
-			font-size: 14px;
-			color: #666666;
-			font-family: "微软雅黑";
-		}
-		.mianP4{
-			margin-top: 10px;
-			font-size: 14px;
-			color: #666666;
-			font-family: "微软雅黑";
-		}
-		.mianP5{
-			position: absolute;
-			width: 50px;
-			height: 20px;
-			background: #f7970f;
-			text-align: center;
-			line-height: 20px;
-			font-size: 13px;
-			border-radius: 3px;
-			top: -16px;
-		}
-		.noImg{
-			clear: both;
-		}
-		.thiz-banner {
-		    margin-top: 20px;
-		    height: 460px;
-		    background-position: center;
-		}
-		.newsBox{
-			width: 1200px;
-			margin: 30px auto;
-		}
-		.new-list{ overflow: hidden; margin-bottom: 20px;}
-		.new-list .left{
-		    width: 280px;
-		    height: 200px;
-		    float: left;
-			overflow: hidden;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.new-list .right{
-		    width: calc(100% - 300px);
-		    height: 200px;
-		    float: right;
-		    padding: 0 20px;
-		    border: 1px solid #ccc;
-			position: relative;
-			box-sizing: border-box;
-		}
-		.new-list .p1{
-			border-radius:10px;
-		    height: 20px;
-			line-height: 20px;
-		    text-align: center;
-		    color: #999999;
-		    line-height: 16px;
-			position: absolute;
-			left: 15px;
-			bottom: 18px;
-		}
-		.kongjian-main{
-			width: 10%;
-		    height: 15px;
-		}
-		.new-list .right .p2{
-			font-weight: 700;
-			font-size: 18px;
-			cursor: pointer;
-		}
-		.new-list .right .p2:hover{
-			color: #1C79DC;
-		}
-		.btn-more0 a{
-			display: block;
-			width: 122px;
-			height: 40px;
-			line-height: 40px !important;
-			text-align: center;
-			border-radius: 30px;
-			border: 2px solid #E5E5E5;
-			color: #6e6e6e;
-			font-size: 13px;
-			margin: auto;
-			position: absolute;
-			z-index: 1;
-			transition: ease .65s;
-			bottom: 10px;
-			right: 15px;
-		}
-		.btn-more0 a:before{content:''; display:block; width:100%; height:100%; border-radius:30px; background:#009900; position:absolute; left:0; top:0; z-index:-1; transform:scale(0); opacity:0; transition:ease .65s;}
-		.btn-more0 a:hover{color:#fff !important; box-shadow:0 0 15px rgba(246,85,76,.25); border-color:#009900;}
-		.btn-more0 a:hover:before{opacity:1;transform:scale(.9);}
-		.dian2{
-			margin-top: 10px;
-			width: 93%;
-		    overflow: hidden;
-		    line-height: 25px;
-		    display: -webkit-box;
-		    display: -webkit-box;
-		    -webkit-box-orient: vertical;
-		    -webkit-line-clamp: 3;
-		    overflow: hidden;
-		}
-		.dian4{
-		    -webkit-line-clamp: 4;
-		}
-		.new-list .left img {
-			width: 100%;
-			height: 100%;
-			display: block;
-			min-width: 100%;
-			height: 100%;
-			object-fit: cover;
 		}
 	</style>
 	<body>
@@ -311,7 +79,6 @@
 			pageSize: '', //每一页显示的数据条数
 			total: '', //记录总数
 			maxPage: '', //最大页数
-			allImg: "", //详情页的所有图片
 			pageBanner: ""
 		},
 		methods: {
@@ -352,23 +119,18 @@
 			},
 			// 跳转评论详情
 			commentList: function(goCommentId) {
-				localStorage.setItem(workId, goCommentId);
-				// window.location.href = 'news-detail.html'
 				window.open("news-detail.html?id=" + goCommentId);
 			},
 			// 获取banner
-			gatBanner: function() {
-				axios.get(allUrl.article_list, {
+			gatBanner:function(){
+				axios.get(allUrl.getBanner, {
 					params: {
-						articleSubTypeId: "a54d7146fe0e47f4897582a991d3ab14"
-
+						articleSubTypeId: "e87c8bfb628846faa4341ce3f8a6b878",
 					}
 				}).then((result) => {
 					if (result != "" && result.code == 0) {
-						this.pageBanner = result.data.data[0]
+						this.pageBanner = result.data[0]
 					}
-				}).catch((error) => {
-					//alert(error.message)
 				})
 			},
 
@@ -376,7 +138,7 @@
 		mounted() {
 			this.newsListGet()
 			this.newsTjGet()
-			// this.gatBanner()
+			this.gatBanner()
 		}
 	})
 </script>

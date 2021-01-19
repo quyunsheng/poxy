@@ -17,30 +17,27 @@
 	<body>
 		<div class="headerpage"></div>
 		<div id="store" v-cloak>
-			<div class="allWidth store-top clearfix">
-				<img class="store-logo" :src="storeDetail.logo">
-				<span>{{storeDetail.cName}}</span>
-			</div>
 			<div class="store-swiper swiper-container">
 				<div class="swiper-wrapper">
 					<div v-for="item in imgBox" class="swiper-slide" :style="{backgroundImage:'url(' + item + ')'}"></div>
 				</div>
 				<div class="pagination"></div>
 			</div>
+			<div class="allWidth store-top clearfix">
+				<img class="store-logo" :src="storeDetail.logo">
+				<span>{{storeDetail.cName}}</span>
+			</div>
 			<div class="main-width">
 				<div class="good-btm clearfix">
 					<div class="merchant-box fl">
-						<div class="merchant-name"><img src="images/shop/merchant.png">{{storeDetail.cName}}</div>
 						<div class="merchant-cont" style="padding: 20px;">
 							<p>联系人：{{storeDetail.userName}}</p>
 							<p>单位详址：{{storeDetail.adress}}</p>
-							<i class="merchant-line"></i>
 							<p>单位电话：{{storeDetail.cellPhone}}</p>
 							<p>质量认证：{{storeDetail.certification}}</p>
 							<i class="merchant-line"></i>
 							<p>电子邮箱：{{storeDetail.email}}</p>
 							<p>单位传真：{{storeDetail.fax}}</p>
-							<i class="merchant-line"></i>
 							<p>单位性质：{{storeDetail.nature}}</p>
 							<p>单位网址：<a :href="storeDetail.url">{{storeDetail.url}}</a></p>
 							<i class="merchant-line"></i>
@@ -48,13 +45,11 @@
 							<p style="overflow: hidden;">主营产品：{{storeDetail.product}}</p>
 						</div>
 					</div>
-					<div class="detail-buy fr">
-						<div class="store-buy">
-							<span @click="showType(0)">店家介绍</span>
-							<span @click="showType(1)">订购说明</span>
+					<div class="detail-box fr">
+						<div class="merchant-cont" style="padding: 20px;">
+							<p style="overflow: hidden;">经营品种:{{storeDetail.varieties}}</p>
+							<p style="overflow: hidden;">主营产品：{{storeDetail.product}}</p>
 						</div>
-						<div v-if="showNum == 0" class="store-buy-mage" v-html="storeDetail.description"></div>
-						<div v-if="showNum == 1" class="store-buy-mage">{{storeDetail.instructions}}</div>
 					</div>
 				</div>
 			</div>
@@ -110,13 +105,8 @@
 							if (response != "" && response.code == 0) {
 								this.storeDetail = response.data
 								this.imgBox = JSON.parse(response.data.imgs) 
-								this.lng = response.data.mapX
-								this.lat = response.data.mapY
 								this.$nextTick(() => {
 									this.bannerSwiper();
-									if(this.lng){
-										this.setmap(this.lng,this.lat)
-									}
 								})
 							}
 						})

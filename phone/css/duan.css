@@ -1,10 +1,10 @@
 .topNav{
-    height: 1rem;
-    line-height: 1rem;
+    height: 1.16rem;
+    line-height: 1.16rem;
     text-align: center;
     color:#fff;
     font-size: 16px;
-    background: #009900;
+    background: #0b71a2;
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -12,7 +12,7 @@
 	z-index: 99;
 }
 #app,#bigBox{
-	padding-top: 1rem;
+	padding-top: 1.16rem;
 	padding-bottom: 0.3rem;
 }
 .topNav>div{
@@ -21,7 +21,7 @@
     height: 26px;
     position: absolute;
     left: 0.2rem;
-    top:0.25rem;
+    top:0.35rem;
 }
 .my-head{
     width: 100%;
@@ -92,6 +92,18 @@
 }
 .my-chooseBox dl{
     color: #333;
+	position: relative;
+}
+.my-chooseBox dl i{
+	position: absolute;
+	right: -0.06rem;
+	top: -0.1rem;
+	padding: 0 0.1rem;
+	border: 1px solid #FF0000;
+	color: #FF0000;
+	background: #FFFFFF;
+	border-radius: 0.2rem;
+	font-size: 0.24rem;
 }
 .my-chooseBox dt{
     margin-bottom: 5px;
@@ -108,6 +120,7 @@
     background-size: 30px 25px;
     border-radius: 50%;
     cursor: pointer;
+	z-index: 99;
 }
 .title span{
     float: right;
@@ -151,87 +164,11 @@
 
 /*--------------*/
 .my-setBox li{
-    padding: 0.2rem;
+    padding: 0 15px;
     border-bottom:1px solid #e6e6e6;
+    height:50px;
+    line-height: 50px;
     position: relative;
-	display: flex;
-	align-items: center;
-}
-.my-setBox li .setBox-logo{
-	width: 1.2rem;
-	height: 1.2rem;
-	border: 1px solid #ddd;
-	text-align: left;
-	background: url(../../images/img-add.png) center no-repeat;
-	float: left;
-	position: relative;
-}
-.my-setBox li .setBox-logo input {
-    width: 1.2rem;
-    height: 1.2rem;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-}
-.my-setBox li .setBox-logo img {
-    width: 100%;
-    height: 100%;
-    display: none;
-}
-.my-setBox .setBox-Img{
-	display: block;
-}
-.setBox-Img .setBox-list{
-	float: left;
-	width: 2.16rem;
-	height: 2.16rem;
-	border: 1px solid #ddd;
-	position: relative;
-	margin: 0.3rem 0.3rem 0 0;
-	box-sizing: border-box;
-}
-.setBox-Img .setBox-list input {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-}
-.setBox-Img .setBox-list:nth-child(3n){
-	margin-right: 0;
-}
-.upZs{
-	background: url(../../images/img-add.png) center no-repeat;
-}
-.imgUrl {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-}
-.imgMb {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0,0,0,0.5);
-    color: #FFFFFF;
-    align-items: center;
-    justify-content: center;
-    display: none;
-    cursor: pointer;
-}
-.showIng {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(255,255,255,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    display: none;
 }
 .my-setBox li a{
     display:block;
@@ -240,18 +177,6 @@
     display: inline-block;
 	width:80px;
     color: #333;
-}
-.my-setBox li input{
-	height: 30px;
-}
-.my-setBox li textarea{
-	min-width: calc(100% - 80px);
-	max-width: calc(100% - 80px);
-	width: calc(100% - 80px);
-	border: 1px solid #999999;
-	height: 1rem;
-	padding: 5px;
-	box-sizing: border-box;
 }
 .my-setBox li .right{
     width: 20px;
@@ -263,14 +188,14 @@
     top:17px;
 }
 .my-but{
+    width: 80%;
     height:45px;
     line-height: 45px;
-    background: #009900;
-    margin: 30px;
+    background: #0b71a2;
+    margin: 50px auto 0;
     border-radius: 45px;
-	font-size: 16px;
-	text-align: center;
-	color: #FFFFFF;
+    color: #fff;
+    text-align: center;
 }
 .my-setAdd{
     padding: 20px 15px;

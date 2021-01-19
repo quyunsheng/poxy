@@ -8,6 +8,7 @@ let allUrl = {
 	typeList:'/shuzhi/home/classify_children',//通过code获得子分类
 	getgoodDetail:'/shuzhi/home/detail_product',//获取商品详情
 	getRecGood:'/shuzhi/home/getRelevantProduct',//通过商品classifyCode获取相关推荐
+	addOrder:'/shuzhi/order/add_or_update',//提交订单
 	// 全局搜索
 	searchGoods:'yungangwan_app/product/overall_product',//搜索产品
 	//内容相关
@@ -26,4 +27,5 @@ let allUrl = {
 	technicalList:'/shuzhi/home/technicalList',//技术资料分页显示
 	technicalDetail:'/shuzhi/home/technicalDetail',//技术资料详情
 	getColumn:'/shuzhi/home/subTypeList',//获取栏目信息
+	getBanner:'/shuzhi/home/getArticleBanner',//获取栏目banner
 };

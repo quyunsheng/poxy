@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>商城</title>
+		<title>商品中心</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
@@ -12,11 +12,11 @@
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js"></script>
 		<script src="js/axios.min.js"></script>
 		<script src="js/request.js"></script>
 		<script src="js/qs.min.js"></script>
 		<script src="js/qurls.js"></script>
-		<script src="js/vue.min.js"></script>
 		<style type="text/css">
 			.shopSwiper .swiper-slide a{
 				background-size: cover !important;
@@ -40,6 +40,9 @@
 				display: flex;
 				align-items: center;
 			}
+			.mb{
+				display: block;
+			}
 		</style>
 	</head>
 	<body>
@@ -56,20 +59,20 @@
 							{{item.title}}
 						</li>
 						<!-- 小分类 -->
-						<li class="good-type" v-for="item in childType" v-if="classifyCode" @click="thizType(item.classifyCode)">
+						<li :class="classifyCode == item.classifyCode?'good-type on':'good-type'" v-for="item in childType" v-if="classifyCode" @click="thizType(item.classifyCode)">
 							{{item.title}}
 						</li>
 					</ul>
 					<!-- 商品分类 -->
 					<!-- 顶部轮播 -->
-					<div class="shopSwiper swiper-container">
+					<!-- <div class="shopSwiper swiper-container">
 						<div class="swiper-wrapper">
 							<div class="swiper-slide" v-for="item in pageBanner">
 								<a href="" :style="{'backgroundImage': 'url(' + item.cover + ')'}"></a>
 							</div>
 						</div>
 						<div class="pagination"></div>
-					</div>
+					</div> -->
 					<!-- 所有商品 -->
 					<div class="goodAll">
 						<h4 class="allTit">商品推荐</h4>
@@ -85,15 +88,15 @@
 					<!-- 分类显示商品 -->
 					<div class="goodBox">
 						<div class="good-select clearfix">
-							<span class="fr" @click="screen">筛选<img src="img/q-img/select.png"></span>
+							<span class="fr" @click="screen">筛选<img src="img/select.png"></span>
 						</div>
 						<div id="mescroll" class="mescroll">
-							<div v-for="(item,index) in goodList" :key="index" class="goodList">
+							<div v-for="(item,index) in goodList" :key="index" class="goodList"  @click="goodDetail(item.id,item.classifyCode)">
+								<img :src="item.logo" >
 								<h4>{{item.name}}</h4>
-								<p>{{item.businessName}}</p>
-								<span class="good-money">￥<i>{{item.price || '面议'}}</i></span>
+								<span class="good-money"><i>{{item.price}}￥</i></span>
 								<p>销量：{{item.salesVolume}}</p>
-								<span class="goDetail" @click="goodDetail(item.id,item.classifyCode)">商品详情</span>
+								<span class="goDetail">商品详情 →</span>
 							</div>
 						</div>
 					</div>
@@ -104,20 +107,20 @@
 					<div class="more-load" v-if="loadLastText" style="text-align: center;color: #C0C0C0;">到底啦〜</div>
 				</div>
 				<!-- 筛选 -->
-				<div class="mb" :class="{block:screenMd}" @click="md"></div>
-				<div class="shop-jump" :class="{block:screenJump}">
+				<div v-show="screenMd" class="mb" @click="md"></div>
+				<div v-show="screenMd" class="shop-jump">
 					<ul class="shop-screenNav">
 						<li v-for="item in navList"><a @click="thizType(item.key,item.model)">&nbsp;|&nbsp;{{item.value}}</a></li>
 					</ul>
 					<div>
 						<div class="jump-list">
-							<p><span>价格区间</span><img src="img/q-img/down.png"></p>
+							<p><span>价格区间</span><img src="img/down.png"></p>
 							<input type="text" v-model="startPrice" style="margin-right: 0;" class="price-range" />
 							<span>~</span>
 							<input type="text" v-model="endPrice" class="price-range" />
 						</div>
 						<div class="jump-list">
-							<p><span>价格排序</span><img src="img/q-img/down.png"></p>
+							<p><span>价格排序</span><img src="img/down.png"></p>
 							<ul class="jumpList">
 								<li :class="{scren:moneyShow == index}" v-for="(item, index) in moneyScreen" :key="index" @click="moneyBorder(index)">
 									{{item.name}}
@@ -125,14 +128,17 @@
 							</ul>
 						</div>
 						<div class="jump-list">
-							<p><span>销量排序</span><img src="img/q-img/down.png"></p>
+							<p><span>销量排序</span><img src="img/down.png"></p>
 							<ul class="jumpList">
 								<li :class="{scren:salesShow == index}" v-for="(item, index) in salesScreen" :key="index" @click="salesBorder(index)">
 									{{item.name}}
 								</li>
 							</ul>
 						</div>
-						<span class="findShop" @click="findShop">搜索</span>
+						<div>
+							<span class="findShop" @click="findShop">搜索</span>
+							<span class="findRem" @click="md">取消</span>
+						</div>
 					</div>
 				</div>
 				<div class="footerpage"></div>
@@ -142,10 +148,6 @@
 			$(function() {
 				$(".footerpage").load("footer.html");
 			});
-			localStorage.removeItem(searchGood);
-		</script>
-
-		<script type="text/javascript">
 			new Vue({
 				el: '#shop',
 				data() {
@@ -168,7 +170,7 @@
 						salesVolumeSort: false, //是否按销量排序（true = 是，false = 否）
 						salesVolumeOrder: false, //销量顺序（1 = 降序，0 = 升序）
 						// 商品参数
-						classifyCode: getUrlParam('code'),
+						classifyCode: getUrlParam('classifyCode'),
 						businessName: '', //商户
 						productName: '', //商品名
 						allNavs: '', // 最大分类列表
@@ -184,23 +186,23 @@
 						moneyShow: '',
 						salesShow: '',
 						moneyScreen: [{
-								name: '默认价格排序'
+								name: '默认'
 							},
 							{
-								name: '价格从低到高'
+								name: '从低到高'
 							},
 							{
-								name: '价格从高到低'
+								name: '从高到低'
 							}
 						],
 						salesScreen: [{
-								name: '默认销量排序'
+								name: '默认'
 							},
 							{
-								name: '销量从低到高'
+								name: '从低到高'
 							},
 							{
-								name: '销量从高到低'
+								name: '从高到低'
 							}
 						],
 						pdlist: [],
@@ -367,12 +369,6 @@
 					// 切换省份
 					changeS: function() {
 						this.showCity(this.provinceId)
-					},
-					// 列表搜索
-					findShop0: function() {
-						this.page = 1
-						this.getGoodList();
-						this.md();
 					},
 					//筛选点击
 					screen: function() {
