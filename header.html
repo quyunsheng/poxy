@@ -91,28 +91,18 @@
 			el: '#headTop',
 			data() {
 				return {
-					loginIn: '0',
-					getUsers: '',
-					userRoles: '',
-					isCompany: '',
-					token: '',
 					navTypeList: '',
 					goodsList: '',
 					seen: false,
 					classifyCode: '',
 					selectType: '产品', //搜索类型
 					findTxt: '', //搜索内容
-					qrCode: '', //二维码
-					kfPhone: '', //客服电话
 				}
 			},
 			methods: {
 				// 分类列表
 				getTypeList: function() {
 					axios.get(allUrl.typeList, {
-						// params: {
-						// 	classifyCode: this.classifyCode
-						// },
 					}).then((response) => {
 						if (response != "" && response.code == 0) {
 							this.navTypeList = response.data
@@ -123,15 +113,6 @@
 				enter(ToclassifyCode,item) {
 					this.seen = true;
 					this.goodsList = item.children
-					// axios.get(allUrl.mroeList, {
-					// 	params: {
-					// 		classifyCode: ToclassifyCode
-					// 	},
-					// }).then((response) => {
-					// 	if (response != "" && response.code == 0) {
-					// 		this.goodsList = response.data
-					// 	}
-					// })
 				},
 				// 鼠标移出关闭二级分类
 				navLeave: function() {
@@ -148,14 +129,6 @@
 					localStorage.setItem(storeName, '');
 					localStorage.setItem(searchStore, '');
 				},
-				// 选择搜索类型
-				changeType: function(num) {
-					if (num == 0) {
-						this.selectType = '产品'
-					} else {
-						this.selectType = '店铺'
-					}
-				},
 				// 搜索按钮
 				searchGo: function() {
 					if (this.findTxt) {
@@ -166,34 +139,6 @@
 						this.findTxt = ''
 					}
 
-				},
-				//获取二维码
-				myQrcode: function() {
-					axios.get(allUrl.article_list, {
-						params: {
-							articleTypeId: 'ca6676614c4e4cde9c4b3d7dfd3fcf21',
-						}
-					}).then((result) => {
-						if (result != "" && result.code == 0) {
-							this.qrCode = result.data.data[0].cover
-						}
-					}).catch((error) => {
-						//alert(error.message)
-					})
-				},
-				//获取客服电话
-				myKfNum: function() {
-					axios.get(allUrl.mageAbout, {
-						params: {
-							key: 'fixed_line_telephone',
-						}
-					}).then((result) => {
-						if (result != "" && result.code == 0) {
-							this.kfPhone = result.data.value
-						}
-					}).catch((error) => {
-						//alert(error.message)
-					})
 				},
 			},
 			mounted() {
