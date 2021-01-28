@@ -292,9 +292,11 @@
 	border-radius: 17px;
 	margin: 20px 0;
 }
-.merchant-shop:hover{
+
+.merchant-shop:hover {
 	color: #0d80b7;
 }
+
 .merchant-shop img {
 	vertical-align: middle;
 	margin-right: 5px;
@@ -1063,23 +1065,28 @@
 	line-height: 180px;
 	background: #EDEDEE;
 }
+
 /* 技术资料 */
-.tech-box{
+.tech-box {
 	margin-top: 50px;
 }
-.tech-left{
+
+.tech-left {
 	width: 220px;
 	border: #009900 1px solid;
 	border-bottom: none;
 }
-.help-list{
+
+.help-list {
 	border-bottom: #009900 1px solid;
 }
-.help-list .active{
+
+.help-list .active {
 	background: #009900;
 	color: #fff;
 }
-.help-tit{
+
+.help-tit {
 	position: relative;
 	height: 40px;
 	line-height: 40px;
@@ -1093,11 +1100,13 @@
 	justify-content: space-between;
 	align-items: center;
 }
-.help-tit:hover{
+
+.help-tit:hover {
 	background: #009900;
 	color: #FFFFFF;
 }
-.help-tit i{
+
+.help-tit i {
 	position: absolute;
 	right: 20px;
 	top: 11px;
@@ -1105,30 +1114,36 @@
 	-moz-transition: -moz-transform 0.2s ease-out;
 	-o-transition: -o-transform 0.2s ease-out;
 	-ms-transition: -ms-transform 0.2s ease-out;
-	transform:rotate(0deg);
+	transform: rotate(0deg);
 }
-.help-tit:hover .fa-caret-right{
-	transform:rotate(90deg);
+
+.help-tit:hover .fa-caret-right {
+	transform: rotate(90deg);
 }
-.help-item li{
+
+.help-item li {
 	border-left: #fff 3px solid;
 }
-.help-item .help-that{
+
+.help-item .help-that {
 	background: #eee;
 	border-left: #009900 3px solid;
 }
-.help-item li a{
+
+.help-item li a {
 	height: 40px;
 	line-height: 40px;
 }
-.help-item .help-that a{
+
+.help-item .help-that a {
 	height: 40px;
 	line-height: 40px;
 	color: #FFFFFF;
 	font-weight: bold;
-	background: rgba(108,208,108,0.8);
+	background: rgba(108, 208, 108, 0.8);
 }
-.help-third{
+
+.help-third {
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
@@ -1136,65 +1151,77 @@
 	border-bottom: 1px dashed #FFFFFF;
 	cursor: pointer;
 }
-.help-item li:hover{
+
+.help-item li:hover {
 	background: #eee;
 	border-left: #009900 3px solid;
 }
-.help-item li:hover a{
+
+.help-item li:hover a {
 	color: #FFFFFF;
 	font-weight: bold;
-	background: rgba(108,208,108,0.8);
+	background: rgba(108, 208, 108, 0.8);
 }
-.help-item li a{
+
+.help-item li a {
 	display: block;
 	text-align: center;
 }
-.help-item li .on{
+
+.help-item li .on {
 	color: #009900;
 }
-.help-item li .help-third:hover{
+
+.help-item li .help-third:hover {
 	color: #009900;
 }
+
 .help-right {
-    width: 800px;
-    min-height: 600px;
+	width: 800px;
+	min-height: 600px;
 	margin-left: 50px;
-    padding-right: 0;
-    border: none;
+	padding-right: 0;
+	border: none;
 }
-.technical-list{
+
+.technical-list {
 	border-bottom: 1px dashed #CCCCCC;
 	padding: 10px 0;
 }
-.technical-img{
+
+.technical-img {
 	float: left;
 	width: 90px;
 	height: 90px;
 	overflow: hidden;
 	text-align: center;
 }
-.technical-img img{
+
+.technical-img img {
 	max-width: 100%;
 	max-height: 100%;
 	width: auto;
 	height: auto;
 }
-.technical-list p{
+
+.technical-list p {
 	float: left;
 	width: calc(100% - 200px);
 	margin-left: 20px;
 	line-height: 90px;
 	overflow: hidden;
-	text-overflow:ellipsis;
+	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.help-down{
+
+.help-down {
 	height: 30px;
 	margin-top: 30px;
 	margin-right: 15px;
 }
+
 /* 关于我们 */
-.about-link{
+.about-link {
 	height: 60px;
 	text-align: center;
 	position: sticky;
@@ -1204,23 +1231,27 @@
 	z-index: 11;
 	background: #FFFFFF;
 }
+
 .about-link ul {
-    display: block;
-    width: 1200px;
-    margin: 0 auto;
+	display: block;
+	width: 1200px;
+	margin: 0 auto;
 }
+
 .about-link ul li {
-    float: left;
-    width: 240px;
-    color: #666;
-    font-size: 16px;
-    margin: 0;
-    cursor: pointer;
+	display: inline-block;
+	width: 240px;
+	color: #666;
+	font-size: 16px;
+	margin: 0;
+	cursor: pointer;
 }
+
 .about-link .active {
-    background: #64d264;
-    color: #FFFFFF;
+	background: #64d264;
+	color: #FFFFFF;
 }
-.about-mage{
+
+.about-mage {
 	margin: 30px auto;
 }
