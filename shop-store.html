@@ -32,20 +32,24 @@
 					<div class="merchant-box fl">
 						<div class="merchant-cont" style="padding: 20px;">
 							<p>联系人：{{storeDetail.userName}}</p>
-							<p>单位详址：{{storeDetail.adress}}</p>
-							<p>单位电话：{{storeDetail.cellPhone}}</p>
-							<p>质量认证：{{storeDetail.certification}}</p>
 							<i class="merchant-line"></i>
-							<p>电子邮箱：{{storeDetail.email}}</p>
-							<p>单位传真：{{storeDetail.fax}}</p>
-							<p>单位性质：{{storeDetail.nature}}</p>
-							<p>单位网址：<a :href="storeDetail.url">{{storeDetail.url}}</a></p>
+							<p>单位详址：{{storeDetail.adress}}</p>
+							<i class="merchant-line"></i>
+							<p>电话/传真：{{storeDetail.cellPhone}}</p>
+							<i class="merchant-line"></i>
+							<p>主页/电子邮件：{{storeDetail.email}}</p>
+							<!-- <p>单位传真：{{storeDetail.fax}}</p> -->
+							<!-- <p>单位性质：{{storeDetail.nature}}</p> -->
+							<i class="merchant-line"></i>
+							<p>邮政编码：<a :href="storeDetail.url">{{storeDetail.url}}</a></p>
+							<i class="merchant-line"></i>
+							<p>认证情况：{{storeDetail.certification}}</p>
 						</div>
 					</div>
 					<div class="detail-box fr">
 						<div class="merchant-cont" style="padding: 20px;">
-							<p style="overflow: hidden;">经营品种：{{storeDetail.varieties}}</p>
-							<p style="overflow: hidden;">主营产品：{{storeDetail.product}}</p>
+							<!-- <p style="overflow: hidden;">经营品种：{{storeDetail.varieties}}</p> -->
+							<p style="overflow: hidden;">主要产品：{{storeDetail.product}}</p>
 						</div>
 					</div>
 				</div>

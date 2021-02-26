@@ -37,7 +37,7 @@
 					<div style="min-height: 500px;">
 						<div class="technical-list clearfix" v-for="item in technicalList">
 							<div class="technical-img">
-								<img src="images/05.png" >
+								<img :src="item.cover" >
 							</div>
 							<p>{{item.name}}</p>
 							<img @click="downFile(item)" class="help-down fr" src="images/down.png" >
@@ -134,8 +134,9 @@
 				    ele.download = item.name;//设置下载的名称
 				    ele.style.display = 'none';// 隐藏的可下载链接
 				    // 字符内容转变成blob地址
-				    var blob = new Blob([item.pictureLibNum]);
-				    ele.href = URL.createObjectURL(blob);
+				    // var blob = new Blob([item.pictureLibNum]);
+				    // ele.href = URL.createObjectURL(blob);
+					ele.href = item.pictureLibNum
 				    // 绑定点击时间
 				    document.body.appendChild(ele);
 				    ele.click();

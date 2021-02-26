@@ -145,10 +145,10 @@
 						<img v-show="logo" :src="logo" ref="demo1pic" />
 					</div>
 				</li>
-				<li>
+				<!-- <li>
 					<span>单位性质</span>
 					<input placeholder="请输入单位性质" class="myOcompanyDw" type="text">
-				</li>
+				</li> -->
 				<li>
 					<span>公司名称</span>
 					<input placeholder="请输入公司名称" class="myOcompanyName" type="text">
@@ -158,33 +158,33 @@
 					<input placeholder="请输入公司地址" class="myOcompanyAddress" type="text">
 				</li>
 				<li>
-					<span>电子信箱</span>
-					<input placeholder="请输入电子信箱" class="myOcompanyMail" type="text">
+					<span>邮政编码</span>
+					<input placeholder="请输入邮政编码" class="myOcompanyMail" type="text">
 				</li>
 				<li>
-					<span>单位网址</span>
-					<input placeholder="请输入单位网址" class="myOcompanyCom" type="text">
+					<span>主页/电子邮件</span>
+					<input placeholder="请输入主页/电子邮件" class="myOcompanyCom" type="text">
 				</li>
 				<li>
 					<span>联系人</span>
 					<input placeholder="请输入联系人" class="myOcompanyPeo" type="text">
 				</li>
 				<li>
-					<span>单位电话</span>
-					<input placeholder="请输入单位电话" class="myOcompanyCel" type="text">
+					<span>电话/传真</span>
+					<input placeholder="请输入电话/传真" class="myOcompanyCel" type="text">
 				</li>
-				<li>
+				<!-- <li>
 					<span>单位传真</span>
 					<input placeholder="请输入单位传真" class="myOcompanyCz" type="text">
-				</li>
+				</li> -->
 				<li>
-					<span>质量认证</span>
-					<input placeholder="请输入质量认证" class="myOcompanyRz" type="text">
+					<span>认证情况</span>
+					<input placeholder="请输入认证情况" class="myOcompanyRz" type="text">
 				</li>
-				<li>
+				<!-- <li>
 					<span>经营品种</span>
 					<textarea placeholder="请输入经营品种" class="myOcompanyType"></textarea>
-				</li>
+				</li> -->
 				<li>
 					<span>主要产品</span>
 					<textarea placeholder="请输入主要产品" class="myOcompanyTxt"></textarea>
@@ -228,10 +228,10 @@
 		},
 		methods: {
 			addCompany: function() {
-				if(!$('.myOcompanyDw').val()){
-					alert('请输入单位性质！')
-					return false
-				}
+				// if(!$('.myOcompanyDw').val()){
+				// 	alert('请输入单位性质！')
+				// 	return false
+				// }
 				if(!$('.myOcompanyName').val()){
 					alert('请输入单位名称！')
 					return false
@@ -245,28 +245,28 @@
 					return false
 				}
 				if(!$('.myOcompanyCel').val()){
-					alert('请输入单位电话！')
+					alert('请输入电话/传真！')
 					return false
 				}
 				if(!$('.myOcompanyMail').val()){
-					alert('请输入单位邮箱！')
+					alert('请输入邮政编码！')
 					return false
 				}
-				if(!$('.myOcompanyType').val()){
-					alert('请输入经营品种！')
-					return false
-				}
+				// if(!$('.myOcompanyType').val()){
+				// 	alert('请输入经营品种！')
+				// 	return false
+				// }
 				
-				var re = /^1\d{10}$/ 
-				if (!re.test($('.myOcompanyCel').val())) {
-					alert("请输入正确的电话格式！");
-					return false
-				}
-				var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
-				if(re2.test($('.myOcompanyMail').val())){
-					alert("请输入正确的邮箱格式！");
-					return false
-				}
+				// var re = /^1\d{10}$/ 
+				// if (!re.test($('.myOcompanyCel').val())) {
+				// 	alert("请输入正确的电话格式！");
+				// 	return false
+				// }
+				// var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
+				// if(re2.test($('.myOcompanyMail').val())){
+				// 	alert("请输入正确的邮箱格式！");
+				// 	return false
+				// }
 				let myImgBox = JSON.stringify(this.imgBox)
 				let myJson = JSON.stringify({
 					"adress": $('.myOcompanyAddress').val(),
@@ -274,14 +274,14 @@
 					"cellPhone": $('.myOcompanyCel').val(),
 					"certification": $('.myOcompanyRz').val(),
 					"email": $('.myOcompanyMail').val(),
-					"fax": $('.myOcompanyCz').val(),
+					// "fax": $('.myOcompanyCz').val(),
 					"imgs": myImgBox,
 					"logo": this.logo,
-					"nature": $('.myOcompanyDw').val(),
+					// "nature": $('.myOcompanyDw').val(),
 					"product": $('.myOcompanyTxt').val(),
 					"url": $('.myOcompanyCom').val(),
 					"userName": $('.myOcompanyPeo').val(),
-					"varieties": $('.myOcompanyType').val(),
+					// "varieties": $('.myOcompanyType').val(),
 				})
 				axios.post(allUrl.companyAuth, myJson, {
 					headers: {

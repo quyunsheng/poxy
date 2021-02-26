@@ -65,6 +65,9 @@
 		.detail-particulars span{
 			font-size: 0.26rem !important;
 		}
+		.detail-particulars p{
+			text-indent: initial !important;
+		}
 		.jumpDetail {
 		    bottom: 0;
 		    top: inherit;
@@ -79,6 +82,9 @@
 		}
 		#detail-mage img{
 			max-width: 100%;
+		}
+		.detail-particulars{
+			overflow: hidden;
 		}
     </style>
 	</head>
@@ -211,6 +217,16 @@
 				$('.detail-nav .active').removeClass('active');
 				$(this).parent().addClass('active');
 			});
+			getTop();
+			function getTop() {
+				var mytop = $(document).scrollTop();
+				if (mytop > 400) {
+					$('.detail-nav').show()
+				} else {
+					$('.detail-nav').hide()
+				}
+				setTimeout(getTop);
+			}
 		</script>
 		<script type="text/javascript">
 			new Vue({

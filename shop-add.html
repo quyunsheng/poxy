@@ -183,12 +183,12 @@
 								</ul>
 							</dd>
 						</dl>
-						<dl>
+						<!-- <dl>
 							<dt>单位性质</dt>
 							<dd>
 								<input placeholder="请输入单位性质" class="myOcompanyDw" type="text">
 							</dd>
-						</dl>
+						</dl> -->
 						<dl>
 							<dt>公司名称</dt>
 							<dd>
@@ -202,15 +202,15 @@
 							</dd>
 						</dl>
 						<dl>
-							<dt>电子信箱</dt>
+							<dt>邮政编码</dt>
 							<dd>
-								<input placeholder="请输入电子信箱" class="myOcompanyMail" type="text">
+								<input placeholder="请输入邮政编码" class="myOcompanyMail" type="text">
 							</dd>
 						</dl>
 						<dl>
-							<dt>单位网址</dt>
+							<dt>主页/电子邮件</dt>
 							<dd>
-								<input placeholder="请输入单位网址" class="myOcompanyCom" type="text">
+								<input placeholder="请输入主页/电子邮件" class="myOcompanyCom" type="text">
 							</dd>
 						</dl>
 						<dl>
@@ -220,29 +220,29 @@
 							</dd>
 						</dl>
 						<dl>
-							<dt>单位电话</dt>
+							<dt>电话/传真</dt>
 							<dd>
-								<input placeholder="请输入单位电话" class="myOcompanyCel" type="text">
+								<input placeholder="请输入电话/传真" class="myOcompanyCel" type="text">
 							</dd>
 						</dl>
-						<dl>
+						<!-- <dl>
 							<dt>单位传真</dt>
 							<dd>
 								<input placeholder="请输入单位传真" class="myOcompanyCz" type="text">
 							</dd>
-						</dl>
+						</dl> -->
 						<dl>
-							<dt>质量认证</dt>
+							<dt>认证情况</dt>
 							<dd>
-								<input placeholder="请输入质量认证" class="myOcompanyRz" type="text">
+								<input placeholder="请输入认证情况" class="myOcompanyRz" type="text">
 							</dd>
 						</dl>
-						<dl>
+						<!-- <dl>
 							<dt>经营品种</dt>
 							<dd>
 								<textarea placeholder="请输入经营品种" class="myOcompanyType"></textarea>
 							</dd>
-						</dl>
+						</dl> -->
 						<dl>
 							<dt>主要产品</dt>
 							<dd>
@@ -286,10 +286,10 @@
 				},
 				methods: {
 					addCompany: function() {
-						if(!$('.myOcompanyDw').val()){
-							alert('请输入单位性质！')
-							return false
-						}
+						// if(!$('.myOcompanyDw').val()){
+						// 	alert('请输入单位性质！')
+						// 	return false
+						// }
 						if(!$('.myOcompanyName').val()){
 							alert('请输入单位名称！')
 							return false
@@ -307,24 +307,24 @@
 							return false
 						}
 						if(!$('.myOcompanyMail').val()){
-							alert('请输入单位邮箱！')
+							alert('请输入邮政编码！')
 							return false
 						}
-						if(!$('.myOcompanyType').val()){
-							alert('请输入经营品种！')
-							return false
-						}
+						// if(!$('.myOcompanyType').val()){
+						// 	alert('请输入经营品种！')
+						// 	return false
+						// }
 						
-						var re = /^1\d{10}$/ 
-						if (!re.test($('.myOcompanyCel').val())) {
-							alert("请输入正确的电话格式！");
-							return false
-						}
-						var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
-						if(re2.test($('.myOcompanyMail').val())){
-							alert("请输入正确的邮箱格式！");
-							return false
-						}
+						// var re = /^1\d{10}$/ 
+						// if (!re.test($('.myOcompanyCel').val())) {
+						// 	alert("请输入正确的电话格式！");
+						// 	return false
+						// }
+						// var re2 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/ 
+						// if(re2.test($('.myOcompanyMail').val())){
+						// 	alert("请输入正确的邮箱格式！");
+						// 	return false
+						// }
 						let myImgBox = JSON.stringify(this.imgBox)
 						let myJson = JSON.stringify({
 							adress: $('.myOcompanyAddress').val(),
@@ -332,14 +332,14 @@
 							cellPhone: $('.myOcompanyCel').val(),
 							certification: $('.myOcompanyRz').val(),
 							email: $('.myOcompanyMail').val(),
-							fax: $('.myOcompanyCz').val(),
+							// fax: $('.myOcompanyCz').val(),
 							imgs: myImgBox,
 							logo: this.logo,
-							nature: $('.myOcompanyDw').val(),
+							// nature: $('.myOcompanyDw').val(),
 							product: $('.myOcompanyTxt').val(),
 							url: $('.myOcompanyCom').val(),
 							userName: $('.myOcompanyPeo').val(),
-							varieties: $('.myOcompanyType').val(),
+							// varieties: $('.myOcompanyType').val(),
 						})
 						axios.post(allUrl.companyAuth,myJson,{
 							headers: {

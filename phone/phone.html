@@ -38,7 +38,7 @@
 				<div class="clearfix">
 					<a class="commodity-list" v-for="list in item.productList" @click="goodDetail(list.id,list.classifyCode)">
 						<div class="commodity-img">
-							<img :src="list.logo">
+							<img :src="list.logo?list.logo:'../images/shop/noImg.jpg'">
 						</div>
 						<h4>{{list.name}}</h4>
 						<p class="commodity-cont clearfix"><i>￥{{list.price}}</i>

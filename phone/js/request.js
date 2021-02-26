@@ -1,7 +1,7 @@
 // axios全局配置
 axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = 'http://www.fjygw.cn/'; 
-axios.defaults.baseURL = 'http://117.50.137.10:8090/'; 
+axios.defaults.baseURL = 'http://s2021.epoxy-e.com/'; 
 // 添加响应拦截器
 axios.interceptors.response.use(function(response) {
 	if (!(response.data.code == 0 || response.data.code == 7)) {

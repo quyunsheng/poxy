@@ -8,7 +8,6 @@
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="css/shop.css" />
-		<link rel="stylesheet" href="css/ljj-css/shop.css">
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
@@ -53,7 +52,7 @@
 				</div>
 				<div class="shop-cont">
 					<ul class="shop-nav">
-						<li class="good-all" v-if="classifyCode" @click="allNav()">全部分类</li>
+						<li class="good-all" v-if="classifyCode" @click="allNav()">返回</li>
 						<!-- 大分类 -->
 						<li class="good-type" v-for="item in allNavs" @click="thizNavType(item.classifyCode)" v-if="!classifyCode">
 							{{item.title}}
@@ -76,21 +75,28 @@
 					<!-- 所有商品 -->
 					<div class="goodAll">
 						<h4 class="allTit">商品推荐</h4>
-						<ul class="clearfix">
+						<div v-for="item in shopRecGood" :key="index" class="goodList"  @click="goodDetail(item.id,item.classifyCode)">
+							<img :src="item.logo" >
+							<h4>{{item.name}}</h4>
+							<span class="good-money"><i>{{item.price}}￥</i></span>
+							<p>销量：{{item.salesVolume}}</p>
+							<span class="goDetail">商品详情 →</span>
+						</div>
+						<!-- <ul class="clearfix">
 							<li class="good-list fl" v-for="item in shopRecGood" @click="goodDetail(item.id,item.classifyCode)">
 								<div class="good-img">
 									<img :src="item.logo">
 								</div>
 								<p>{{item.name}}</p>
 							</li>
-						</ul>
+						</ul> -->
 					</div>
 					<!-- 分类显示商品 -->
 					<div class="goodBox">
 						<div class="good-select clearfix">
 							<span class="fr" @click="screen">筛选<img src="img/select.png"></span>
 						</div>
-						<div id="mescroll" class="mescroll">
+						<div class="mescroll">
 							<div v-for="(item,index) in goodList" :key="index" class="goodList"  @click="goodDetail(item.id,item.classifyCode)">
 								<img :src="item.logo" >
 								<h4>{{item.name}}</h4>
@@ -227,7 +233,7 @@
 						$('.wrap').hide();
 						localStorage.removeItem(classifyCode);
 						this.classifyCode = '';
-						axios.get(allUrl.typeList, {
+						axios.get(allUrl.allList, {
 							params: {
 								classifyCode: ''
 							},

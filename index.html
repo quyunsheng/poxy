@@ -5,7 +5,6 @@
 		<title>中国环氧树脂网</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
-		<link rel="stylesheet" type="text/css" href="css/index-duan.css" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -30,6 +29,9 @@
 			.good_nav {
 				display: block;
 			}
+			.good_box{
+				width: 710px;
+			}
 		</style>
 	</head>
 	<body>
@@ -44,18 +46,20 @@
 					<div class="pagination"></div>
 				</div>
 				<div class="main-width swiper-right">
-					<div class="swiper-news" style="overflow: hidden;height: 145px">
+					<div class="swiper-news" style="overflow: hidden;height: 234px">
 						<div class="swiper-news-tit clearfix">
 							<img height="20" src="images/icon-voice.png">
 							<span>消息</span>
 							<a href="notice.html">更多&gt;&gt;</a>
 						</div>
-						<div v-for="(item,index) in bannerArticleList" v-if="index<3">
+						<div v-for="(item,index) in bannerArticleList" v-if="index<6">
 							<p class="swiper-news-list" @click="commentList(item.id)"><i>[{{item.articleTypeName}}]</i>{{item.title}}</p>
 						</div>
 					</div>
-					<div v-if="bannerArticleList.length>3" class="swiper-news-img" @click="commentList(bannerArticleList[3].id)">
-						<img :src="bannerArticleList[3].cover">
+					<div class="swiper-news-img">
+						<a target="_blank" href="http://www.wxepoxy.com/cn/Index.asp">
+							<img src="images/bins.jpg">
+						</a>
 					</div>
 				</div>
 			</div>
@@ -92,8 +96,11 @@
 					</a>
 				</p>
 				<ul class="cooperative clearfix">
-					<li v-for="item in companyList">
-						<img :src="item.logo">
+					<li v-for="item in companyList" @click="shopDetail(item.id)">
+						<div>
+							<img :src="item.logo?item.logo:'images/noLogo.png'">
+						</div>
+						<p>{{item.cName}}</p>
 					</li>
 				</ul>
 			</div>
@@ -113,7 +120,7 @@
 						<li v-for="(item,index) in list.productList" v-if="index<8" @click="goodDetail(item.id,item.classifyCode)">
 							<a>
 								<div class="index-img">
-									<img height="100%" :src="item.logo">
+									<img height="100%" :src="item.logo?item.logo:'images/shop/noImg.jpg'">
 								</div>
 								<h2 class="index-h2">{{item.name}}</h2>
 								<!-- <div class="index-tag">
@@ -236,6 +243,10 @@
 							localStorage.setItem(classifyCode, code);
 							localStorage.setItem(storeName, goStoreName);
 							window.location.href = 'good-list.html'
+						},
+						// 跳转店铺页
+						shopDetail: function(commpanyId) {
+							window.open('shop-store.html?commpanyId=' + commpanyId)
 						},
 						// 跳转新闻详情
 						commentList: function(id) {

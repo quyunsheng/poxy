@@ -11,8 +11,12 @@
 		<style type="text/css">
 			.merchant-list {
 				margin-bottom: 30px;
+				border: 1px solid #FFFFFF;
 			}
-			.addStore{
+			.merchant-list:hover{
+				border: 1px solid #0d80b7;
+			}
+			.addStore {
 				display: inline-block;
 				width: 80px;
 				height: 30px;
@@ -25,6 +29,13 @@
 				color: #009900;
 				border: 1px dashed #009900;
 			}
+			.merchant-cont{
+				height: 88px;
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 4;
+				overflow: hidden; 
+			}
 		</style>
 	</head>
 	<body>
@@ -36,23 +47,12 @@
 				<div class="index-merchant clearfix">
 					<div class="merchant-list fl" v-for="item in remShops" @click="shopDetail(item.id)">
 						<div class="merchant-top">
-							<img :src="item.logo">
+							<img :src="item.logo?item.logo:'images/noLogo.png'">
 							<span>{{item.cName}}</span>
 						</div>
-						<!-- <div class="merchant-num clearfix hidden">
-								<div class="fl">
-									<p><i>1000</i>单</p>
-									<p class="merchant-m">累计销售</p>
-								</div>
-								<div class="fl">
-									<p><i>11</i>年</p>
-									<p class="merchant-m">入驻年限</p>
-								</div>
-								<span class="merchant-line"></span>
-							</div> -->
 						<div class="merchant-mage">
 							<h4>公司主营</h4>
-							<p class="merchant-cont">{{item.varieties}}</p>
+							<p class="merchant-cont">{{item.product}}</p>
 							<a class="fr merchant-shop" @click="shopDetail(item.id)">查看详情 →</a>
 						</div>
 					</div>
@@ -87,16 +87,16 @@
 						page: 1, //显示的是哪一页
 						pageSize: '', //每一页显示的数据条数
 						total: '', //记录总数
-						maxPage: '',//最大页数
-						pageBanner:''
+						maxPage: '', //最大页数
+						pageBanner: ''
 					}
 				},
 				methods: {
 					getStoreList: function() {
 						let myJson = {
 							pageIndex: this.page,
-							pageSize: 20,
-							dismount:2
+							pageSize: 12,
+							dismount: 2
 						}
 						axios.post(allUrl.companyList, myJson).then((response) => {
 							if (response != "" && response.code == 0) {
@@ -116,7 +116,7 @@
 					},
 					// 跳转店铺页
 					shopDetail: function(commpanyId) {
-						window.open('shop-store.html?commpanyId=' + commpanyId) 
+						window.open('shop-store.html?commpanyId=' + commpanyId)
 					},
 					// 获取banner
 					gatBanner: function() {

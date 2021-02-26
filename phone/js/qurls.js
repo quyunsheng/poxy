@@ -6,6 +6,7 @@ let allUrl = {
 	getAnnunce:'/shuzhi/home/getAllArticle',//推荐公告
 	getShopNav:'/shuzhi/home/classify_rank',//获取商城导航级别
 	typeList:'/shuzhi/home/classify_children',//通过code获得子分类
+	allList:'/shuzhi/home/tree',//通过code获得子分类
 	getgoodDetail:'/shuzhi/home/detail_product',//获取商品详情
 	getRecGood:'/shuzhi/home/getRelevantProduct',//通过商品classifyCode获取相关推荐
 	addOrder:'/shuzhi/order/add_or_update',//提交订单

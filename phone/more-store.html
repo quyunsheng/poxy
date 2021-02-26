@@ -49,7 +49,7 @@
 				<div class="clearfix">
 					<a class="commodity-list" v-for="item in remShops" @click="shopDetail(item.id)">
 						<div class="commodity-img">
-							<img :src="item.logo">
+							<img :src="item.logo || '../images/noLogo.png'">
 						</div>
 						<h4>{{item.cName}}</h4>
 					</a>

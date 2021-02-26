@@ -28,7 +28,7 @@
     <!-- 店铺列表 -->
     <div class="allStore">
         <div class="shopMain clearfix" v-for="iten in remShops">
-            <p><img :src="iten.logo"></p>
+            <p><img :src="item.logo?item.logo:'../images/noLogo.png'"></p>
             <div class="storeText">
                 <p>{{iten.name}}</p>
                 <!-- <p><span></span>累计销售</p> -->

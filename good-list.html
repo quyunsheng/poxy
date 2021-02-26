@@ -14,7 +14,7 @@
 			<div class="main-width">
 				<!-- <img class="shop-banner" src="images/shop/shop-banner.png" > -->
 				<ul class="shop-nav" v-if="this.classifyCode">
-					<li><a @click="thizTypeAll">全部</a></li>
+					<li>全部</li>
 					<li v-for="item in navList"><a @click="thizType(item.key)">&nbsp;&gt;&nbsp;{{item.value}}</a></li>
 				</ul>
 				<ul class="shop-type" v-if="childShow">
@@ -98,7 +98,7 @@
 						total: '', //记录总数
 						maxPage:'',  //最大页数
 						// 商品参数
-						classifyCode:localStorage.getItem(classifyCode),
+						classifyCode:localStorage.getItem('classifyCode'),
 						businessName:'',//商户
 						productName:'',//商品名
 					}
@@ -165,6 +165,7 @@
 							this.priceSort = true
 							this.priceOrder = true
 						}
+						this.page = 1
 						this.getShopList();
 					},
 					salesChange:function(){
@@ -180,6 +181,7 @@
 							this.salesVolumeSort = true
 							this.salesVolumeOrder = true
 						}
+						this.page = 1
 						this.getShopList();
 					},
 					getShopList:function(){
@@ -207,23 +209,31 @@
 					// 搜索
 					findShop:function(){
 						let myPrice = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
-						if(!myPrice.test(this.startPrice)){
-							alert('请输入正确价格!')
-							this.startPrice = '';
-							return false
+						if(this.startPrice){
+							if(!myPrice.test(this.startPrice)){
+								alert('请输入正确价格!')
+								this.startPrice = '';
+								return false
+							}
 						}
-						if(this.endPrice != ''){
+						if(this.endPrice){
 							if(!myPrice.test(this.endPrice)){
 								alert('请输入正确价格!')
 								this.endPrice = '';
 								return false
 							}
-							if(this.startPrice>this.endPrice){
+						}
+						if(this.startPrice&&this.endPrice){
+							console.log(this.startPrice);
+							console.log(this.endPrice);
+							if(Number(this.startPrice) >Number(this.endPrice)){
 								alert('请输入正确的价格区间!')
+								this.startPrice = '';
 								this.endPrice = '';
 								return false
 							}
 						}
+						this.page = 1
 						this.getShopList();
 					},
 					// 分页
