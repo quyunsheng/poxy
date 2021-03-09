@@ -148,8 +148,8 @@
 				height: auto;
 			}
 			.technical-list p{
-				flex-grow: 1;
-				margin-right: 20px;
+				width: calc(100% - 110px);
+				margin: 0 10px;
 				overflow: hidden;
 				text-overflow:ellipsis;
 				white-space: nowrap;
@@ -189,7 +189,7 @@
 			<div class="technical-mage">
 				<div class="technical-list clearfix" v-for="item in technicalList">
 					<div class="technical-img">
-						<img src="../images/05.png" >
+						<img :src="item.cover" >
 					</div>
 					<p>{{item.name}}</p>
 					<img @click="downFile(item)" class="help-down fr" src="../images/down.png" >

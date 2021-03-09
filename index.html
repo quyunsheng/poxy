@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>中国环氧树脂网</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
-		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css?vid=0308" />
 		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -63,27 +63,101 @@
 					</div>
 				</div>
 			</div>
-			<div class="index-flow">
-				<div class="main-width">
-					<div class="">
-						<h2>购买流程</h2>
-						<p>Purchase process</p>
+			<div class="main-width index-tip index-tip1">
+				<a class="index-tip-list" target="_blank" href="cooperation.html">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-com.png" >
+						<img class="tip-on" src="images/icon-com-on.png" >
 					</div>
-					<div class="index-flow-list">
-						<img src="images/flow1.png">
-						客户下单
+					<h2>环氧论坛</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+				<a class="index-tip-list" target="_blank">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-jl.png" >
+						<img class="tip-on" src="images/icon-jl-on.png" >
 					</div>
-					<div class="index-flow-list">
-						<img src="images/flow2.png">
-						支付货款
+					<h2>交流平台</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+				<a class="index-tip-list" target="_blank" href="news.html">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-new.png" >
+						<img class="tip-on" src="images/icon-new-on.png" >
 					</div>
-					<div class="index-flow-list">
-						<img src="images/flow3.png">
-						物流发货
+					<h2>近日要闻</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+			</div>
+			<div class="main-width index-tip index-tip2">
+				<a class="index-tip-list" target="_blank" href="technical.html">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-zl.png" >
+						<img class="tip-on" src="images/icon-zl-on.png" >
 					</div>
-					<div class="index-flow-list">
-						<img src="images/flow4.png">
-						开具发票
+					<h2>技术资料</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+				<a class="index-tip-list" target="_blank">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-bbs.png" >
+						<img class="tip-on" src="images/icon-bbs-on.png" >
+					</div>
+					<h2>环氧BBS</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+				<a class="index-tip-list" target="_blank" href="shop-list.html">
+					<div class="tip-list-img">
+						<img class="tip-move" src="images/icon-comp.png" >
+						<img class="tip-on" src="images/icon-comp-on.png" >
+					</div>
+					<h2>合作企业</h2>
+					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
+				</a>
+			</div>
+			<div class="main-width">
+				<p class="main-tit tit-bg">
+					<img src="images/icon-tit.png">
+					动态视频
+					<!-- <a href="shop-list.html" class="main-more">
+						<span>+ 查看更多</span>
+					</a> -->
+				</p>
+				<div class="index-video">
+					<div class="index-video-swip swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<video width="200" height="150">
+									<source src="myvideo.mp4" type="video/mp4"></source>
+								</video>
+								<p>名称</p>
+							</div>
+						</div>
+						<div class="swiper-scrollbar"></div>
+					</div>
+				</div>
+			</div>
+			<div class="main-width">
+				<p class="main-tit tit-bg">
+					<img src="images/icon-tit.png">
+					产品应用展示
+					<!-- <a href="shop-list.html" class="main-more">
+						<span>+ 查看更多</span>
+					</a> -->
+				</p>
+				<div class="index-video">
+					<div class="index-img-swip swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<div class="img-slide">
+									<img src="images/0.png" >
+									<p>名称</p>
+								</div>
+								
+							</div>
+						</div>
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
 					</div>
 				</div>
 			</div>
@@ -134,7 +208,30 @@
 				</div>
 				<img width="100%" style="margin: 30px 0;" :src="bannerGaoList[index].cover" v-if="bannerGaoList[index]" @click="commentList(bannerGaoList[index].id)">
 			</div>
-
+			<div class="index-flow">
+				<div class="main-width">
+					<div class="">
+						<h2>购买流程</h2>
+						<p>Purchase process</p>
+					</div>
+					<div class="index-flow-list">
+						<img src="images/flow1.png">
+						客户下单
+					</div>
+					<div class="index-flow-list">
+						<img src="images/flow2.png">
+						支付货款
+					</div>
+					<div class="index-flow-list">
+						<img src="images/flow3.png">
+						物流发货
+					</div>
+					<div class="index-flow-list">
+						<img src="images/flow4.png">
+						开具发票
+					</div>
+				</div>
+			</div>
 			<div class="footerpage"></div>
 			<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
@@ -269,6 +366,29 @@
 								observeParents: true //修改swiper的父元素时，自动初始化swiper
 							});
 						},
+						videoSwiper: function() {
+							// 首页banner轮播
+							const headSwiper = new Swiper('.index-video-swip', {
+								slidesPerView: 'auto',
+								scrollbar: {
+									el: '.swiper-scrollbar',
+								},
+								observer: true, //修改swiper自己或子元素时，自动初始化swiper
+								observeParents: true //修改swiper的父元素时，自动初始化swiper
+							});
+						},
+						imgSwiper: function() {
+							// 首页banner轮播
+							const headSwiper = new Swiper('.index-img-swip', {
+								slidesPerView: 'auto',
+								navigation: {
+									nextEl: '.swiper-button-next',
+									prevEl: '.swiper-button-prev',
+								},
+								observer: true, //修改swiper自己或子元素时，自动初始化swiper
+								observeParents: true //修改swiper的父元素时，自动初始化swiper
+							});
+						},
 					},
 					mounted() {
 						$(".headerpage").load("header.html");
@@ -278,6 +398,8 @@
 						this.bannerArticle() //公告
 						this.gatBanner()
 						this.gatAdver()
+						this.videoSwiper()
+						this.imgSwiper()
 					}
 				})
 			</script>
