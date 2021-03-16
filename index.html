@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>中国环氧树脂网</title>
 		<link rel="stylesheet" type="text/css" href="css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="css/index.css?vid=0308" />
@@ -118,7 +120,7 @@
 			<div class="main-width">
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
-					动态视频
+					产品应用视频
 					<!-- <a href="shop-list.html" class="main-more">
 						<span>+ 查看更多</span>
 					</a> -->
@@ -126,11 +128,11 @@
 				<div class="index-video">
 					<div class="index-video-swip swiper-container">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<video width="200" height="150">
-									<source src="myvideo.mp4" type="video/mp4"></source>
+							<div class="swiper-slide" v-for="item in videoList">
+								<video width="200" height="150" :poster="item.cover" controls="controls">
+									<source :src="item.fileUrl" type="video/mp4"></source>
 								</video>
-								<p>名称</p>
+								<p>{{item.title}}</p>
 							</div>
 						</div>
 						<div class="swiper-scrollbar"></div>
@@ -140,7 +142,7 @@
 			<div class="main-width">
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
-					产品应用展示
+					产品应用图片
 					<!-- <a href="shop-list.html" class="main-more">
 						<span>+ 查看更多</span>
 					</a> -->
@@ -148,10 +150,10 @@
 				<div class="index-video">
 					<div class="index-img-swip swiper-container">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
+							<div class="swiper-slide" v-for="item in imgList">
 								<div class="img-slide">
-									<img src="images/0.png" >
-									<p>名称</p>
+									<img :src="item.cover" >
+									<p>{{item.title}}</p>
 								</div>
 								
 							</div>
@@ -259,6 +261,9 @@
 
 							advertisId: '64560152089345f48934587a4bd9ca8b',
 							advertising: '', //广告
+							
+							videoList:[],
+							imgList:[]
 						}
 					},
 					methods: {
@@ -389,6 +394,36 @@
 								observeParents: true //修改swiper的父元素时，自动初始化swiper
 							});
 						},
+						videoListGet: function() {
+							let myJson = {
+								articleTypeId: 'f48402da7d734b6b954c4b47bf2f0121',
+								pageSize: 10,
+								pageIndex: 1
+							}
+							axios.post(allUrl.article_list, myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.videoList = result.data.data
+									this.$nextTick(() => {
+										this.videoSwiper()
+									})
+								}
+							})
+						},
+						imgListGet: function() {
+							let myJson = {
+								articleTypeId: '666d492a084047e7b2c6788314604142',
+								pageSize: 10,
+								pageIndex: 1
+							}
+							axios.post(allUrl.article_list, myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.imgList = result.data.data
+									this.$nextTick(() => {
+										this.imgSwiper()
+									})
+								}
+							})
+						},
 					},
 					mounted() {
 						$(".headerpage").load("header.html");
@@ -398,8 +433,8 @@
 						this.bannerArticle() //公告
 						this.gatBanner()
 						this.gatAdver()
-						this.videoSwiper()
-						this.imgSwiper()
+						this.videoListGet()
+						this.imgListGet()
 					}
 				})
 			</script>

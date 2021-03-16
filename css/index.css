@@ -1351,9 +1351,8 @@
 	overflow: hidden;
 }
 .img-slide img{
-	max-width: 100%;
-	min-width: 100%;
-	width: auto;
+	width: 100%;
+	min-height: 100%;
 	height: auto;
 }
 .img-slide p{

@@ -36,7 +36,7 @@
 					<a class="fr" @click="storeDetail(item.classifyCode)">查看更多</a>
 				</div>
 				<div class="clearfix">
-					<a class="commodity-list" v-for="list in item.productList" @click="goodDetail(list.id,list.classifyCode)">
+					<a class="commodity-list" v-for="list in item.productList.slice(0, 4)" @click="goodDetail(list.id,list.classifyCode)">
 						<div class="commodity-img">
 							<img :src="list.logo?list.logo:'../images/shop/noImg.jpg'">
 						</div>

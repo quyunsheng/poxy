@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>中国环氧树脂网</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<link rel="stylesheet" type="text/css" href="css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="css/shop.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/phone.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+		.video-box{
+			padding: 0.2rem;
+			padding-bottom: 0;
+			margin-top: 10px;
+			margin-bottom: 80px;
+		}
+		.videoList{
+			width: 3.4rem;
+			float: left;
+			background: url(../img/videobg.jpg);
+			margin-bottom: 0.3rem;
+		}
+		.videoList:nth-child(2n){
+			margin-left: 0.3rem;
+		}
+		.videoList video{
+			width: 100%;
+			height: 5rem;
+		}
+		.videoList p{
+			background: #000000;
+			color: #FFFFFF;
+			text-align: center;
+			line-height: 0.6rem;
+		}
+	</style>
+	<body style="background: #f5f5f5;padding-top: 1.2rem;padding-bottom: 80px;">
+		<div id="vidoeBox" v-cloak>
+			<div class="header headerBg"><p>产品应用视频</p></div>
+			<div class="video-box clearfix">
+				<div class="videoList" v-for="item in videoList">
+					<video controls="controls" :poster="item.cover">
+						<source :src="item.fileUrl" type="video/mp4">
+					</video>
+					<p>{{item.title}}</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="footerpage"></div>
+		<div style="height: 80px"></div>
+		<script src="js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qs.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/request.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/qurls.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".footerpage").load("footer.html?vid=0717");
+			});
+			new Vue({
+				el: '#vidoeBox',
+				data() {
+					return {
+						videoList:[]
+					}
+				},
+				methods: {
+					videoListGet: function() {
+						let myJson = {
+							articleTypeId: 'f48402da7d734b6b954c4b47bf2f0121',
+							pageSize: 10,
+							pageIndex: 1
+						}
+						axios.post(allUrl.article_list, myJson).then((result) => {
+							if (result != "" && result.code == 0) {
+								this.videoList = result.data.data
+							}
+						})
+					},
+				},
+				mounted() {
+					this.videoListGet()
+				}
+			})
+		</script>
+	</body>
+</html>
