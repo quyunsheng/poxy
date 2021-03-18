@@ -28,8 +28,7 @@
 			<div class="headerpage"></div>
 			<div class="thiz-banner" :style="{'backgroundImage': 'url(' + pageBanner.cover + ')'}"></div>
 			<div class="listFater">
-				<a target="_blank" v-for="item in newsTj" class="dataMain" :href="['news-detail.html?id='+ item.id]" :style="{'backgroundImage': 'url(' + item.cover + ')'}"
-				 @click="commentList(item.id)">
+				<a target="_blank" v-for="item in newsTj" class="dataMain" :href="['news-detail.html?id='+ item.id]" :style="{'backgroundImage': 'url(' + item.cover + ')'}">
 					<div class="liatMain">
 						<p class="main-h3">{{item.title}}</p>
 						<p class="main-p">{{item.description}}</p>
@@ -43,12 +42,12 @@
 					<div class="right">
 						<p class="p1 right_fl">{{item2.source}}&nbsp;&nbsp;{{item2.createTime}}</p>
 						<p class="kongjian-main"></p>
-						<a target="_blank" @click="commentList(item2.id)" :href="['news-detail.html?id='+ item2.id]">
+						<a target="_blank" :href="['news-detail.html?id='+ item2.id]">
 							<p class="p2">{{item2.title}}</p>
 						</a>
 						<p class="p3 dian2">{{item2.description}}</p>
 						<!-- <p class="main-p2">{{item2.source}}</p> -->
-						<p class="btn-more0"><a @click="commentList(item2.id)" target="_blank" :href="['news-detail.html?id='+ item2.id]">查看更多</a></p>
+						<p class="btn-more0"><a target="_blank" :href="['news-detail.html?id='+ item2.id]">查看更多</a></p>
 					</div>
 				</div>
 			</div>
