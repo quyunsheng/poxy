@@ -34,6 +34,18 @@
 			.good_box{
 				width: 710px;
 			}
+			.index-news a{
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+				color: #666666;
+				line-height: 30px;
+				display: block;
+				text-align: center;
+			}
+			.index-news a:hover{
+				color: #00BB50;
+			}
 		</style>
 	</head>
 	<body>
@@ -66,14 +78,14 @@
 				</div>
 			</div>
 			<div class="main-width index-tip index-tip1">
-				<a class="index-tip-list" target="_blank" href="cooperation.html">
-					<div class="tip-list-img">
+				<div class="index-tip-list index-news">
+					<div class="tip-list-img" @click="window.open('cooperation.html')">
 						<img class="tip-move" src="images/icon-com.png" >
 						<img class="tip-on" src="images/icon-com-on.png" >
 					</div>
-					<h2>环氧论坛</h2>
-					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
-				</a>
+					<h2 @click="window.open('cooperation.html')">环氧论坛</h2>
+					<a target="_blank" v-for="item in ltAll" :href="['news-detail.html?id='+ item.id]">{{item.title}}</a>
+				</div>
 				<a class="index-tip-list" target="_blank">
 					<div class="tip-list-img">
 						<img class="tip-move" src="images/icon-jl.png" >
@@ -82,14 +94,15 @@
 					<h2>交流平台</h2>
 					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
 				</a>
-				<a class="index-tip-list" target="_blank" href="news.html">
-					<div class="tip-list-img">
+				<div class="index-tip-list index-news" target="_blank" href="news.html">
+					<div class="tip-list-img" @click="window.open('news.html')">
 						<img class="tip-move" src="images/icon-new.png" >
 						<img class="tip-on" src="images/icon-new-on.png" >
 					</div>
-					<h2>近日要闻</h2>
-					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
-				</a>
+					<h2 @click="window.open('news.html')">近日要闻</h2>
+					<a target="_blank" v-for="item in newsAll" :href="['news-detail.html?id='+ item.id]">{{item.title}}</a>
+					<!-- <p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p> -->
+				</div>
 			</div>
 			<div class="main-width index-tip index-tip2">
 				<a class="index-tip-list" target="_blank" href="technical.html">
@@ -108,14 +121,15 @@
 					<h2>环氧BBS</h2>
 					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
 				</a>
-				<a class="index-tip-list" target="_blank" href="shop-list.html">
-					<div class="tip-list-img">
+				<div class="index-tip-list index-news">
+					<div class="tip-list-img" @click="window.open('shop-list.html')">
 						<img class="tip-move" src="images/icon-comp.png" >
 						<img class="tip-on" src="images/icon-comp-on.png" >
 					</div>
-					<h2>合作企业</h2>
-					<p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p>
-				</a>
+					<h2 @click="window.open('shop-list.html')">合作企业</h2>
+					<!-- <p>环氧树脂是一大类应用十分广泛的有机化工产品，是一个经济效益比较好的产业。</p> -->
+					<a target="_blank" v-for="(item,index) in companyList" :href="['shop-store.html?commpanyId='+ item.id]" v-if="index<2">{{item.cName}}</a>
+				</div>
 			</div>
 			<div class="main-width">
 				<p class="main-tit tit-bg">
@@ -135,7 +149,7 @@
 								<p>{{item.title}}</p>
 							</div>
 						</div>
-						<div class="swiper-scrollbar"></div>
+						<!-- <div class="swiper-scrollbar"></div> -->
 					</div>
 				</div>
 			</div>
@@ -163,11 +177,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="main-width">
+			<!-- <div class="main-width">
 				<p class="main-tit tit-bg">
 					<img src="images/icon-tit.png">
 					合作企业
-					<a href="shop-list.html" class="main-more">
+					<a target="_blank" href="shop-list.html" class="main-more">
 						<span>+ 查看更多</span>
 					</a>
 				</p>
@@ -179,6 +193,43 @@
 						<p>{{item.cName}}</p>
 					</li>
 				</ul>
+			</div> -->
+			<div class="main-width">
+				<p class="main-tit tit-bg">
+					<img src="images/icon-tit.png">
+					原材料数据
+					<a target="_blank" href="materials-list.html" class="main-more">
+						<span>+ 查看更多</span>
+					</a>
+				</p>
+				<div class="index-materials clearfix">
+					<div class="materials-l fl" @click="goLink(materials[0].address)">
+						<img :src="materials[0].cover" >
+						<p>{{materials[0].title}}</p>
+					</div>
+					<div class="materials-r fr">
+						<div class="materials-box clearfix">
+							<div class="materials-list fl" v-for="(item,index) in materials" v-if="index < 4 && index > 0" @click="goLink(item.address)">
+								<img :src="item.cover" >
+								<p>{{item.title}}</p>
+							</div>
+						</div>
+						<div class="materials-p">
+							<div class="clearfix" v-if="materials[4]" @click="goLink(materials[4].address)">
+								<p>【5】{{materials[4].title}}</p>
+								<span class="fr">了解详情&gt;&gt;</span>
+							</div>
+							<div class="clearfix" v-if="materials[5]" @click="goLink(materials[5].address)">
+								<p>【6】{{materials[5].title}}</p>
+								<span class="fr">了解详情&gt;&gt;</span>
+							</div>
+							<div class="clearfix" v-if="materials[6]" @click="goLink(materials[6].address)">
+								<p>【6】{{materials[6].title}}</p>
+								<span class="fr">了解详情&gt;&gt;</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="main-width" v-for="(list,index) in goodList" v-if="list.productList.length>0">
 				<p class="main-tit tit-bg">
@@ -253,7 +304,8 @@
 							// 新闻
 							typeId: "eb186ab5a3b94ae998675d5f3498070d",
 							zxId: "93ee4d6f1ac34297b120fb6864155e97",
-							newsAll: "",
+							newsAll: [],
+							ltAll:[],
 							newsTj: "",
 							/* banner 文章列表 */
 							bannerArticleList: [],
@@ -263,7 +315,8 @@
 							advertising: '', //广告
 							
 							videoList:[],
-							imgList:[]
+							imgList:[],
+							materials:[]
 						}
 					},
 					methods: {
@@ -301,7 +354,7 @@
 								params: {
 									recommend:true,
 									pageNum: 1,
-									pageSize: 12,
+									pageSize: 2,
 									dismount:2
 								}
 							}).then((response) => {
@@ -375,9 +428,9 @@
 							// 首页banner轮播
 							const headSwiper = new Swiper('.index-video-swip', {
 								slidesPerView: 'auto',
-								scrollbar: {
-									el: '.swiper-scrollbar',
-								},
+								// scrollbar: {
+								// 	el: '.swiper-scrollbar',
+								// },
 								observer: true, //修改swiper自己或子元素时，自动初始化swiper
 								observeParents: true //修改swiper的父元素时，自动初始化swiper
 							});
@@ -424,6 +477,59 @@
 								}
 							})
 						},
+						// 获取所有新闻
+						newsListGet: function() {
+							let myJson = {
+								articleTypeId: "7b689546f1114499916ba6d2a0f1fec4",
+								pageSize: 2,
+								pageIndex: 1
+							}
+							axios.post(allUrl.article_list, myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.newsAll = result.data.data
+								}
+							})
+						},
+						// 获取所有原材料数据
+						materialsGet: function() {
+							let myJson = {
+								articleTypeId: "f58566720414428791170ce90ef4a99e",
+								pageSize: 7,
+								pageIndex: 1
+							}
+							axios.post(allUrl.article_list, myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.materials = result.data.data
+								}
+							})
+						},
+						goLink(link){
+							window.open(link)
+						},
+						titleListGet: function() {
+							let myJson = {
+								articleTypeId:'ea1bcaf3306242d3a5306edbbef2d7ff',
+								pageSize:20
+							}
+							axios.post(allUrl.getColumn,myJson).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.handleClick(result.data.data[0].id)
+								}
+							})
+						},
+						handleClick: function(id) {
+							let myJson = {
+								articleSubTypeId:id,
+								articleTypeId:'ea1bcaf3306242d3a5306edbbef2d7ff',
+								pageSize:2,
+								pageIndex:1
+							}
+							axios.post(allUrl.article_list,myJson ).then((result) => {
+								if (result != "" && result.code == 0) {
+									this.ltAll = result.data.data
+								}
+							})
+						},
 					},
 					mounted() {
 						$(".headerpage").load("header.html");
@@ -435,6 +541,9 @@
 						this.gatAdver()
 						this.videoListGet()
 						this.imgListGet()
+						this.newsListGet()
+						this.materialsGet()
+						this.titleListGet()
 					}
 				})
 			</script>
